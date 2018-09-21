@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-icon > i {
+  font-size: 28px;
+}
+
+.header-search {
+  width: 350px;
+}
