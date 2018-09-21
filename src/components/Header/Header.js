@@ -1,6 +1,5 @@
 import React from 'react';
-import { Layout, Button } from 'antd';
-import Search from 'antd/lib/input/Search';
+import { Layout, Button, Input } from 'antd';
 import './Header.css';
 import { UserIconGroupStyled } from './Header.styled';
 
@@ -8,7 +7,7 @@ const Header = () => (
   <Layout.Header className="header">
     <img src="https://via.placeholder.com/150x58" alt="Logo" />
 
-    <Search
+    <Input.Search
       placeholder="Menus"
       size="large"
       className="header-search"
