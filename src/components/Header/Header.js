@@ -5,7 +5,7 @@ import { UserIconGroupStyled } from './Header.styled';
 
 const Header = () => (
   <Layout.Header className="header">
-    <img src="https://via.placeholder.com/150x58" alt="Logo" />
+    <img src="/tasty.png" alt="Logo" />
 
     <Input.Search
       placeholder="Menus"
