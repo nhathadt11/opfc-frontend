@@ -1,11 +1,11 @@
 import React from 'react';
 import { Layout, Button, Input } from 'antd';
 import './Header.css';
-import { UserIconGroupStyled } from './Header.styled';
+import { UserIconGroupStyled, LogoStyled } from './Header.styled';
 
 const Header = () => (
   <Layout.Header className="header">
-    <img src="/tasty.png" alt="Logo" />
+    <LogoStyled src="/tasty.png" alt="Logo" />
 
     <Input.Search
       placeholder="Menus"

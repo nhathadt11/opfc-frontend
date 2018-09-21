@@ -13,3 +13,7 @@ export const UserIconGroupStyled = styled.div`
 export const CreateAProfileButtonStyled = styled(Button)`
   height: 40px;
 `;
+
+export const LogoStyled = styled.img`
+  height: 68px;
+`;
