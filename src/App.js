@@ -1,11 +1,9 @@
 import React from 'react';
-import Button from 'antd/lib/button';
 import './App.css';
+import MainLayout from './containers/MainLayout';
 
 const App = () => (
-  <div className="App">
-    <Button type="primary">Button</Button>
-  </div>
+  <MainLayout />
 );
 
 export default App;
