@@ -8,6 +8,7 @@ import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
 import Header from '../components/Header/Header';
+import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -23,3 +24,6 @@ storiesOf('Button', module)
 
 storiesOf('Layout', module)
   .add('Header', () => <Header />);
+
+storiesOf('Component', module)
+  .add('BreadCrumb', () => <BreadCrumb />);

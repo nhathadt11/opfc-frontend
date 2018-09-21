@@ -1,0 +1,6 @@
+.opfc-breadcrumb {
+  display: flex;
+  align-items: center;
+  height: 58px;
+  padding: 0 26px;
+}
