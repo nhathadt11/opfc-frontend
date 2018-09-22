@@ -9,6 +9,8 @@ import { linkTo } from '@storybook/addon-links';
 import { Button, Welcome } from '@storybook/react/demo';
 import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
+import EventType from '../components/MenuFilterSider/EventType/EventType';
+import BudgetRange from '../components/MenuFilterSider/BudgetRange/BudgetRange';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -27,3 +29,7 @@ storiesOf('Layout', module)
 
 storiesOf('Component', module)
   .add('BreadCrumb', () => <BreadCrumb />);
+
+storiesOf('MenuFilterSider', module)
+  .add('EventType', () => <EventType />)
+  .add('BudgetRange', () => <BudgetRange />);

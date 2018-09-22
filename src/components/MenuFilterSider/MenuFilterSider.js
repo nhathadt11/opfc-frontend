@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import EventType from './EventType/EventType';
+import BudgetRange from './BudgetRange/BudgetRange';
 
 const EventFilterSider = () => (
-  <EventType />
+  <Fragment>
+    <EventType />
+    <BudgetRange />
+  </Fragment>
 );
 
 export default EventFilterSider;
