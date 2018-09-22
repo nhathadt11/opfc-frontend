@@ -16,7 +16,6 @@ export const CatergoryLabelStyled = styled.div`
   min-width: 30px;
   max-width: 200px;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   line-height: 30px;
 
