@@ -11,6 +11,7 @@ import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
 import EventType from '../components/MenuFilterSider/EventType/EventType';
 import BudgetRange from '../components/MenuFilterSider/BudgetRange/BudgetRange';
+import MenuCard from '../components/MenuCard/MenuCard';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -33,3 +34,7 @@ storiesOf('Component', module)
 storiesOf('MenuFilterSider', module)
   .add('EventType', () => <EventType />)
   .add('BudgetRange', () => <BudgetRange />);
+
+storiesOf('Card', module)
+  .add('Menu card', () => <MenuCard />)
+  .add('Menu card with loading', () => <MenuCard loading />);
