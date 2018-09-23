@@ -2,3 +2,9 @@
   width: 200px;
   height: 200px;
 }
+
+.opfc-brand-avatar {
+  width: 182px;
+  height: 182px;
+  object-fit: 'cover';
+}

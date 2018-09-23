@@ -35,13 +35,13 @@ class CreateBrand extends Component {
     const { current } = this.state;
 
     return (
-      <Row>
-        <Col span={8}>
+      <Row type="flex">
+        <Col style={{ padding: 100 }}>
           <Steps current={current} direction="vertical">
             {this.steps.map(item => <Step key={item.title} title={item.title} />)}
           </Steps>
         </Col>
-        <Col span={16}>
+        <Col>
           <div className="steps-content">{this.steps[current].content}</div>
           <div className="steps-action">
             {

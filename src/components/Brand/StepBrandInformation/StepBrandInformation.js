@@ -37,6 +37,12 @@ class StepBrandInformation extends Component {
         loading: false,
       }));
     }
+    if (info.file.status === 'error') {
+      getBase64(info.file.originFileObj, imageUrl => this.setState({
+        imageUrl,
+        loading: false,
+      }));
+    }
   }
 
   render() {
@@ -60,17 +66,17 @@ class StepBrandInformation extends Component {
 
     return (
       <Form>
-        <Row type="flex">
+        <Row type="flex" gutter={24} style={{ padding: '50px 10px' }}>
           <Col>
             <Upload
               name="avatar"
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={false}
-              action="//jsonplaceholder.typicode.com/posts/"
+              action="/jsonplaceholder.typicode.com/posts/"
               onChange={this.handleChange}
             >
-              {imageUrl ? <img src={imageUrl} alt="avatar" /> : uploadButton}
+              {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
             </Upload>
           </Col>
           <Col>
