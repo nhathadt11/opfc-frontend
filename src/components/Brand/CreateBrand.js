@@ -47,16 +47,16 @@ class CreateBrand extends Component {
           <div className="steps-action">
             {
               (current < this.steps.length - 1) && (current !== 0)
-              && <Button type="primary" onClick={() => this.next()}>Next</Button>
+              && <Button type="primary" size="large" onClick={() => this.next()}>Next</Button>
             }
             {
               current === this.steps.length - 1
-              && <Button type="primary">Done</Button>
+              && <Button type="primary" size="large">Done</Button>
             }
             {
               current > 0
               && (
-              <Button style={{ marginLeft: 8 }} onClick={() => this.prev()}>
+              <Button style={{ marginLeft: 8 }} size="large" onClick={() => this.prev()}>
                 Previous
               </Button>
               )
