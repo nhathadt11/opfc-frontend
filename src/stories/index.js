@@ -14,6 +14,7 @@ import BudgetRange from '../components/MenuFilterSider/BudgetRange/BudgetRange';
 import MenuCard from '../components/MenuCard/MenuCard';
 import MenuCardGrid from '../containers/MenuCardGrid/MenuCardGrid';
 import CreateBrand from '../components/Brand/CreateBrand';
+import CreateBrandModal from '../components/Brand/CreateBrandModal';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -45,4 +46,5 @@ storiesOf('Menu Grid', module)
   .add('Menu Grid', () => <MenuCardGrid />);
 
 storiesOf('Brand', module)
-  .add('Create Brand', () => <CreateBrand />);
+  .add('Create Brand', () => <CreateBrand />)
+  .add('Create Brand with modal', () => <CreateBrandModal />);

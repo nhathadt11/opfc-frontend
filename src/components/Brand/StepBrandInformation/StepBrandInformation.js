@@ -66,7 +66,7 @@ class StepBrandInformation extends Component {
 
     return (
       <Form>
-        <Row type="flex" gutter={24} style={{ padding: '50px 10px' }}>
+        <Row type="flex" gutter={24}>
           <Col>
             <Upload
               name="avatar"

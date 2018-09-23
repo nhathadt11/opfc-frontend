@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Steps, Button, Row, Col,
 } from 'antd';
+import './CreateBrand.css';
 import StepBrandName from './StepBrandName/StepBrandName';
 import StepBrandInformation from './StepBrandInformation/StepBrandInformation';
 
@@ -35,14 +36,14 @@ class CreateBrand extends Component {
     const { current } = this.state;
 
     return (
-      <Row type="flex">
+      <Row type="flex" className="opfc-create-brand-container">
         <Col style={{ padding: 100 }}>
           <Steps current={current} direction="vertical">
             {this.steps.map(item => <Step key={item.title} title={item.title} />)}
           </Steps>
         </Col>
-        <Col>
-          <div className="steps-content">{this.steps[current].content}</div>
+        <Col className="opfc-step-content">
+          {this.steps[current].content}
           <div className="steps-action">
             {
               (current < this.steps.length - 1) && (current !== 0)

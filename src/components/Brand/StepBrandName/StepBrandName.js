@@ -3,11 +3,12 @@ import { func } from 'prop-types';
 import {
   Input, Button, Icon, Form,
 } from 'antd';
+import './StepBrandName.css';
 
 const FormItem = Form.Item;
 
 const StepBrandName = ({ next }) => (
-  <Form layout="inline">
+  <Form layout="inline" className="opfc-step-brand-name">
     <FormItem>
       <span htmlFor="brandName">Name</span>
     </FormItem>
