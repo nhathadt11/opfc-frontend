@@ -3,6 +3,7 @@ import {
   Steps, Button, Row, Col,
 } from 'antd';
 import StepBrandName from './StepBrandName/StepBrandName';
+import StepBrandInformation from './StepBrandInformation/StepBrandInformation';
 
 const { Step } = Steps;
 
@@ -15,8 +16,8 @@ class CreateBrand extends Component {
     title: 'Brand Name',
     content: <StepBrandName next={() => this.next()} />,
   }, {
-    title: 'Description',
-    content: 'Second-content',
+    title: 'Information',
+    content: <StepBrandInformation />,
   }, {
     title: 'Account',
     content: 'Last-content',
