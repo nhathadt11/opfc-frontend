@@ -10,7 +10,7 @@ const { Step } = Steps;
 
 class CreateBrand extends Component {
   state = {
-    current: 1,
+    current: 0,
   }
 
   steps = [{

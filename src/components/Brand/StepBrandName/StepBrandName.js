@@ -5,21 +5,12 @@ import {
 } from 'antd';
 import './StepBrandName.css';
 
-const FormItem = Form.Item;
-
 const StepBrandName = ({ next }) => (
   <Form layout="inline" className="opfc-step-brand-name">
-    <FormItem>
-      <span htmlFor="brandName">Name</span>
-    </FormItem>
-    <FormItem>
-      <Input id="brandName" size="large" title="Brand Name" />
-    </FormItem>
-    <FormItem>
-      <Button type="primary" size="large" onClick={next}>
-        <Icon type="right-circle" theme="outlined" style={{ fontSize: 24 }} />
-      </Button>
-    </FormItem>
+    <Input name="brandName" size="large" title="Brand Name" placeholder="Enter a Brand Name" />
+    <Button type="primary" size="large" onClick={next}>
+      <Icon type="right-circle" theme="outlined" style={{ fontSize: 24 }} />
+    </Button>
   </Form>
 );
 

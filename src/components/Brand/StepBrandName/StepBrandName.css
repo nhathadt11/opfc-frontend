@@ -4,3 +4,6 @@
   align-items: center;
   height: 100%;
 }
+.opfc-step-brand-name > *[name="brandName"] {
+  width: 300px;
+}
