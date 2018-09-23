@@ -19,3 +19,7 @@
 .header-search {
   width: 350px;
 }
+
+.opfc-browse-popup-content .ant-popover-inner-content {
+  padding: 0;
+}
