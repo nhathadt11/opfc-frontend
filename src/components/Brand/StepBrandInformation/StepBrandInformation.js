@@ -65,7 +65,7 @@ class StepBrandInformation extends Component {
     );
 
     return (
-      <Form>
+      <Form layout="vertical">
         <Row type="flex" gutter={24}>
           <Col>
             <Upload
