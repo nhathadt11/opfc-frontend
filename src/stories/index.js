@@ -13,6 +13,7 @@ import EventType from '../components/MenuFilterSider/EventType/EventType';
 import BudgetRange from '../components/MenuFilterSider/BudgetRange/BudgetRange';
 import MenuCard from '../components/MenuCard/MenuCard';
 import MenuCardGrid from '../containers/MenuCardGrid/MenuCardGrid';
+import CreateBrand from '../components/Brand/CreateBrand';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -42,3 +43,6 @@ storiesOf('Card', module)
 
 storiesOf('Menu Grid', module)
   .add('Menu Grid', () => <MenuCardGrid />);
+
+storiesOf('Brand', module)
+  .add('Create Brand', () => <CreateBrand />);
