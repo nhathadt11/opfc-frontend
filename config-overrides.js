@@ -9,8 +9,9 @@ module.exports = function override(config, env) {
 
   nextConfig = rewireLess.withLoaderOptions({
     modifyVars: {
-      "@primary-color": "#f68b40",
-      "@border-radius-base": "none"
+      '@primary-color': '#f68b40',
+      '@border-radius-base': 'unset',
+      '@font-family': '"Montserrat", sans-serif;',
     },
     javascriptEnabled: true,
   })(config, env);
