@@ -51,7 +51,7 @@ class StepBrandInformation extends Component {
     const uploadButton = (
       <div>
         <Icon type={loading ? 'loading' : 'plus'} />
-        <div className="ant-upload-text">Upload</div>
+        <div className="ant-upload-text">Avatar</div>
       </div>
     );
 
@@ -78,13 +78,13 @@ class StepBrandInformation extends Component {
             >
               {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
             </Upload>
+            <FormItem label="Bio">
+              <Input.TextArea style={{ width: 200 }} />
+            </FormItem>
           </Col>
           <Col>
             <FormItem label="Brand Name">
               <Input readOnly value="OPFC" />
-            </FormItem>
-            <FormItem label="Description">
-              <Input.TextArea />
             </FormItem>
             <FormItem label="Hotline">
               <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
