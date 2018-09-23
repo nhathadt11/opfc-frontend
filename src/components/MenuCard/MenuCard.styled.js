@@ -8,7 +8,6 @@ export const MenuCardTitleStyled = styled.a`
   line-height: 25px;
   color: #f68b40;
   max-height: 48px;
-  z-index: 2;
   cursor: pointer;
 `;
 
@@ -23,7 +22,6 @@ export const CatergoryLabelStyled = styled.div`
   position: absolute;
   top: 17px;
   left: -5px;
-  z-index: 2;
   color: #fff;
   padding: 0px 10px;
   -webkit-box-shadow: 0 0 7px rgba(43,48,52,0.3);

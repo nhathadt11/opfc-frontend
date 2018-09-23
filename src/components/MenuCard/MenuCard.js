@@ -8,11 +8,13 @@ import { MenuCardTitleStyled, CatergoryLabelStyled } from './MenuCard.styled';
 const MenuCard = ({ loading }) => (
   <Card
     loading={loading}
-    style={{ width: 300 }}
+    style={{ width: 230 }}
+    hoverable
+    bordered={false}
     cover={<img alt="example" src="https://www.thelocal.it/userdata/images/article/69523836b0191608c41d640feead8da2be5462038d3409e1e3900fad039c7fc8.jpg" />}
   >
     <CatergoryLabelStyled>Breakfast</CatergoryLabelStyled>
-    <Row style={{ fontSize: 16, marginBottom: 20 }}>
+    <Row style={{ marginBottom: 20 }}>
       <Col span={8}>
         <Icon type="team" theme="outlined" style={{ color: '#f68b40' }} />
         <span style={{ marginLeft: 5 }}>10</span>
