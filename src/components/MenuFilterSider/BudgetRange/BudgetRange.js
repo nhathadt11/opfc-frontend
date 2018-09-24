@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Slider, InputNumber } from 'antd';
-import { MenuFilterItemStyled } from '../MenuFilterSider.styled';
+import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
 import { BudgetLimitStyled } from './BudgetRangeStyled.styled';
 
 class BudgetRange extends Component {
@@ -18,7 +18,7 @@ class BudgetRange extends Component {
 
     return (
       <MenuFilterItemStyled>
-        <h2 htmlFor="">Budget</h2>
+        <MenuFilterItemTitleStyled htmlFor="">Budget</MenuFilterItemTitleStyled>
         <Slider
           range
           defaultValue={[lowerLimit, upperLimit]}

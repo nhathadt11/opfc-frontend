@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 export const MenuCardTitleStyled = styled.a`
-  font-size: 21px;
+  font-size: 16px;
   font-weight: 300;
   margin-top: 5px;
   overflow: hidden;
-  line-height: 25px;
+  line-height: 18px;
   color: #f68b40;
   max-height: 48px;
   cursor: pointer;
@@ -29,7 +29,7 @@ export const CatergoryLabelStyled = styled.div`
   font-weight: 400;
   text-shadow: 1px 1px 0px rgba(43,48,52,0.2);
   height: 30px;
-  font-size: 21px;
+  font-size: 14px;
   letter-spacing: 1px;
 
   &::after {

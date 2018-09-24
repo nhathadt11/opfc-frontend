@@ -17,7 +17,7 @@ const Home = props => (
     </Layout>
 
     <Layout {...props}>
-      <Sider theme="light" width={350}>
+      <Sider theme="light" width={280}>
         <MenuFilterSider />
       </Sider>
       <Content className="opfc-main-content">
@@ -31,10 +31,12 @@ const MainLayout = () => (
   <Layout>
     <Header />
 
-    <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/profile/brand" component={BrandProfile} />
-    </Switch>
+    <div className="container">
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/profile/brand" component={BrandProfile} />
+      </Switch>
+    </div>
 
     <Footer>Footer</Footer>
   </Layout>

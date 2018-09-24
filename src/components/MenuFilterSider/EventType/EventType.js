@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox, Row, Col } from 'antd';
 import { map } from 'lodash';
-import { MenuFilterItemStyled } from '../MenuFilterSider.styled';
+import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
 
 function onChange(checkedValues) {
   console.log('checked = ', checkedValues);
@@ -15,7 +15,7 @@ const options = [
 
 const EventType = () => (
   <MenuFilterItemStyled>
-    <h2 htmlFor="">Event Type</h2>
+    <MenuFilterItemTitleStyled htmlFor="">Event Type</MenuFilterItemTitleStyled>
     <Checkbox.Group
       style={{ width: '100%' }}
       defaultValue={['Apple']}

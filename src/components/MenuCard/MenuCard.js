@@ -8,7 +8,7 @@ import { MenuCardTitleStyled, CatergoryLabelStyled } from './MenuCard.styled';
 const MenuCard = ({ loading }) => (
   <Card
     loading={loading}
-    style={{ width: 230 }}
+    style={{ width: 200 }}
     hoverable
     bordered={false}
     cover={<img alt="example" src="https://www.thelocal.it/userdata/images/article/69523836b0191608c41d640feead8da2be5462038d3409e1e3900fad039c7fc8.jpg" />}
