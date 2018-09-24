@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import LocalIcon from '../../../../fonts/LocalFont';
+import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 
 
 const { TabPane } = Tabs;
@@ -11,7 +12,7 @@ const BrandProfileContent = () => (
       tab={<span><LocalIcon type="icon-menu" />Menu</span>}
       key="1"
     >
-      Menus Content
+      <MenuTab />
     </TabPane>
     <TabPane
       tab={<span><LocalIcon type="icon-dish" />Meals</span>}
