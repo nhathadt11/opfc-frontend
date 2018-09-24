@@ -1,0 +1,5 @@
+.opfc-gallery-uploader .ant-upload-list-item,
+.opfc-gallery-uploader .ant-upload-select-picture-card {
+  width: 200px;
+  height: 200px;
+}

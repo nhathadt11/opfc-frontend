@@ -2,12 +2,13 @@ import React from 'react';
 import { Tabs } from 'antd';
 import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
+import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 
 
 const { TabPane } = Tabs;
 
 const BrandProfileContent = () => (
-  <Tabs defaultActiveKey="2" size="large">
+  <Tabs defaultActiveKey="1" size="large">
     <TabPane
       tab={<span><LocalIcon type="icon-menu" />Menu</span>}
       key="1"
@@ -24,7 +25,7 @@ const BrandProfileContent = () => (
       tab={<span><LocalIcon type="icon-gallery" />Gallery</span>}
       key="3"
     >
-      Gallery Content
+      <GalleryTab />
     </TabPane>
   </Tabs>
 );
