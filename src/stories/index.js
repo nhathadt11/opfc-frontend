@@ -7,7 +7,6 @@ import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
 import { Button, Welcome } from '@storybook/react/demo';
-import { Layout } from 'antd';
 import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
 import EventType from '../components/MenuFilterSider/EventType/EventType';
@@ -16,7 +15,8 @@ import MenuCard from '../components/MenuCard/MenuCard';
 import MenuCardGrid from '../containers/MenuCardGrid/MenuCardGrid';
 import CreateBrand from '../components/Brand/CreateBrand';
 import CreateProfileButton from '../components/Brand/CreateProfileButton/CreateProfileButton';
-import BrandProfileHeader from '../modules/components/BrandProfileHeader/BrandProfileHeader';
+import BrandProfileHeader from '../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader';
+import BrandProfileContent from '../modules/BrandProfile/components/BrandProfileContent/BrandProfileContent';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -52,4 +52,5 @@ storiesOf('Brand', module)
   .add('Create Brand with modal', () => <CreateProfileButton />);
 
 storiesOf('Brand Profile', module)
-  .add('Header', () => <Layout><BrandProfileHeader /></Layout>);
+  .add('Header', () => <BrandProfileHeader />)
+  .add('Content', () => <BrandProfileContent />);
