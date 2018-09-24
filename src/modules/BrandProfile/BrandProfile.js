@@ -1,13 +1,13 @@
 import React from 'react';
-import { Layout } from 'antd';
-import BrandProfileHeader from '../../components/BrandProfileHeader/BrandProfileHeader';
-import BrandProfileContent from '../../components/BrandProfileContent/BrandProfileContent';
+import BrandProfileHeader from './components/BrandProfileHeader/BrandProfileHeader';
+import BrandProfileContent from './components/BrandProfileContent/BrandProfileContent';
+import { BrandProfileStyled } from './BrandProfile.styled';
 
 const BrandProfile = () => (
-  <Layout>
+  <BrandProfileStyled>
     <BrandProfileHeader />
     <BrandProfileContent />
-  </Layout>
+  </BrandProfileStyled>
 );
 
 export default BrandProfile;

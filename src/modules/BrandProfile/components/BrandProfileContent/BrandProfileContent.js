@@ -6,7 +6,7 @@ import LocalIcon from '../../../../fonts/LocalFont';
 const { TabPane } = Tabs;
 
 const BrandProfileContent = () => (
-  <Tabs defaultActiveKey="2">
+  <Tabs defaultActiveKey="2" size="large">
     <TabPane
       tab={<span><LocalIcon type="icon-menu" />Menu</span>}
       key="1"

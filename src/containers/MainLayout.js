@@ -1,22 +1,22 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Layout } from 'antd';
+import { Route, Switch } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
 import MenuFilterSider from '../components/MenuFilterSider/MenuFilterSider';
 import MenuCardGrid from './MenuCardGrid/MenuCardGrid';
 import './MainLayout.css';
+import BrandProfile from '../modules/BrandProfile/BrandProfile';
 
 const { Footer, Content, Sider } = Layout;
 
-const MainLayout = () => (
-  <Layout>
-    <Header />
-
+const Home = props => (
+  <Fragment>
     <Layout>
       <BreadCrumb />
     </Layout>
 
-    <Layout>
+    <Layout {...props}>
       <Sider theme="light" width={350}>
         <MenuFilterSider />
       </Sider>
@@ -24,6 +24,17 @@ const MainLayout = () => (
         <MenuCardGrid />
       </Content>
     </Layout>
+  </Fragment>
+);
+
+const MainLayout = () => (
+  <Layout>
+    <Header />
+
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/profile/brand" component={BrandProfile} />
+    </Switch>
 
     <Footer>Footer</Footer>
   </Layout>
