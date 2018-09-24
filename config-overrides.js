@@ -12,6 +12,8 @@ module.exports = function override(config, env) {
       '@primary-color': '#f68b40',
       '@border-radius-base': 'unset',
       '@font-family': '"Montserrat", sans-serif;',
+      '@layout-body-background': '#fff',
+      '@layout-header-background': '#fff',
     },
     javascriptEnabled: true,
   })(config, env);

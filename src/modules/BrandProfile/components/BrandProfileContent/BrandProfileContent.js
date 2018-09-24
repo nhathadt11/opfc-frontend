@@ -8,7 +8,7 @@ import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 const { TabPane } = Tabs;
 
 const BrandProfileContent = () => (
-  <Tabs defaultActiveKey="1" size="large">
+  <Tabs defaultActiveKey="1" size="large" className="opfc-brand-profile-content">
     <TabPane
       tab={<span><LocalIcon type="icon-menu" />Menu</span>}
       key="1"

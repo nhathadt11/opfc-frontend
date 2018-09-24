@@ -28,15 +28,13 @@ const Home = props => (
 );
 
 const MainLayout = () => (
-  <Layout>
+  <Layout className="container">
     <Header />
 
-    <div className="container">
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/profile/brand" component={BrandProfile} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/profile/brand" component={BrandProfile} />
+    </Switch>
 
     <Footer>Footer</Footer>
   </Layout>

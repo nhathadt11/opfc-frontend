@@ -5,6 +5,10 @@
   background-color: #fff;
 }
 
+.header.ant-layout-header {
+  padding: 0 30px;
+}
+
 .header-icon {
   display: flex;
   align-items: center;
