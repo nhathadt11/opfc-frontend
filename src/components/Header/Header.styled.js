@@ -16,4 +16,5 @@ export const CreateAProfileButtonStyled = styled(Button)`
 
 export const LogoStyled = styled.img`
   height: 68px;
+  cursor: pointer;
 `;

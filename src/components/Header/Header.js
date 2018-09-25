@@ -1,14 +1,15 @@
 import React from 'react';
 import { Layout, Button, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import { shape, func } from 'prop-types';
 import './Header.css';
 import { UserIconGroupStyled, LogoStyled } from './Header.styled';
 import MenuBrowse from './MenuBrowse/MenuBrowse';
 import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButton';
 
-const Header = () => (
+const Header = ({ history: { push } }) => (
   <Layout.Header className="header">
-    <LogoStyled src="/tasty.png" alt="Logo" />
+    <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
 
     <div>
       <MenuBrowse />
@@ -32,4 +33,10 @@ const Header = () => (
   </Layout.Header>
 );
 
-export default Header;
+Header.propTypes = {
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(Header);
