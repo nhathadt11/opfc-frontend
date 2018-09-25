@@ -54,6 +54,7 @@
 .opfc-menu-detail-main .opfc-menu-meal-list .opfc-menu-meal-desc {
   font-size: 12px;
   color: #9b9b9b;
+  max-width: 350px;
 }
 
 .opfc-menu-detail-main .opfc-menu-tag-list {
