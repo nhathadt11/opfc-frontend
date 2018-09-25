@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
+import './BrandProfileContent.css';
 
 
 const { TabPane } = Tabs;

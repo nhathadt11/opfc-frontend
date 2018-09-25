@@ -1,0 +1,88 @@
+.opfc-menu-detail {
+  flex-flow: unset;
+}
+
+.opfc-menu-detail-image {
+  width: 400px;
+  min-width: 400px;
+  padding: 20px;
+}
+
+.opfc-menu-detail-gallery {
+  padding: 12px;
+}
+
+.opfc-menu-detail-main {
+  padding: 20px;
+}
+
+.opfc-menu-detail-main .opfc-menu-price {
+  font-size: 20px;
+  font-weight: 700px;
+  color: red;
+}
+
+.opfc-menu-detail-main .opfc-menu-stat {
+  margin-right: 8px;
+  font-size: 18px;
+}
+
+.opfc-menu-detail-main .opfc-menu-rating {
+  color: #9b9b9b;
+}
+
+.opfc-menu-detail-main .opfc-menu-desc {
+  margin-top: 15px;
+}
+
+.opfc-menu-detail-main .opfc-menu-meal-list {
+  padding: 10px 0 30px 0;
+}
+
+.opfc-menu-detail-main .opfc-menu-meal-list > ul {
+  list-style-type: decimal;
+}
+
+.opfc-menu-detail-main .opfc-menu-meal-list > ul > li:not(:first-child) {
+  margin-top: 10px;
+}
+
+.opfc-menu-detail-main .opfc-menu-meal-list section {
+  font-weight: 600;
+}
+
+.opfc-menu-detail-main .opfc-menu-meal-list .opfc-menu-meal-desc {
+  font-size: 12px;
+  color: #9b9b9b;
+}
+
+.opfc-menu-detail-main .opfc-menu-tag-list {
+  padding-bottom: 30px;
+}
+
+.opfc-menu-detail-main .opfc-menu-tag-new {
+  background: #fff;
+  border-style: dashed;
+}
+
+.opfc-menu-detail .opfc-brand-info-list {
+  font-size: 13px;
+}
+
+.opfc-menu-detail .opfc-brand-info-list .opfc-brand-info-item {
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #eee;
+}
+
+.opfc-menu-detail .opfc-brand-info-list .opfc-brand-info-view {
+  border: none;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  font-size: 13px;
+}
+
+.opfc-menu-detail .opfc-brand-info-list .opfc-brand-info-item:not(:first-child) {
+  margin-top: 15px;
+}

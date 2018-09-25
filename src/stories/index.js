@@ -17,6 +17,7 @@ import CreateBrand from '../components/Brand/CreateBrand';
 import CreateProfileButton from '../components/Brand/CreateProfileButton/CreateProfileButton';
 import BrandProfileHeader from '../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader';
 import BrandProfileContent from '../modules/BrandProfile/components/BrandProfileContent/BrandProfileContent';
+import MenuDetail from '../components/MenuDetail/MenuDetail';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -45,7 +46,8 @@ storiesOf('Card', module)
   .add('Menu card with loading', () => <MenuCard loading />);
 
 storiesOf('Menu Grid', module)
-  .add('Menu Grid', () => <MenuCardGrid />);
+  .add('Menu Grid', () => <MenuCardGrid />)
+  .add('Menu Detail', () => <MenuDetail />);
 
 storiesOf('Brand', module)
   .add('Create Brand', () => <CreateBrand />)

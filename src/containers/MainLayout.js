@@ -7,6 +7,7 @@ import MenuFilterSider from '../components/MenuFilterSider/MenuFilterSider';
 import MenuCardGrid from './MenuCardGrid/MenuCardGrid';
 import './MainLayout.css';
 import BrandProfile from '../modules/BrandProfile/BrandProfile';
+import MenuDetail from '../components/MenuDetail/MenuDetail';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -34,6 +35,7 @@ const MainLayout = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/profile/brand" component={BrandProfile} />
+      <Route path="/menus/:id" component={MenuDetail} />
     </Switch>
 
     <Footer>Footer</Footer>
