@@ -6,4 +6,16 @@
 }
 .opfc-step-brand-name > *[name="brandName"] {
   width: 300px;
+  height: 58px;
+  font-size: 24px;
+}
+
+.opfc-step-brand-name .opfc-next-step {
+  height: 58px;
+  width: 80px;
+}
+
+.opfc-step-brand-name .opfc-next-step-icon {
+  font-size: 32px;
+  vertical-align: middle;
 }

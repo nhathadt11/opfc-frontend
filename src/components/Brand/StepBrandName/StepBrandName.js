@@ -8,8 +8,8 @@ import './StepBrandName.css';
 const StepBrandName = ({ next }) => (
   <Form layout="inline" className="opfc-step-brand-name">
     <Input name="brandName" size="large" title="Brand Name" placeholder="Enter a Brand Name" />
-    <Button type="primary" size="large" onClick={next}>
-      <Icon type="right-circle" theme="outlined" style={{ fontSize: 24 }} />
+    <Button type="primary" size="large" onClick={next} className="opfc-next-step">
+      <Icon type="right-circle" theme="outlined" className="opfc-next-step-icon" />
     </Button>
   </Form>
 );
