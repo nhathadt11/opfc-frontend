@@ -1,0 +1,44 @@
+.opfc-review-item {
+  padding: 20px;
+  flex-flow: nowrap;
+}
+
+.opfc-review-item-info {
+  width: 170px;
+  min-width: 170px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+
+.opfc-review-item-log {
+  margin-top: 10px;
+}
+
+.opfc-review-item-log section:nth-child(1) {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.opfc-review-item-log section:nth-child(3) {
+  color: #9d9d9d;
+}
+
+.opfc-review-item-log section {
+  flex: 1;
+  text-align: center;
+}
+
+.opfc-review-item-content {
+  margin-left: 20px;
+}
+
+.opfc-review-item-info-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.opfc-review-item-text {
+  margin-top: 10px;
+}

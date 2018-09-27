@@ -18,6 +18,7 @@ import CreateProfileButton from '../components/Brand/CreateProfileButton/CreateP
 import BrandProfileHeader from '../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader';
 import BrandProfileContent from '../modules/BrandProfile/components/BrandProfileContent/BrandProfileContent';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
+import ReviewList from '../components/ReviewList/ReviewList';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -55,4 +56,5 @@ storiesOf('Brand', module)
 
 storiesOf('Brand Profile', module)
   .add('Header', () => <BrandProfileHeader />)
-  .add('Content', () => <BrandProfileContent />);
+  .add('Content', () => <BrandProfileContent />)
+  .add('ChatList', () => <ReviewList />);

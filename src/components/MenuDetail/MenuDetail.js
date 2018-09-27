@@ -10,6 +10,7 @@ import './MenuDetail.css';
 import Rate from '../Rate/Rate';
 import { StatSpanStyled } from '../../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader.styled';
 import LocalIcon from '../../fonts/LocalFont';
+import ReviewList from '../ReviewList/ReviewList';
 
 const tags = [
   { id: 0, name: 'wedding' },
@@ -153,6 +154,7 @@ class MenuDetail extends Component {
             </div>
           </Col>
         </Row>
+        <ReviewList />
       </div>
     );
   }
