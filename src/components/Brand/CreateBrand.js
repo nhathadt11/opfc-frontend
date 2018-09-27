@@ -5,6 +5,7 @@ import {
 import './CreateBrand.css';
 import StepBrandName from './StepBrandName/StepBrandName';
 import StepBrandInformation from './StepBrandInformation/StepBrandInformation';
+import StepBrandAccount from './StepBrandAccount/StepBrandAccount';
 
 const { Step } = Steps;
 
@@ -21,7 +22,7 @@ class CreateBrand extends Component {
     content: <StepBrandInformation />,
   }, {
     title: 'Account',
-    content: 'Last-content',
+    content: <StepBrandAccount />,
   }];
 
   next() {
