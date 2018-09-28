@@ -22,6 +22,7 @@ import MenuDetail from '../components/MenuDetail/MenuDetail';
 import ReviewList from '../components/ReviewList/ReviewList';
 import EventPlannerSider from '../modules/EventPlanner/components/EventPlannerSider/EventPlannerSider';
 import EventPlannerAccount from '../modules/EventPlanner/components/EventPlannerAccount/EventPlannerAccount';
+import EventPlannerOrder from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrder';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -64,4 +65,5 @@ storiesOf('Brand Profile', module)
 
 storiesOf('Event Planner', module)
   .add('Sider', () => <BrowserRouter><EventPlannerSider /></BrowserRouter>)
-  .add('Account Tab', () => <EventPlannerAccount />);
+  .add('Account Tab', () => <EventPlannerAccount />)
+  .add('Order Tab', () => <EventPlannerOrder />);
