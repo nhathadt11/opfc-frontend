@@ -6,7 +6,3 @@
 .opfc-event-planner-sider .ant-layout-sider-children {
   width: 256px;
 }
-
-.opfc-event-planner-sider .ant-layout-sider-children > ul {
-  height: 100%;
-}
