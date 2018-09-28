@@ -8,6 +8,7 @@ import MenuCardGrid from './MenuCardGrid/MenuCardGrid';
 import './MainLayout.css';
 import BrandProfile from '../modules/BrandProfile/BrandProfile';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
+import EventPlanner from '../modules/EventPlanner/EventPlanner';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -36,6 +37,7 @@ const MainLayout = () => (
       <Route exact path="/" component={Home} />
       <Route path="/profile/brand" component={BrandProfile} />
       <Route path="/menus/:id" component={MenuDetail} />
+      <Route path="/profile/event-planner" component={EventPlanner} />
     </Switch>
 
     <Footer>Footer</Footer>

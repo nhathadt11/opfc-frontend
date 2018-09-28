@@ -1,0 +1,12 @@
+.opfc-event-planner-sider {
+  width: 256px !important;
+  min-width: 256px !important;
+}
+
+.opfc-event-planner-sider .ant-layout-sider-children {
+  width: 256px;
+}
+
+.opfc-event-planner-sider .ant-layout-sider-children > ul {
+  height: 100%;
+}

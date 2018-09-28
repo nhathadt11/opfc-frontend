@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
 import 'antd/dist/antd.css';
 
@@ -19,6 +20,8 @@ import BrandProfileHeader from '../modules/BrandProfile/components/BrandProfileH
 import BrandProfileContent from '../modules/BrandProfile/components/BrandProfileContent/BrandProfileContent';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
 import ReviewList from '../components/ReviewList/ReviewList';
+import EventPlannerSider from '../modules/EventPlanner/components/EventPlannerSider/EventPlannerSider';
+import EventPlannerAccount from '../modules/EventPlanner/components/EventPlannerAccount/EventPlannerAccount';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -58,3 +61,7 @@ storiesOf('Brand Profile', module)
   .add('Header', () => <BrandProfileHeader />)
   .add('Content', () => <BrandProfileContent />)
   .add('ChatList', () => <ReviewList />);
+
+storiesOf('Event Planner', module)
+  .add('Sider', () => <BrowserRouter><EventPlannerSider /></BrowserRouter>)
+  .add('Account Tab', () => <EventPlannerAccount />);
