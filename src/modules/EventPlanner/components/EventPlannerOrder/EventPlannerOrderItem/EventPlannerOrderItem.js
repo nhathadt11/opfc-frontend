@@ -4,23 +4,24 @@ import {
 } from 'antd';
 import './EventPlannerOrderItem.css';
 import {
-  LabelStyled, OrderStatusStyled, PriceAndMenuStyled, OrderNoteStyled,
+  LabelStyled, OrderStatusStyled, PriceAndMenuStyled, OrderNoteStyled, EventDateStyled, ValueStyled,
 } from './EventPlannerOrderItem.styled';
 
 const EventPlannerOrderItem = () => (
   <Row className="opfc-event-planner-order-item" gutter={24}>
     <Col span={6}>
       <div className="opfc-event-planner-event-name">Event name</div>
-      <div className="opfc-event-planner-event-date">2018, Sep 12</div>
+      <div className="opfc-event-planner-event-date">Ordered on 2018, Sep 12</div>
       <PriceAndMenuStyled>
-        <section><LabelStyled>Price: </LabelStyled>$128,900</section>
-        <section><LabelStyled>No. of Menus: </LabelStyled>2</section>
+        <section><LabelStyled>Price: </LabelStyled><ValueStyled>$128,900</ValueStyled></section>
+        <section><LabelStyled>No. of Menus: </LabelStyled><ValueStyled>2</ValueStyled></section>
       </PriceAndMenuStyled>
     </Col>
     <Col span={14}>
       <section>
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
         <OrderStatusStyled success>Serviced</OrderStatusStyled>
+        <EventDateStyled>on 2018, Sep 22 at 12:00 pm</EventDateStyled>
       </section>
       <OrderNoteStyled>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
