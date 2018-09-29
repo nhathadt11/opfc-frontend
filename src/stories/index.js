@@ -24,6 +24,7 @@ import EventPlannerSider from '../modules/EventPlanner/components/EventPlannerSi
 import EventPlannerAccount from '../modules/EventPlanner/components/EventPlannerAccount/EventPlannerAccount';
 import EventPlannerOrder from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrder';
 import EventPlannerAddress from '../modules/EventPlanner/components/EventPlannerAddress/EventPlannerAddress';
+import EventPlannerOrderDetail from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrderDetail/EventPlannerOrderDetail';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -68,4 +69,5 @@ storiesOf('Event Planner', module)
   .add('Sider', () => <BrowserRouter><EventPlannerSider /></BrowserRouter>)
   .add('Account Tab', () => <EventPlannerAccount />)
   .add('Order Tab', () => <EventPlannerOrder />)
-  .add('Address Tab', () => <EventPlannerAddress />);
+  .add('Address Tab', () => <EventPlannerAddress />)
+  .add('Order Detail', () => <EventPlannerOrderDetail />);

@@ -2,12 +2,14 @@ import React from 'react';
 import {
   Row, Col, Button, Icon,
 } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { shape, func, number } from 'prop-types';
 import './EventPlannerOrderItem.css';
 import {
   LabelStyled, OrderStatusStyled, PriceAndMenuStyled, OrderNoteStyled, EventDateStyled, ValueStyled,
 } from './EventPlannerOrderItem.styled';
 
-const EventPlannerOrderItem = () => (
+const EventPlannerOrderItem = ({ history, id }) => (
   <Row className="opfc-event-planner-order-item" gutter={24}>
     <Col span={6}>
       <div className="opfc-event-planner-event-name">Event name</div>
@@ -29,7 +31,7 @@ const EventPlannerOrderItem = () => (
       </OrderNoteStyled>
     </Col>
     <Col span={4} className="opfc-order-detail-actions">
-      <Button shape="circle" type="primary" ghost>
+      <Button shape="circle" type="primary" ghost onClick={() => history.push(`/profile/event-planner/order/${id}`)}>
         <Icon type="eye" theme="outlined" />
       </Button>
       <Button shape="circle" type="primary" ghost>
@@ -39,4 +41,11 @@ const EventPlannerOrderItem = () => (
   </Row>
 );
 
-export default EventPlannerOrderItem;
+EventPlannerOrderItem.propTypes = {
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
+  id: number.isRequired,
+};
+
+export default withRouter(EventPlannerOrderItem);
