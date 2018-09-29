@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  List, Button, Icon, Row, Col,
+  List, Button, Icon, Row, Col, Modal,
 } from 'antd';
 import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
 import './EventPlannerAddress.css';
@@ -19,6 +19,17 @@ const data = [
     receiver: 'John Doe', address: '123 To Ky', city: 'Ho Chi Minh', distrcit: 'Go Vap', ward: 'Phuong 14', phoneNumber: '123456789',
   },
 ];
+
+const confirmDelete = () => {
+  Modal.confirm({
+    title: 'Delete Address',
+    content: 'Are you sure to delete this address?',
+    okText: 'Delete',
+    cancelText: 'Cancel',
+    okType: 'danger',
+    maskClosable: true,
+  });
+};
 
 const EventPlannerAddress = () => (
   <div>
@@ -39,7 +50,7 @@ const EventPlannerAddress = () => (
                 <Button shape="circle">
                   <Icon type="edit" theme="outlined" />
                 </Button>
-                <Button type="danger" shape="circle">
+                <Button type="danger" shape="circle" onClick={confirmDelete}>
                   <Icon type="delete" theme="outlined" />
                 </Button>
               </Col>
