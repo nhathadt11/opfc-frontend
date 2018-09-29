@@ -1,0 +1,23 @@
+.opfc-event-planner-order-item {
+  width: 100%;
+}
+
+.opfc-event-planner-order-item .opfc-event-planner-event-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.opfc-event-planner-order-item .opfc-event-planner-event-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.opfc-event-planner-order-item .opfc-order-detail-actions {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.opfc-event-planner-order-item .opfc-order-detail-actions button:not(:first-child) {
+  margin-left: 10px;
+}
