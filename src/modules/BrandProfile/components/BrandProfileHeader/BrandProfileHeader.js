@@ -19,7 +19,7 @@ IconText.propTypes = {
 };
 
 const BrandProfileHeader = () => (
-  <Row style={{ padding: 50 }} type="flex" gutter={64} className="opfc-brand-profile-header">
+  <Row type="flex" gutter={64} className="opfc-brand-profile-header">
     <Col>
       <Avatar size={128} icon="user" />
     </Col>
@@ -43,7 +43,9 @@ const BrandProfileHeader = () => (
     </Col>
     <Col>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget ante id urna blandit venenatis in vitae enim. Nam a placerat lacus. Curabitur pellentesque turpis nisi, id volutpat leo eleifend at
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Integer eget ante id urna blandit venenatis in vitae enim.
+        Nam a placerat lacus. Curabitur pellentesque turpis nisi, id volutpat leo eleifend at
       </p>
       <Row>
         <Col span={8} className="opfc-brand-info-label">Hotline</Col>

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Layout } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../components/Header/Header';
@@ -13,25 +13,23 @@ import EventPlanner from '../modules/EventPlanner/EventPlanner';
 const { Footer, Content, Sider } = Layout;
 
 const Home = props => (
-  <Fragment>
-    <Layout>
-      <BreadCrumb />
-    </Layout>
-
-    <Layout {...props}>
-      <Sider theme="light" width={280}>
-        <MenuFilterSider />
-      </Sider>
-      <Content className="opfc-main-content">
-        <MenuCardGrid />
-      </Content>
-    </Layout>
-  </Fragment>
+  <Layout {...props}>
+    <Sider theme="light" width={280}>
+      <MenuFilterSider />
+    </Sider>
+    <Content className="opfc-main-content">
+      <MenuCardGrid />
+    </Content>
+  </Layout>
 );
 
 const MainLayout = () => (
   <Layout className="container">
     <Header />
+
+    <Layout>
+      <BreadCrumb />
+    </Layout>
 
     <Switch>
       <Route exact path="/" component={Home} />
