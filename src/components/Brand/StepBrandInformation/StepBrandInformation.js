@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {
-  Form, Row, Col, Input, Upload, Icon, Select, InputNumber,
+  Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader,
 } from 'antd';
-import { func, shape } from 'prop-types';
+import { func, shape, string } from 'prop-types';
 import './StepBrandInformation.css';
 
 const FormItem = Form.Item;
@@ -13,11 +13,39 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
+const residences = [{
+  value: 'Ho Chi Minh',
+  label: 'Ho Chi Minh',
+  children: [{
+    value: 'Go Vap',
+    label: 'Go Vap',
+    children: [{
+      value: 'Phuong 14',
+      label: 'Phuong 14',
+    }],
+  }],
+}, {
+  value: 'Da Nang',
+  label: 'Da Nang',
+  children: [{
+    value: 'Quan Hai Chau',
+    label: 'Quan Hai Chau',
+    children: [{
+      value: 'Phuong 10',
+      label: 'Phuong 10',
+    }],
+  }],
+}];
+
 class StepBrandInformation extends Component {
   static propTypes = {
     form: shape({
       getFieldDecorator: func.isRequired,
     }).isRequired,
+    formValues: shape({
+      brandName: string,
+    }).isRequired,
+    onFormValueChange: func.isRequired,
   }
 
   state = {
@@ -46,7 +74,7 @@ class StepBrandInformation extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator } } = this.props;
+    const { form: { getFieldDecorator }, formValues, onFormValueChange } = this.props;
     const { imageUrl, loading } = this.state;
     const uploadButton = (
       <div>
@@ -55,10 +83,12 @@ class StepBrandInformation extends Component {
       </div>
     );
 
-    const prefixSelector = getFieldDecorator('prefix', {
-      initialValue: '86',
+    const prefixSelector = getFieldDecorator('publicPhonePrefix', {
+      initialValue: formValues.publicPhonePrefix,
     })(
-      <Select style={{ width: 70 }}>
+      <Select style={{ width: 70 }} onChange={value => onFormValueChange('phonePrefix', value)}>
+        <Select.Option value="84">+84</Select.Option>
+        <Select.Option value="85">+85</Select.Option>
         <Select.Option value="86">+86</Select.Option>
         <Select.Option value="87">+87</Select.Option>
       </Select>,
@@ -79,50 +109,57 @@ class StepBrandInformation extends Component {
               {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
             </Upload>
             <FormItem label="Bio">
-              <Input.TextArea style={{ width: 200 }} />
+              <Input.TextArea
+                style={{ width: 200 }}
+                value={formValues.description}
+                onChange={e => onFormValueChange('description', e.target.value)}
+              />
             </FormItem>
           </Col>
           <Col>
             <FormItem label="Brand Name">
-              <Input readOnly value="OPFC" />
+              <Input readOnly value={formValues.brandName} />
             </FormItem>
             <FormItem label="Hotline">
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+              <Input
+                addonBefore={prefixSelector}
+                style={{ width: '100%' }}
+                value={formValues.publicPhone}
+                onChange={e => onFormValueChange('publicPhone', e.target.value)}
+              />
             </FormItem>
             <FormItem label="Email">
-              <Input value="johndoe@gmail.com" />
+              <Input
+                value={formValues.publicEmail}
+                onChange={e => onFormValueChange('publicEmail', e.target.value)}
+              />
             </FormItem>
             <FormItem label="Number of member">
-              <InputNumber />
+              <InputNumber
+                value={formValues.participantNumber}
+                onChange={value => onFormValueChange('participantNumber', value)}
+              />
             </FormItem>
             <Row>
-              <Col span={8}>
-                <FormItem label="City">
-                  <Select defaultValue="lucy" style={{ width: 'calc(100% - 10px)' }}>
-                    <Select.Option value="jack">Jack</Select.Option>
-                    <Select.Option value="lucy">Lucy</Select.Option>
-                    <Select.Option value="Yiminghe">yiminghe</Select.Option>
-                  </Select>
-                </FormItem>
-              </Col>
-              <Col span={8}>
-                <FormItem label="District">
-                  <Select defaultValue="lucy" style={{ width: 'calc(100% - 10px)' }}>
-                    <Select.Option value="jack">Jack</Select.Option>
-                    <Select.Option value="lucy">Lucy</Select.Option>
-                    <Select.Option value="Yiminghe">yiminghe</Select.Option>
-                  </Select>
-                </FormItem>
-              </Col>
-              <Col span={8}>
-                <FormItem label="Ward">
-                  <Select defaultValue="lucy" style={{ width: 'calc(100% - 10px)' }}>
-                    <Select.Option value="jack">Jack</Select.Option>
-                    <Select.Option value="lucy">Lucy</Select.Option>
-                    <Select.Option value="Yiminghe">yiminghe</Select.Option>
-                  </Select>
-                </FormItem>
-              </Col>
+              <FormItem
+                label="City/District/Ward"
+              >
+                {getFieldDecorator('cityDistrictWard', {
+                  initialValue: [formValues.city, formValues.district, formValues.ward],
+                  rules: [{ type: 'array', required: true, message: 'Please select your City/District/Ward!' }],
+                })(
+                  <Cascader
+                    options={residences}
+                    onChange={
+                      (values) => {
+                        onFormValueChange('city', values[0]);
+                        onFormValueChange('district', values[1]);
+                        onFormValueChange('ward', values[2]);
+                      }
+                    }
+                  />,
+                )}
+              </FormItem>
             </Row>
           </Col>
         </Row>

@@ -12,18 +12,37 @@ const { Step } = Steps;
 class CreateBrand extends Component {
   state = {
     current: 0,
+    formValues: {
+      publicPhonePrefix: '84',
+      privatePhonePrefix: '84',
+    },
   }
 
   steps = [{
     title: 'Brand Name',
-    content: <StepBrandName next={() => this.next()} />,
+    content: props => <StepBrandName next={() => this.next()} {...props} />,
   }, {
     title: 'Information',
-    content: <StepBrandInformation />,
+    content: props => <StepBrandInformation {...props} />,
   }, {
     title: 'Account',
-    content: <StepBrandAccount />,
+    content: props => <StepBrandAccount {...props} />,
   }];
+
+  handleFormValueChange = (field, value) => {
+    this.setState(({ formValues }) => ({
+      formValues: {
+        ...formValues,
+        [field]: value,
+      },
+    }));
+  }
+
+  handleSubmit = () => {
+    const { formValues } = this.state;
+
+    console.log(formValues);
+  }
 
   next() {
     this.setState(({ current }) => ({ current: current + 1 }));
@@ -34,7 +53,7 @@ class CreateBrand extends Component {
   }
 
   render() {
-    const { current } = this.state;
+    const { current, formValues } = this.state;
 
     return (
       <Row type="flex" className="opfc-create-brand-container">
@@ -44,7 +63,10 @@ class CreateBrand extends Component {
           </Steps>
         </Col>
         <Col className="opfc-step-content">
-          {this.steps[current].content}
+          {this.steps[current].content({
+            formValues,
+            onFormValueChange: this.handleFormValueChange,
+          })}
           <div className="steps-action">
             {
               (current < this.steps.length - 1) && (current !== 0)
@@ -52,7 +74,7 @@ class CreateBrand extends Component {
             }
             {
               current === this.steps.length - 1
-              && <Button type="primary" size="large">Done</Button>
+              && <Button type="primary" size="large" onClick={this.handleSubmit}>Done</Button>
             }
             {
               current > 0
