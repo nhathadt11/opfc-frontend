@@ -41,11 +41,13 @@ class StepBrandInformation extends Component {
   static propTypes = {
     form: shape({
       getFieldDecorator: func.isRequired,
+      validateFieldsAndScroll: func.isRequired,
     }).isRequired,
     formValues: shape({
       brandName: string,
     }).isRequired,
     onFormValueChange: func.isRequired,
+    next: func.isRequired,
   }
 
   state = {
@@ -73,6 +75,15 @@ class StepBrandInformation extends Component {
     }
   }
 
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { form: { validateFieldsAndScroll }, next } = this.props;
+    validateFieldsAndScroll((err) => {
+      if (!err) next();
+    });
+  }
+
   render() {
     const { form: { getFieldDecorator }, formValues, onFormValueChange } = this.props;
     const { imageUrl, loading } = this.state;
@@ -95,7 +106,7 @@ class StepBrandInformation extends Component {
     );
 
     return (
-      <Form layout="vertical">
+      <Form layout="vertical" onSubmit={this.handleSubmit}>
         <Row type="flex" gutter={24}>
           <Col>
             <Upload
@@ -109,36 +120,68 @@ class StepBrandInformation extends Component {
               {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
             </Upload>
             <FormItem label="Bio">
-              <Input.TextArea
-                style={{ width: 200 }}
-                value={formValues.description}
-                onChange={e => onFormValueChange('description', e.target.value)}
-              />
+              {
+                getFieldDecorator('description', {
+                  initialValue: formValues.description,
+                  rules: [{
+                    required: true, message: 'Bio is required!',
+                  }],
+                })(
+                  <Input.TextArea
+                    style={{ width: 200 }}
+                    onChange={e => onFormValueChange('description', e.target.value)}
+                  />,
+                )
+              }
             </FormItem>
           </Col>
           <Col>
-            <FormItem label="Brand Name">
-              <Input readOnly value={formValues.brandName} />
-            </FormItem>
             <FormItem label="Hotline">
-              <Input
-                addonBefore={prefixSelector}
-                style={{ width: '100%' }}
-                value={formValues.publicPhone}
-                onChange={e => onFormValueChange('publicPhone', e.target.value)}
-              />
+              {
+                getFieldDecorator('publicPhone', {
+                  initialValue: formValues.publicPhone,
+                  rules: [{
+                    required: true, message: 'Hotline is required!',
+                  }],
+                })(
+                  <Input
+                    addonBefore={prefixSelector}
+                    style={{ width: '100%' }}
+                    onChange={e => onFormValueChange('publicPhone', e.target.value)}
+                  />,
+                )
+              }
             </FormItem>
             <FormItem label="Email">
-              <Input
-                value={formValues.publicEmail}
-                onChange={e => onFormValueChange('publicEmail', e.target.value)}
-              />
+              {
+                getFieldDecorator('publicEmail', {
+                  initialValue: formValues.publicEmail,
+                  rules: [{
+                    required: true, message: 'Email is required!',
+                  }, {
+                    type: 'email', message: 'The input is not valid Email!',
+                  }],
+                })(
+                  <Input
+                    onChange={e => onFormValueChange('publicEmail', e.target.value)}
+                  />,
+                )
+              }
             </FormItem>
             <FormItem label="Number of member">
-              <InputNumber
-                value={formValues.participantNumber}
-                onChange={value => onFormValueChange('participantNumber', value)}
-              />
+              {
+                getFieldDecorator('participantNumber', {
+                  initialValue: formValues.participantNumber,
+                  rules: [{
+                    required: true, message: 'Number of member is required!',
+                  }],
+                })(
+                  <InputNumber
+                    min={1}
+                    onChange={value => onFormValueChange('participantNumber', value)}
+                  />,
+                )
+              }
             </FormItem>
             <Row>
               <FormItem
@@ -146,7 +189,7 @@ class StepBrandInformation extends Component {
               >
                 {getFieldDecorator('cityDistrictWard', {
                   initialValue: [formValues.city, formValues.district, formValues.ward],
-                  rules: [{ type: 'array', required: true, message: 'Please select your City/District/Ward!' }],
+                  rules: [{ type: 'array', required: true, message: 'Please select City/District/Ward!' }],
                 })(
                   <Cascader
                     options={residences}
@@ -163,6 +206,7 @@ class StepBrandInformation extends Component {
             </Row>
           </Col>
         </Row>
+        <input type="submit" id="brand-form" style={{ display: 'none' }} />
       </Form>
     );
   }

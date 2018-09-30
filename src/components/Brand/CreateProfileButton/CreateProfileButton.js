@@ -9,6 +9,8 @@ class CreateProfileButton extends Component {
 
   showModal = () => this.setState({ visible: true })
 
+  handleOk = () => this.setState({ visible: false })
+
   handleCancel = () => this.setState({ visible: false })
 
   render() {
@@ -26,7 +28,7 @@ class CreateProfileButton extends Component {
           footer={null}
           onCancel={this.handleCancel}
         >
-          <CreateBrand />
+          <CreateBrand onSuccess={this.handleOk} />
         </Modal>
       </Fragment>
     );

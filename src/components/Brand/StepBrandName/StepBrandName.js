@@ -5,21 +5,45 @@ import {
 } from 'antd';
 import './StepBrandName.css';
 
-const StepBrandName = ({ next, formValues, onFormValueChange }) => (
-  <Form layout="inline" className="opfc-step-brand-name">
-    <Input
-      name="brandName"
-      value={formValues.brandName}
-      size="large"
-      title="Brand Name"
-      placeholder="Enter a Brand Name"
-      onChange={e => onFormValueChange('brandName', e.target.value)}
-    />
-    <Button type="primary" size="large" onClick={next} className="opfc-next-step">
-      <Icon type="right-circle" theme="outlined" className="opfc-next-step-icon" />
-    </Button>
-  </Form>
-);
+const FormItem = Form.Item;
+
+const StepBrandName = ({
+  next, formValues, onFormValueChange, form: { validateFieldsAndScroll, getFieldDecorator },
+}) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    validateFieldsAndScroll((err) => {
+      if (!err) next();
+    });
+  };
+
+  return (
+    <Form layout="inline" className="opfc-step-brand-name" onSubmit={handleSubmit}>
+      <FormItem>
+        {
+          getFieldDecorator('brandName', {
+            initialValue: formValues.brandName,
+            rules: [{
+              required: true, message: 'Brand Name is required!',
+            }],
+          })(
+            <Input
+              name="brandName"
+              size="large"
+              title="Brand Name"
+              placeholder="Enter a Brand Name"
+              onChange={e => onFormValueChange('brandName', e.target.value)}
+            />,
+          )
+        }
+      </FormItem>
+      <Button type="primary" size="large" htmlType="submit" className="opfc-next-step">
+        <Icon type="right-circle" theme="outlined" className="opfc-next-step-icon" />
+      </Button>
+    </Form>
+  );
+};
 
 StepBrandName.propTypes = {
   next: func.isRequired,
@@ -27,6 +51,10 @@ StepBrandName.propTypes = {
     brandName: string,
   }).isRequired,
   onFormValueChange: func.isRequired,
+  form: shape({
+    validateFieldsAndScroll: func.isRequired,
+    getFieldDecorator: func.isRequired,
+  }).isRequired,
 };
 
-export default StepBrandName;
+export default Form.create()(StepBrandName);

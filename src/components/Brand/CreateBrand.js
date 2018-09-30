@@ -2,14 +2,24 @@ import React, { Component } from 'react';
 import {
   Steps, Button, Row, Col,
 } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { func, bool } from 'prop-types';
 import './CreateBrand.css';
 import StepBrandName from './StepBrandName/StepBrandName';
 import StepBrandInformation from './StepBrandInformation/StepBrandInformation';
 import StepBrandAccount from './StepBrandAccount/StepBrandAccount';
+import { createBrandRequest } from '../../modules/Account/actions/createBrand';
 
 const { Step } = Steps;
 
 class CreateBrand extends Component {
+  static propTypes = {
+    createBrandRequest: func.isRequired,
+    onSuccess: func.isRequired,
+    submitting: bool.isRequired,
+  }
+
   state = {
     current: 0,
     formValues: {
@@ -23,10 +33,10 @@ class CreateBrand extends Component {
     content: props => <StepBrandName next={() => this.next()} {...props} />,
   }, {
     title: 'Information',
-    content: props => <StepBrandInformation {...props} />,
+    content: props => <StepBrandInformation next={() => this.next()} {...props} />,
   }, {
     title: 'Account',
-    content: props => <StepBrandAccount {...props} />,
+    content: props => <StepBrandAccount done={this.handleSubmit} {...props} />,
   }];
 
   handleFormValueChange = (field, value) => {
@@ -39,9 +49,10 @@ class CreateBrand extends Component {
   }
 
   handleSubmit = () => {
+    const { createBrandRequest: createBrandRequestAction, onSuccess } = this.props;
     const { formValues } = this.state;
 
-    console.log(formValues);
+    createBrandRequestAction(formValues, onSuccess);
   }
 
   next() {
@@ -53,6 +64,7 @@ class CreateBrand extends Component {
   }
 
   render() {
+    const { submitting } = this.props;
     const { current, formValues } = this.state;
 
     return (
@@ -70,11 +82,11 @@ class CreateBrand extends Component {
           <div className="steps-action">
             {
               (current < this.steps.length - 1) && (current !== 0)
-              && <Button type="primary" size="large" onClick={() => this.next()}>Next</Button>
+              && <Button type="primary" size="large"><label htmlFor="brand-form">Next</label></Button>
             }
             {
               current === this.steps.length - 1
-              && <Button type="primary" size="large" onClick={this.handleSubmit}>Done</Button>
+              && <Button type="primary" size="large" onClick={this.handleSubmit} loading={submitting}>Done</Button>
             }
             {
               current > 0
@@ -91,4 +103,14 @@ class CreateBrand extends Component {
   }
 }
 
-export default CreateBrand;
+const mapStateToProps = state => ({
+  submitting: state.accountReducer.submitting,
+});
+
+const mapDispatchToProps = {
+  createBrandRequest,
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(CreateBrand);

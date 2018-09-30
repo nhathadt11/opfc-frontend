@@ -5,7 +5,12 @@ import './StepBrandAccount.css';
 
 const FormItem = Form.Item;
 
-const StepBrandAccount = ({ form: { getFieldDecorator }, formValues, onFormValueChange }) => {
+const StepBrandAccount = ({
+  form: {
+    getFieldDecorator, validateFieldsAndScroll, getFieldValue,
+  },
+  formValues, onFormValueChange, done,
+}) => {
   const prefixSelector = getFieldDecorator('privatePhonePrefix', {
     initialValue: formValues.privatePhonePrefix,
   })(
@@ -16,47 +21,106 @@ const StepBrandAccount = ({ form: { getFieldDecorator }, formValues, onFormValue
       <Select.Option value="87">+87</Select.Option>
     </Select>,
   );
+  const compareToFirstPassword = (rule, value, callback) => {
+    if (value && value !== getFieldValue('password')) {
+      callback('Two passwords that you enter is inconsistent!');
+    } else {
+      callback();
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    validateFieldsAndScroll((err) => {
+      if (!err) done();
+    });
+  };
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit}>
       <FormItem label="Username">
-        <Input
-          className="opfc-brand-account-input"
-          value={formValues.username}
-          onChange={e => onFormValueChange('username', e.target.value)}
-        />
+        {
+          getFieldDecorator('username', {
+            initialValue: formValues.username,
+            rules: [{
+              required: true, message: 'Username is required!',
+            }],
+          })(
+            <Input
+              className="opfc-brand-account-input"
+              onChange={e => onFormValueChange('username', e.target.value)}
+            />,
+          )
+        }
       </FormItem>
       <FormItem label="Password">
-        <Input
-          type="password"
-          className="opfc-brand-account-input"
-          value={formValues.password}
-          onChange={e => onFormValueChange('password', e.target.value)}
-        />
+        {
+          getFieldDecorator('password', {
+            initialValue: formValues.password,
+            rules: [{
+              required: true, message: 'Password is required!',
+            }],
+          })(
+            <Input
+              type="password"
+              className="opfc-brand-account-input"
+              onChange={e => onFormValueChange('password', e.target.value)}
+            />,
+          )
+        }
       </FormItem>
       <FormItem label="Confirm password">
-        <Input
-          type="password"
-          className="opfc-brand-account-input"
-          value={formValues.confirmPassword}
-          onChange={e => onFormValueChange('confirmPassword', e.target.value)}
-        />
+        {
+          getFieldDecorator('confirmPassword', {
+            initialValue: formValues.confirmPassword,
+            rules: [{
+              required: true, message: 'You must confirm your password!',
+            }, {
+              validator: compareToFirstPassword,
+            }],
+          })(
+            <Input
+              type="password"
+              className="opfc-brand-account-input"
+              onChange={e => onFormValueChange('confirmPassword', e.target.value)}
+            />,
+          )
+        }
       </FormItem>
       <FormItem label="Phone">
-        <Input
-          className="opfc-brand-account-input-phone"
-          addonBefore={prefixSelector}
-          value={formValues.privatePhone}
-          onChange={e => onFormValueChange('privatePhone', e.target.value)}
-        />
+        {
+          getFieldDecorator('privatePhone', {
+            initialValue: formValues.privatePhone,
+            rules: [{
+              required: true, message: 'Phone is required!',
+            }],
+          })(
+            <Input
+              className="opfc-brand-account-input-phone"
+              addonBefore={prefixSelector}
+              onChange={e => onFormValueChange('privatePhone', e.target.value)}
+            />,
+          )
+        }
       </FormItem>
       <FormItem label="Email">
-        <Input
-          className="opfc-brand-account-input"
-          value={formValues.privateEmail}
-          onChange={e => onFormValueChange('privateEmail', e.target.value)}
-        />
+        {
+          getFieldDecorator('privateEmail', {
+            initialValue: formValues.privateEmail,
+            rules: [{
+              required: true, message: 'Email is required!',
+            }, {
+              type: 'email', message: 'The input is not valid Email!',
+            }],
+          })(
+            <Input
+              className="opfc-brand-account-input"
+              onChange={e => onFormValueChange('privateEmail', e.target.value)}
+            />,
+          )
+        }
       </FormItem>
+      <input type="submit" id="brand-form" style={{ display: 'none' }} />
     </Form>
   );
 };
@@ -64,6 +128,7 @@ const StepBrandAccount = ({ form: { getFieldDecorator }, formValues, onFormValue
 StepBrandAccount.propTypes = {
   form: shape({
     getFieldDecorator: func.isRequired,
+    validateFieldsAndScroll: func.isRequired,
   }).isRequired,
   formValues: shape({
     username: string,
@@ -73,6 +138,7 @@ StepBrandAccount.propTypes = {
     email: string,
   }).isRequired,
   onFormValueChange: func.isRequired,
+  done: func.isRequired,
 };
 
 export default Form.create()(StepBrandAccount);
