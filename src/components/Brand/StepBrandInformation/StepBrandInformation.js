@@ -3,6 +3,7 @@ import {
   Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader,
 } from 'antd';
 import { func, shape, string } from 'prop-types';
+import { filter } from 'lodash';
 import './StepBrandInformation.css';
 
 const FormItem = Form.Item;
@@ -188,7 +189,10 @@ class StepBrandInformation extends Component {
                 label="City/District/Ward"
               >
                 {getFieldDecorator('cityDistrictWard', {
-                  initialValue: [formValues.city, formValues.district, formValues.ward],
+                  initialValue: filter(
+                    [formValues.city, formValues.district, formValues.ward],
+                    item => item,
+                  ),
                   rules: [{ type: 'array', required: true, message: 'Please select City/District/Ward!' }],
                 })(
                   <Cascader
