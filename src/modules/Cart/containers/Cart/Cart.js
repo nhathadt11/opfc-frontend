@@ -2,6 +2,8 @@ import React from 'react';
 import {
   List, Row, Col, Button,
 } from 'antd';
+import { withRouter } from 'react-router-dom';
+import { shape, func } from 'prop-types';
 import CartItem from '../../components/CartItem/CartItem';
 import {
   CartStyled, CheckoutSubTotalLabelStyled, CheckoutShippingFeeLabelStyled,
@@ -15,7 +17,7 @@ const menus = [
   <CartItem />,
 ];
 
-const Cart = () => (
+const Cart = ({ history: { push } }) => (
   <CartStyled>
     <Row type="flex" style={{ flexFlow: 'unset' }}>
       <Col>
@@ -46,11 +48,17 @@ const Cart = () => (
           </Col>
         </Row>
         <Row>
-          <Button type="primary" size="large">Checkout Now</Button>
+          <Button type="primary" size="large" onClick={() => push('/checkout')}>Checkout Now</Button>
         </Row>
       </Col>
     </Row>
   </CartStyled>
 );
 
-export default Cart;
+Cart.propTypes = {
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(Cart);
