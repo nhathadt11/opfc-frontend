@@ -1,0 +1,20 @@
+.opfc-cart-item-checkout {
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-left: 65px;
+}
+
+.opfc-cart-item-checkout-price-summary {
+  width: 100%;
+  margin: 20px 0;
+}
+
+.opfc-cart-item-checkout-price-summary > div {
+  line-height: 32px;
+}
+
+.opfc-cart-item-checkout-price {
+  text-align: right;
+}

@@ -1,7 +1,13 @@
 import React from 'react';
-import { List } from 'antd';
+import {
+  List, Row, Col, Button,
+} from 'antd';
 import CartItem from '../../components/CartItem/CartItem';
-import { CartStyled } from './Cart.styled';
+import {
+  CartStyled, CheckoutSubTotalLabelStyled, CheckoutShippingFeeLabelStyled,
+  CheckoutTotalStyled, CheckoutTotalLabelStyled,
+} from './Cart.styled';
+import './Cart.css';
 
 const menus = [
   <CartItem />,
@@ -11,10 +17,39 @@ const menus = [
 
 const Cart = () => (
   <CartStyled>
-    <List
-      dataSource={menus}
-      renderItem={item => <List.Item>{item}</List.Item>}
-    />
+    <Row type="flex" style={{ flexFlow: 'unset' }}>
+      <Col>
+        <List
+          dataSource={menus}
+          renderItem={item => <List.Item>{item}</List.Item>}
+        />
+      </Col>
+      <Col className="opfc-cart-item-checkout">
+        <Row className="opfc-cart-item-checkout-price-summary">
+          <Col span={12}>
+            <CheckoutSubTotalLabelStyled>Sub Total</CheckoutSubTotalLabelStyled>
+          </Col>
+          <Col className="opfc-cart-item-checkout-price">
+            $23.50
+          </Col>
+          <Col span={12}>
+            <CheckoutShippingFeeLabelStyled>Shipping fee</CheckoutShippingFeeLabelStyled>
+          </Col>
+          <Col className="opfc-cart-item-checkout-price">
+            $23.50
+          </Col>
+          <Col span={12}>
+            <CheckoutTotalLabelStyled>Total</CheckoutTotalLabelStyled>
+          </Col>
+          <Col className="opfc-cart-item-checkout-price">
+            <CheckoutTotalStyled>$23.50</CheckoutTotalStyled>
+          </Col>
+        </Row>
+        <Row>
+          <Button type="primary" size="large">Checkout Now</Button>
+        </Row>
+      </Col>
+    </Row>
   </CartStyled>
 );
 

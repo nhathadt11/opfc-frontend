@@ -35,3 +35,7 @@
 .opfc-cart-item-align-right {
   text-align: right;
 }
+
+.opfc-cart-item-service-info {
+  max-width: 350px;
+}

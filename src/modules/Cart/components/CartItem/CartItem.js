@@ -51,14 +51,15 @@ class CartItem extends Component {
             <section>
               <span><Icon type="team" /> x 7</span>
             </section>
-            <ViewMealsInThisMenu>View meals in this menu</ViewMealsInThisMenu>
+            <ViewMealsInThisMenu>View meals</ViewMealsInThisMenu>
           </div>
         </Col>
-        <Col span={10}>
+        <Col span={10} className="opfc-cart-item-service-info">
           <ServiceTimeStyled>Service time</ServiceTimeStyled>
           {
             editing ? (
               <RangePicker
+                style={{ width: 'auto' }}
                 showTime={{ format: 'HH:mm' }}
                 format="YYYY-MM-DD HH:mm"
                 placeholder={['Start Time', 'End Time']}
