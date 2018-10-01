@@ -23,7 +23,9 @@ const Header = ({ history: { push } }) => (
     </div>
 
     <UserIconGroupStyled>
-      <Button icon="notification" size="large" shape="circle" className="header-icon" />
+      <Link to="/cart">
+        <Button icon="notification" size="large" shape="circle" className="header-icon" />
+      </Link>
       <Link to="/profile/event-planner/account">
         <Button icon="heart" size="large" shape="circle" className="header-icon" />
       </Link>

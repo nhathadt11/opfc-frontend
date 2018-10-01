@@ -25,6 +25,7 @@ import EventPlannerAccount from '../modules/EventPlanner/components/EventPlanner
 import EventPlannerOrder from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrder';
 import EventPlannerAddress from '../modules/EventPlanner/components/EventPlannerAddress/EventPlannerAddress';
 import EventPlannerOrderDetail from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrderDetail/EventPlannerOrderDetail';
+import Cart from '../modules/Cart/containers/Cart/Cart';
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -70,4 +71,5 @@ storiesOf('Event Planner', module)
   .add('Account Tab', () => <EventPlannerAccount />)
   .add('Order Tab', () => <EventPlannerOrder />)
   .add('Address Tab', () => <EventPlannerAddress />)
-  .add('Order Detail', () => <EventPlannerOrderDetail />);
+  .add('Order Detail', () => <EventPlannerOrderDetail />)
+  .add('Cart', () => <Cart />);

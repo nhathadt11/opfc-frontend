@@ -9,6 +9,7 @@ import './MainLayout.css';
 import BrandProfile from '../modules/BrandProfile/BrandProfile';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
 import EventPlanner from '../modules/EventPlanner/EventPlanner';
+import Cart from '../modules/Cart/containers/Cart/Cart';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -36,6 +37,7 @@ const MainLayout = () => (
       <Route path="/profile/brand" component={BrandProfile} />
       <Route path="/menus/:id" component={MenuDetail} />
       <Route path="/profile/event-planner" component={EventPlanner} />
+      <Route path="/cart" component={Cart} />
     </Switch>
 
     <Footer>Footer</Footer>
