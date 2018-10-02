@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader,
+  Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader, message,
 } from 'antd';
 import { func, shape, string } from 'prop-types';
 import { filter } from 'lodash';
 import './StepBrandInformation.css';
+import Api from '../../../api/Api';
 
 const FormItem = Form.Item;
 
@@ -14,7 +15,7 @@ const getBase64 = (img, callback) => {
   reader.readAsDataURL(img);
 };
 
-const residences = [{
+const locations = [{
   value: 'Ho Chi Minh',
   label: 'Ho Chi Minh',
   children: [{
@@ -56,24 +57,20 @@ class StepBrandInformation extends Component {
     imageUrl: null,
   }
 
-  handleChange = (info) => {
-    if (info.file.status === 'uploading') {
-      this.setState({ loading: true });
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => this.setState({
+  beforeUpload = (file) => {
+    const { onFormValueChange } = this.props;
+    this.setState({ loading: true });
+
+    Api.uploadImage(file).then(({ data }) => {
+      onFormValueChange('avatar', data.secure_url);
+
+      getBase64(file, imageUrl => this.setState({
         imageUrl,
         loading: false,
       }));
-    }
-    if (info.file.status === 'error') {
-      getBase64(info.file.originFileObj, imageUrl => this.setState({
-        imageUrl,
-        loading: false,
-      }));
-    }
+    }).catch(this.handleUploadError);
+
+    return false;
   }
 
   handleSubmit = (e) => {
@@ -83,6 +80,10 @@ class StepBrandInformation extends Component {
     validateFieldsAndScroll((err) => {
       if (!err) next();
     });
+  }
+
+  handleUploadError = () => {
+    message.error('Could not upload image');
   }
 
   render() {
@@ -116,9 +117,9 @@ class StepBrandInformation extends Component {
               className="avatar-uploader"
               showUploadList={false}
               action="/jsonplaceholder.typicode.com/posts/"
-              onChange={this.handleChange}
+              beforeUpload={this.beforeUpload}
             >
-              {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
+              {(imageUrl || formValues.avatar) ? <img src={imageUrl || formValues.avatar} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
             </Upload>
             <FormItem label="Bio">
               {
@@ -196,7 +197,7 @@ class StepBrandInformation extends Component {
                   rules: [{ type: 'array', required: true, message: 'Please select City/District/Ward!' }],
                 })(
                   <Cascader
-                    options={residences}
+                    options={locations}
                     onChange={
                       (values) => {
                         onFormValueChange('city', values[0]);
