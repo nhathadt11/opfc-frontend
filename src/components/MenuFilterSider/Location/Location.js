@@ -8,6 +8,10 @@ const options = [{
   children: [{
     value: 'Go Vap',
     label: 'Go Vap',
+    children: [{
+      value: 'Phuong 14',
+      label: 'Phuong 14',
+    }],
   }],
 }, {
   value: 'Da Nang',
@@ -15,6 +19,10 @@ const options = [{
   children: [{
     value: 'Quan Hai Chau',
     label: 'Quan Hai Chau',
+    children: [{
+      value: 'Phuong 10',
+      label: 'Phuong 10',
+    }],
   }],
 }];
 
@@ -24,7 +32,7 @@ const Location = () => (
   <MenuFilterItemStyled>
     <MenuFilterItemTitleStyled htmlFor="">Location</MenuFilterItemTitleStyled>
     <Cascader
-      placeholder="City / District"
+      placeholder="City / District / Ward"
       options={options}
       onChange={onChange}
     />
