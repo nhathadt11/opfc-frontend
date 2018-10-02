@@ -54,3 +54,13 @@ export const EditingActionsStyled = styled.div`
     margin-top: 5px;
   }
 `;
+
+export const MealListStyled = styled.ul`
+  padding: 20px 20px 20px 30px;
+  margin-bottom: 0;
+  color: rgba(0, 0, 0, 0.65);
+  list-style-type: decimal;
+  border: 1px dashed;
+  font-size: 13px;
+  font-style: italic;
+`;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, Col, Button, Icon, DatePicker, Input, Modal,
+  Row, Col, Button, Icon, DatePicker, Input, Modal, Tooltip,
 } from 'antd';
 import './CartItem.css';
 import LocalIcon from '../../../../fonts/LocalFont';
@@ -8,6 +8,7 @@ import {
   MenuNameStyled, ByBrandNameStyled, ViewMealsInThisMenu, ServiceTimeStyled,
   MenuPriceStyled, ShippingFeeStyled, SubTotalStyled, NoteWrapperStyled,
   EditingActionsStyled,
+  MealListStyled,
 } from './CartItem.styled';
 
 const { RangePicker } = DatePicker;
@@ -23,6 +24,17 @@ const confirmDelete = () => {
     maskClosable: true,
   });
 };
+
+const mealList = (
+  <MealListStyled>
+    <li>Chicken Quesadilla</li>
+    <li>Southwestern Shrimp</li>
+    <li>Fresh Cookie Tray</li>
+    <li>Assorted Individual Sodas</li>
+    <li>Meat Lasagna</li>
+    <li>Moussaka</li>
+  </MealListStyled>
+);
 
 class CartItem extends Component {
   state = {
@@ -51,7 +63,9 @@ class CartItem extends Component {
             <section>
               <span><Icon type="team" /> x 7</span>
             </section>
-            <ViewMealsInThisMenu>View meals</ViewMealsInThisMenu>
+            <Tooltip title={mealList} placement="right" overlayClassName="opfc-meal-list-view">
+              <ViewMealsInThisMenu>View meals</ViewMealsInThisMenu>
+            </Tooltip>
           </div>
         </Col>
         <Col span={10} className="opfc-cart-item-service-info">

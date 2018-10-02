@@ -39,3 +39,11 @@
 .opfc-cart-item-service-info {
   max-width: 350px;
 }
+
+.opfc-meal-list-view .ant-tooltip-inner {
+  background-color: #fff;
+}
+
+.opfc-meal-list-view .ant-tooltip-arrow {
+  display: none;
+}
