@@ -1,38 +1,28 @@
-import React, { Component, Fragment } from 'react';
-import { Modal, Button } from 'antd';
-import CreateBrand from '../CreateBrand';
+import React from 'react';
+import { Button } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { func } from 'prop-types';
+import { showRoleChoiceModal } from '../../../modules/Account/actions/modal';
 
-class CreateProfileButton extends Component {
-  state = {
-    visible: false,
-  }
+const CreateProfileButton = ({ showRoleChoiceModalAction }) => (
+  <Button
+    type="primary"
+    size="large"
+    onClick={showRoleChoiceModalAction}
+  >
+    Create a Profile
+  </Button>
+);
 
-  showModal = () => this.setState({ visible: true })
+CreateProfileButton.propTypes = {
+  showRoleChoiceModalAction: func.isRequired,
+};
 
-  handleOk = () => this.setState({ visible: false })
+const mapDispatchToProps = {
+  showRoleChoiceModalAction: showRoleChoiceModal,
+};
 
-  handleCancel = () => this.setState({ visible: false })
-
-  render() {
-    const { visible } = this.state;
-
-    return (
-      <Fragment>
-        <Button type="primary" size="large" onClick={this.showModal}>Create a Profile</Button>
-        <Modal
-          title="Basic Modal"
-          visible={visible}
-          wrapClassName="opfc-create-brand-modal-container"
-          width={988}
-          centered
-          footer={null}
-          onCancel={this.handleCancel}
-        >
-          <CreateBrand onSuccess={this.handleOk} />
-        </Modal>
-      </Fragment>
-    );
-  }
-}
-
-export default CreateProfileButton;
+export default compose(
+  connect(undefined, mapDispatchToProps),
+)(CreateProfileButton);

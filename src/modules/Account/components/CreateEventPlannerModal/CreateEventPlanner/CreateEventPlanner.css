@@ -1,0 +1,12 @@
+.opfc-event-planner-register-avatar > .ant-upload {
+  width: 150px;
+  height: 150px;
+}
+
+.opfc-event-planner-register-actions {
+  margin-bottom: 15px;
+}
+
+.opfc-event-planner-register-actions > button:not(:first-child) {
+  margin-left: 15px;
+}

@@ -1,4 +1,4 @@
-import { CREATE_BRAND_REQUEST, CREATE_BRAND_SUCCESS } from '../actions/createBrand';
+import { CREATE_BRAND_REQUEST, CREATE_BRAND_SUCCESS, CREATE_BRAND_FAILURE } from '../actions/createBrand';
 
 const initialState = {
   brand: {},
@@ -16,6 +16,12 @@ const accountReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         brand: payload.brand,
+        submitting: false,
+      };
+    }
+    case CREATE_BRAND_FAILURE: {
+      return {
+        ...state,
         submitting: false,
       };
     }

@@ -11,6 +11,10 @@ import MenuDetail from '../components/MenuDetail/MenuDetail';
 import EventPlanner from '../modules/EventPlanner/EventPlanner';
 import Checkout from '../modules/Checkout/containers/Checkout/Checkout';
 import Cart from '../modules/Cart/containers/Cart/Cart';
+import RoleChoiceModal from '../modules/Account/components/RoleChoice/RoleChoice';
+import CreateBrandModal from './CreateBrandModal/CreateBrandModal';
+import CreateEventPlannerModal from '../modules/Account/components/CreateEventPlannerModal/CreateEventPlannerModal';
+import LoginModal from '../modules/Account/components/LoginModal/LoginModal';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -41,6 +45,11 @@ const MainLayout = () => (
       <Route path="/cart" component={Cart} />
       <Route path="/checkout" component={Checkout} />
     </Switch>
+
+    <RoleChoiceModal />
+    <CreateBrandModal />
+    <CreateEventPlannerModal />
+    <LoginModal />
 
     <Footer>Footer</Footer>
   </Layout>
