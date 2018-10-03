@@ -12,7 +12,7 @@ const MenuCard = ({ loading, history }) => (
     style={{ width: 200 }}
     hoverable
     bordered={false}
-    cover={<img alt="example" src="https://www.thelocal.it/userdata/images/article/69523836b0191608c41d640feead8da2be5462038d3409e1e3900fad039c7fc8.jpg" />}
+    cover={<img alt="example" src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" />}
     onClick={() => history.push('/menus/1')}
   >
     <CatergoryLabelStyled>Breakfast</CatergoryLabelStyled>

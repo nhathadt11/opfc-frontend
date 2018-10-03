@@ -112,7 +112,7 @@ class CreateEventPlanner extends Component {
               action="/jsonplaceholder.typicode.com/posts/"
               beforeUpload={this.beforeUpload}
             >
-              {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-brand-avatar" /> : uploadButton}
+              {imageUrl ? <img src={imageUrl} alt="avatar" className="opfc-create-event-planner-avatar" /> : uploadButton}
             </Upload>
           </Col>
           <Col>

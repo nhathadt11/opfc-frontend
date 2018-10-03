@@ -10,3 +10,7 @@
 .opfc-event-planner-register-actions > button:not(:first-child) {
   margin-left: 15px;
 }
+
+.opfc-create-event-planner-avatar {
+  width: 132px;
+}
