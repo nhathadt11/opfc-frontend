@@ -18,7 +18,7 @@ const modalReducer = (state = initialState, { type }) => {
     case SHOW_CREATE_MEAL_MODAL:
       return {
         ...initialState,
-        menuModalVisible: true,
+        mealModalVisible: true,
       };
     case HIDE_CREATE_MENU_MODAL:
     case HIDE_CREATE_MEAL_MODAL: {
