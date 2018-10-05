@@ -1,0 +1,7 @@
+.opfc-meal-title {
+  justify-content: space-between;
+}
+
+.opfc-meal-actions > button:not(:first-child) {
+  margin-left: 7px;
+}

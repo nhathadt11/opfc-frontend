@@ -8,6 +8,7 @@ import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 import './BrandProfileContent.css';
 import { showCreateMenuModal, showCreateMealModal } from '../../actions/modals';
+import MealTab from '../BrandProfileContentTabs/MealTab/MealTab';
 
 
 const { TabPane } = Tabs;
@@ -50,7 +51,7 @@ class BrandProfileContent extends Component {
           tab={<span><LocalIcon type="icon-dish" />Meals</span>}
           key="2"
         >
-          Meals Content
+          <MealTab />
         </TabPane>
         <TabPane
           tab={<span><LocalIcon type="icon-gallery" />Gallery</span>}
