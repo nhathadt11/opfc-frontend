@@ -26,7 +26,7 @@ import EventPlannerOrder from '../modules/EventPlanner/components/EventPlannerOr
 import EventPlannerAddress from '../modules/EventPlanner/components/EventPlannerAddress/EventPlannerAddress';
 import EventPlannerOrderDetail from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrderDetail/EventPlannerOrderDetail';
 import Cart from '../modules/Cart/containers/Cart/Cart';
-import CreateMenuModal from '../modules/Menu/components/CreateMenuModal/CreateMenuModal';
+import CreateMenuModal from '../modules/BrandProfile/components/Menu/components/CreateMenuModal/CreateMenuModal';
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);

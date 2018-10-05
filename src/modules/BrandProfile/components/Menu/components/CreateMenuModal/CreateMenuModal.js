@@ -5,8 +5,8 @@ import {
 import { shape, func, bool } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { hideCreateMenuModal } from '../../../BrandProfile/actions/modals';
 import './CreateMenuModal.css';
+import { hideCreateMenuModal } from '../../../../actions/modals';
 
 const tags = [
   { id: 1, name: 'Wedding' },
