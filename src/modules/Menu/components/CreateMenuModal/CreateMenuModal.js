@@ -57,7 +57,7 @@ class CreateMenuModal extends Component {
         centered
         onOk={this.handleOk}
         onCancel={this.handleCancel}
-        width={900}
+        width={600}
       >
         <Form>
           <Row gutter={24}>
