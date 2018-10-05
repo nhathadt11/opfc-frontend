@@ -19,6 +19,10 @@ const EventPlannerSider = ({ history }) => (
         <LocalIcon type="icon-account" />
         Account
       </Menu.Item>
+      <Menu.Item key="/profile/event-planner/event">
+        <LocalIcon type="icon-event" />
+        Event
+      </Menu.Item>
       <Menu.Item key="/profile/event-planner/order">
         <LocalIcon type="icon-order" />
         Order

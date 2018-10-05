@@ -9,6 +9,7 @@ import EventPlannerOrder from './components/EventPlannerOrder/EventPlannerOrder'
 import EventPlannerAddress from './components/EventPlannerAddress/EventPlannerAddress';
 import EventPlannerPayment from './components/EventPlannerPayment/EventPlannerPayment';
 import EventPlannerBookmark from './components/EventPlannerBookmark/EventPlannerBookmark';
+import EventPlannerEvent from './components/EventPlannerEvent/EventPlannerEvent';
 
 const EventPlanner = () => (
   <Layout className="opfc-event-planner">
@@ -16,6 +17,7 @@ const EventPlanner = () => (
     <EventPlannerTabContentStyled>
       <Switch>
         <Route path="/profile/event-planner/account" component={EventPlannerAccount} />
+        <Route path="/profile/event-planner/event" component={EventPlannerEvent} />
         <Route path="/profile/event-planner/order" component={EventPlannerOrder} />
         <Route path="/profile/event-planner/address" component={EventPlannerAddress} />
         <Route path="/profile/event-planner/payment" component={EventPlannerPayment} />
