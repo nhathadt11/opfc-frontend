@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import { Tabs, Button, Icon } from 'antd';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { func } from 'prop-types';
 import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 import './BrandProfileContent.css';
+import { showCreateMenuModal, showCreateMealModal } from '../../actions/modals';
+
 
 const { TabPane } = Tabs;
-const operations = {
-  1: <Button onClick={() => console.log('add menu')}><Icon type="plus" /></Button>,
-  2: <Button onClick={() => console.log('add meal')}><Icon type="plus" /></Button>,
-};
 
 class BrandProfileContent extends Component {
+  static propTypes = {
+    showCreateMenuModalAction: func.isRequired,
+    showCreateMealModalAction: func.isRequired,
+  }
+
   state = {
     activeTab: 1,
   }
@@ -19,7 +25,12 @@ class BrandProfileContent extends Component {
   handleActiveTabChange = key => this.setState({ activeTab: key })
 
   render() {
+    const { showCreateMenuModalAction, showCreateMealModalAction } = this.props;
     const { activeTab } = this.state;
+    const operations = {
+      1: <Button onClick={() => showCreateMenuModalAction()}><Icon type="plus" /></Button>,
+      2: <Button onClick={() => showCreateMealModalAction()}><Icon type="plus" /></Button>,
+    };
 
     return (
       <Tabs
@@ -52,4 +63,11 @@ class BrandProfileContent extends Component {
   }
 }
 
-export default BrandProfileContent;
+const mapDispatchToProps = {
+  showCreateMenuModalAction: showCreateMenuModal,
+  showCreateMealModalAction: showCreateMealModal,
+};
+
+export default compose(
+  connect(undefined, mapDispatchToProps),
+)(BrandProfileContent);

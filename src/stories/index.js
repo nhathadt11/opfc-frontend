@@ -26,6 +26,8 @@ import EventPlannerOrder from '../modules/EventPlanner/components/EventPlannerOr
 import EventPlannerAddress from '../modules/EventPlanner/components/EventPlannerAddress/EventPlannerAddress';
 import EventPlannerOrderDetail from '../modules/EventPlanner/components/EventPlannerOrder/EventPlannerOrderDetail/EventPlannerOrderDetail';
 import Cart from '../modules/Cart/containers/Cart/Cart';
+import CreateMenuModal from '../modules/Menu/components/CreateMenuModal/CreateMenuModal';
+
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -51,7 +53,8 @@ storiesOf('MenuFilterSider', module)
 
 storiesOf('Card', module)
   .add('Menu card', () => <MenuCard />)
-  .add('Menu card with loading', () => <MenuCard loading />);
+  .add('Menu card with loading', () => <MenuCard loading />)
+  .add('Create menu modal', () => <CreateMenuModal />);
 
 storiesOf('Menu Grid', module)
   .add('Menu Grid', () => <MenuCardGrid />)
