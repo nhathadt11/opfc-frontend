@@ -46,20 +46,22 @@ const uploadImage = (file) => {
 
 const createEvent = (_event) => {
   const event = {
-    eventName: _event.eventName,
-    description: _event.description,
-    startAt: _event.timeRange[0].valueOf(),
-    endAt: _event.timeRange[1].valueOf(),
-    budget: _event.budget,
-    servingNumber: _event.servingNumber,
-    city: _event.cityDistrictWard[0],
-    district: _event.cityDistrictWard[1],
-    ward: _event.cityDistrictWard[2],
-    address: _event.address,
-    eventTypes: _event.eventTypes,
+    event: {
+      eventName: _event.eventName,
+      description: _event.description,
+      startAt: _event.timeRange[0].valueOf(),
+      endAt: _event.timeRange[1].valueOf(),
+      budget: _event.budget,
+      servingNumber: _event.servingNumber,
+      city: _event.cityDistrictWard[0],
+      district: _event.cityDistrictWard[1],
+      ward: _event.cityDistrictWard[2],
+      address: _event.address,
+      eventTypes: _event.eventTypes,
+    },
   };
 
-  return axios.post('/Event', event);
+  return axios.post('/Event/CreateEvent', event);
 };
 
 const createMeal = (meal) => {
