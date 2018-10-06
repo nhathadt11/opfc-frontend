@@ -11,7 +11,7 @@ class MenuCardGrid extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 2000);
+    }, 400);
   }
 
   render() {

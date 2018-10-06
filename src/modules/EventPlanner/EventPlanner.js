@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import EventPlannerSider from './components/EventPlannerSider/EventPlannerSider';
@@ -10,9 +10,10 @@ import EventPlannerAddress from './components/EventPlannerAddress/EventPlannerAd
 import EventPlannerPayment from './components/EventPlannerPayment/EventPlannerPayment';
 import EventPlannerBookmark from './components/EventPlannerBookmark/EventPlannerBookmark';
 import EventPlannerEvent from './components/EventPlannerEvent/EventPlannerEvent';
+import EventPlanningFlow from './components/EventPlanningFlow/EventPlanningFlow';
 
-const EventPlanner = () => (
-  <Layout className="opfc-event-planner">
+const EventPlannerProfile = () => (
+  <Fragment>
     <EventPlannerSider />
     <EventPlannerTabContentStyled>
       <Switch>
@@ -24,6 +25,15 @@ const EventPlanner = () => (
         <Route path="/profile/event-planner/bookmark" component={EventPlannerBookmark} />
       </Switch>
     </EventPlannerTabContentStyled>
+  </Fragment>
+);
+
+const EventPlanner = () => (
+  <Layout className="opfc-event-planner">
+    <Switch>
+      <Route path="/profile/event-planner/plan" component={EventPlanningFlow} />
+      <Route path="/profile/event-planner" component={EventPlannerProfile} />
+    </Switch>
   </Layout>
 );
 
