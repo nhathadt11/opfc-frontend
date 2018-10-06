@@ -1,5 +1,4 @@
 import axios from 'axios';
-import moment from 'moment';
 import { CLOUDINARY_API_KEY, CLOUDINARY_UPLOAD_PRESET } from '../constants/AppConstants';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
@@ -67,9 +66,17 @@ const createMeal = (meal) => {
   return axios.post('/Meal', meal);
 };
 
+const updateMeal = (meal) => {
+  return axios.put('/Meal', meal);
+};
+
+const deleteMeal = id => axios.delete(`/Meal/${id}`);
+
 export default {
   createBrand,
   uploadImage,
   createEvent,
   createMeal,
+  updateMeal,
+  deleteMeal,
 };

@@ -11,8 +11,11 @@ export const hideCreateMenuModal = () => ({
   type: HIDE_CREATE_MENU_MODAL,
 });
 
-export const showCreateMealModal = () => ({
+export const showCreateMealModal = meal => ({
   type: SHOW_CREATE_MEAL_MODAL,
+  payload: {
+    meal,
+  },
 });
 
 export const hideCreateMealModal = () => ({

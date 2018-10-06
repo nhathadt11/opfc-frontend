@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Modal, Form, Input } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { shape, func, bool } from 'prop-types';
+import {
+  shape, func, bool, number, string,
+} from 'prop-types';
 import { hideCreateMealModal } from '../../actions/modals';
 import { createMealRequest } from '../../actions/meal';
 
@@ -11,10 +13,26 @@ class CreateMealModal extends Component {
     form: shape({
       getFieldDecorator: func.isRequired,
       validateFieldsAndScroll: func.isRequired,
+      setFieldsValue: func.isRequired,
     }).isRequired,
     hideCreateMealModalAction: func.isRequired,
     visible: bool.isRequired,
     createMealRequestAction: func.isRequired,
+    meal: shape({
+      id: number,
+      mealName: string,
+      description: string,
+    }).isRequired,
+  }
+
+  componentDidUpdate(prevProps) {
+    const { meal, form: { setFieldsValue } } = this.props;
+    if (JSON.stringify(meal) !== JSON.stringify(prevProps.meal)) {
+      setFieldsValue({
+        mealName: meal.mealName,
+        description: meal.description,
+      });
+    }
   }
 
   handleCancel = () => {
@@ -23,15 +41,25 @@ class CreateMealModal extends Component {
   }
 
   handleSubmit = () => {
-    const { form: { validateFieldsAndScroll }, createMealRequestAction } = this.props;
+    const {
+      form: { validateFieldsAndScroll, setFields },
+      createMealRequestAction,
+      hideCreateMealModalAction,
+    } = this.props;
 
     validateFieldsAndScroll((err, values) => {
-      if (!err) createMealRequestAction(values);
+      if (!err) createMealRequestAction(values, () => {
+        hideCreateMealModalAction();
+        setFields({
+          mealName: { value: null, errors: null },
+          description: { value: null, errors: null },
+        });
+      });
     });
   }
 
   render() {
-    const { form: { getFieldDecorator }, visible } = this.props;
+    const { form: { getFieldDecorator }, visible, meal } = this.props;
 
     return (
       <Modal
@@ -44,7 +72,8 @@ class CreateMealModal extends Component {
           <Form.Item label="Name">
             {
               getFieldDecorator('mealName', {
-                required: true, message: 'Meal name is required!',
+                initialValue: meal.mealName,
+                rules: [{ required: true, message: 'Meal name is required!' }],
               })(
                 <Input />,
               )
@@ -52,7 +81,9 @@ class CreateMealModal extends Component {
           </Form.Item>
           <Form.Item label="Description">
             {
-              getFieldDecorator('description')(
+              getFieldDecorator('description', {
+                initialValue: meal.description,
+              })(
                 <Input.TextArea name="description" />,
               )
             }
@@ -65,6 +96,7 @@ class CreateMealModal extends Component {
 
 const mapStateToProps = state => ({
   visible: state.brandProfileReducer.modal.mealModalVisible,
+  meal: state.brandProfileReducer.modal.selectedMeal,
 });
 
 const mapDispatchToProps = {

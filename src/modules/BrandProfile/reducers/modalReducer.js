@@ -6,9 +6,10 @@ import {
 const initialState = {
   menuModalVisible: false,
   mealModalVisible: false,
+  selectedMeal: {},
 };
 
-const modalReducer = (state = initialState, { type }) => {
+const modalReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SHOW_CREATE_MENU_MODAL:
       return {
@@ -19,6 +20,7 @@ const modalReducer = (state = initialState, { type }) => {
       return {
         ...initialState,
         mealModalVisible: true,
+        selectedMeal: payload.meal || {},
       };
     case HIDE_CREATE_MENU_MODAL:
     case HIDE_CREATE_MEAL_MODAL: {

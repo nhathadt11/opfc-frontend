@@ -15,7 +15,9 @@ const MealTab = () => (
             lg={{ span: 8 }}
             style={{ marginTop: 16 }}
           >
-            <MealCard />
+            <MealCard
+              meal={{ id: 1, mealName: 'Chicken', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer eget ante id urna blandit venenatis in vitae enim.' }}
+            />
           </Col>
         ))
       }
