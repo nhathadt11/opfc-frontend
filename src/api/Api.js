@@ -63,8 +63,13 @@ const createEvent = (_event) => {
   return axios.post('/Event', event);
 };
 
+const createMeal = (meal) => {
+  return axios.post('/Meal', meal);
+};
+
 export default {
   createBrand,
   uploadImage,
   createEvent,
+  createMeal,
 };

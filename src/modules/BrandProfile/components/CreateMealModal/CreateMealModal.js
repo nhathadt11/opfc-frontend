@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { shape, func, bool } from 'prop-types';
 import { hideCreateMealModal } from '../../actions/modals';
+import { createMealRequest } from '../../actions/meal';
 
 class CreateMealModal extends Component {
   static propTypes = {
@@ -13,6 +14,7 @@ class CreateMealModal extends Component {
     }).isRequired,
     hideCreateMealModalAction: func.isRequired,
     visible: bool.isRequired,
+    createMealRequestAction: func.isRequired,
   }
 
   handleCancel = () => {
@@ -21,10 +23,10 @@ class CreateMealModal extends Component {
   }
 
   handleSubmit = () => {
-    const { form: { validateFieldsAndScroll } } = this.props;
+    const { form: { validateFieldsAndScroll }, createMealRequestAction } = this.props;
 
     validateFieldsAndScroll((err, values) => {
-      if (!err) console.log(values);
+      if (!err) createMealRequestAction(values);
     });
   }
 
@@ -67,6 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   hideCreateMealModalAction: hideCreateMealModal,
+  createMealRequestAction: createMealRequest,
 };
 
 export default compose(
