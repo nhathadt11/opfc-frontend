@@ -5,12 +5,15 @@ import {
 import { map } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import { shape, func } from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import Gallery from '../Gallery/Gallery';
 import './MenuDetail.css';
 import Rate from '../Rate/Rate';
 import { StatSpanStyled } from '../../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader.styled';
 import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
+import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 
 const tags = [
   { id: 0, name: 'wedding' },
@@ -23,6 +26,7 @@ class MenuDetail extends Component {
     history: shape({
       push: func.isRequired,
     }).isRequired,
+    selectMenuAction: func.isRequired,
   }
 
   state = {
@@ -32,7 +36,7 @@ class MenuDetail extends Component {
   showNewTagInput = () => this.setState({ newTagInputVisible: true })
 
   render() {
-    const { history: { push } } = this.props;
+    const { history: { push }, selectMenuAction } = this.props;
     const { newTagInputVisible } = this.state;
 
     return (
@@ -116,7 +120,7 @@ class MenuDetail extends Component {
             </Row>
             <Row>
               <p>
-                <Button type="primary" size="large">Taste it</Button>
+                <Button type="primary" size="large" onClick={() => selectMenuAction(1)}>Taste it</Button>
               </p>
             </Row>
           </Col>
@@ -160,4 +164,11 @@ class MenuDetail extends Component {
   }
 }
 
-export default withRouter(MenuDetail);
+const mapDispatchToProps = {
+  selectMenuAction: selectMenu,
+};
+
+export default compose(
+  withRouter,
+  connect(undefined, mapDispatchToProps),
+)(MenuDetail);

@@ -2,6 +2,8 @@ export const CHANGE_EVENT_PLAN_CURRENT_STEP = 'CHANGE_EVENT_PLAN_CURRENT_STEP';
 export const NEXT_EVENT_PLAN_STEP = 'NEXT_EVENT_PLAN_STEP';
 export const PREV_EVENT_PLAN_STEP = 'PREV_EVENT_PLAN_STEP';
 
+export const SELECT_MENU = 'SELECT_MENU';
+
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
   payload: {
@@ -15,4 +17,11 @@ export const nextEventPlanStep = () => ({
 
 export const prevEventPlanStep = () => ({
   type: PREV_EVENT_PLAN_STEP,
+});
+
+export const selectMenu = menu => ({
+  type: SELECT_MENU,
+  payload: {
+    menu,
+  },
 });

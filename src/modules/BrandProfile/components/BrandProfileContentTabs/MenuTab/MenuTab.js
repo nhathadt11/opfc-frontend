@@ -4,7 +4,7 @@ import CreateMenuModal from '../../Menu/components/CreateMenuModal/CreateMenuMod
 
 const MenuTab = () => (
   <Fragment>
-    <MenuCardGrid />
+    <MenuCardGrid dataList={Array.from(Array(12))} />
     <CreateMenuModal />
   </Fragment>
 );

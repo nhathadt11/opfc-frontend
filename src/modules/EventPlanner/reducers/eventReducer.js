@@ -1,5 +1,8 @@
 import { CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_FAILURE } from '../actions/event';
-import { CHANGE_EVENT_PLAN_CURRENT_STEP, NEXT_EVENT_PLAN_STEP, PREV_EVENT_PLAN_STEP } from '../actions/planningFlow';
+import {
+  CHANGE_EVENT_PLAN_CURRENT_STEP, NEXT_EVENT_PLAN_STEP,
+  PREV_EVENT_PLAN_STEP, SELECT_MENU,
+} from '../actions/planningFlow';
 
 const initialState = {
   eventList: [],
@@ -42,6 +45,12 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         currentStep: state.currentStep - 1,
+      };
+    }
+    case SELECT_MENU: {
+      return {
+        ...state,
+        selectedMenus: [...state, payload.menu],
       };
     }
     default:

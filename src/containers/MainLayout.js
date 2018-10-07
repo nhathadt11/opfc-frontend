@@ -24,7 +24,7 @@ const Home = props => (
       <MenuFilterSider />
     </Sider>
     <Content className="opfc-main-content">
-      <MenuCardGrid />
+      <MenuCardGrid dataList={Array.from(Array(12))} />
     </Content>
   </Layout>
 );
