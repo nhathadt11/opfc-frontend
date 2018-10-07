@@ -49,8 +49,8 @@ const createEvent = (_event) => {
     event: {
       eventName: _event.eventName,
       description: _event.description,
-      startAt: _event.timeRange[0].valueOf(),
-      endAt: _event.timeRange[1].valueOf(),
+      startAt: _event.timeRange[0].toISOString(),
+      endAt: _event.timeRange[1].toISOString(),
       budget: _event.budget,
       servingNumber: _event.servingNumber,
       city: _event.cityDistrictWard[0],
