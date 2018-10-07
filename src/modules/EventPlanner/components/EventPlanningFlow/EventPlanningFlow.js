@@ -3,7 +3,7 @@ import { Steps, Button, Icon } from 'antd';
 import { map } from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { bool, func } from 'prop-types';
+import { bool, func, number } from 'prop-types';
 import StepEvent from './EventPlanningSteps/StepEvent';
 import { EventStepContentStyled, ActionButtonGroupStyled } from './EventStepFlow.styled';
 import StepPickMenus from './EventPlanningSteps/StepPickMenus';
@@ -15,7 +15,7 @@ const { Step } = Steps;
 class EventPlanningFlow extends Component {
   static propTypes = {
     submitting: bool.isRequired,
-    currentStep: bool.isRequired,
+    currentStep: number.isRequired,
     nextEventPlanStepAction: func.isRequired,
     prevEventPlanStepAction: func.isRequired,
   }

@@ -33,7 +33,7 @@ class EventPlannerEvent extends Component {
         <Row type="flex" gutter={24}>
           {
             map(eventList, (event => (
-              <Col md={24} lg={12} xl={8} className="opfc-event-card"><EventCard key={event.id} data={event} /></Col>
+              <Col key={event.id} md={24} lg={12} xl={8} className="opfc-event-card"><EventCard data={event} /></Col>
             )))
           }
         </Row>
