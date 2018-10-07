@@ -1,14 +1,25 @@
 import React, { Component, Fragment } from 'react';
 import { Steps, Button, Icon } from 'antd';
 import { map } from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { bool, func } from 'prop-types';
 import StepEvent from './EventPlanningSteps/StepEvent';
 import { EventStepContentStyled, ActionButtonGroupStyled } from './EventStepFlow.styled';
 import StepPickMenus from './EventPlanningSteps/StepPickMenus';
 import Cart from '../../../Cart/containers/Cart/Cart';
+import { nextEventPlanStep, prevEventPlanStep } from '../../actions/planningFlow';
 
 const { Step } = Steps;
 
 class EventPlanningFlow extends Component {
+  static propTypes = {
+    submitting: bool.isRequired,
+    currentStep: bool.isRequired,
+    nextEventPlanStepAction: func.isRequired,
+    prevEventPlanStepAction: func.isRequired,
+  }
+
   constructor(props) {
     super(props);
 
@@ -20,40 +31,42 @@ class EventPlanningFlow extends Component {
     ];
   }
 
-  state = {
-    current: 0,
+  next = () => {
+    const { nextEventPlanStepAction } = this.props;
+    nextEventPlanStepAction();
   }
 
-  next = () => this.setState(({ current }) => ({ current: current + 1 }))
-
-  prev = () => this.setState(({ current }) => ({ current: current - 1 }))
+  prev = () => {
+    const { prevEventPlanStepAction } = this.props;
+    prevEventPlanStepAction();
+  }
 
   render() {
-    const { current } = this.state;
+    const { submitting, currentStep } = this.props;
 
     return (
       <Fragment>
-        <Steps current={current} style={{ width: 800, alignSelf: 'center', marginTop: 30 }}>
+        <Steps current={currentStep} style={{ width: 800, alignSelf: 'center', marginTop: 30 }}>
           {
             map(this.steps, (step, index) => <Step title={step.title} key={index} />)
           }
         </Steps>
-        <EventStepContentStyled>{this.steps[current].content}</EventStepContentStyled>
+        <EventStepContentStyled>{this.steps[currentStep].content}</EventStepContentStyled>
         <ActionButtonGroupStyled>
           {
-            (current <= this.steps.length - 1) && (current !== 0)
-            && <Button size="large" onClick={this.prev}><Icon type="left" theme="outlined" />Prev</Button>
+            (currentStep <= this.steps.length - 1) && (currentStep !== 0)
+            && <Button size="large" onClick={this.prev} disabled={submitting}><Icon type="left" theme="outlined" />Prev</Button>
           }
           {
-            (current === this.steps.length - 1)
-            && <Button type="primary" size="large">Done</Button>
+            (currentStep === this.steps.length - 1)
+            && <Button type="primary" size="large" loading={submitting}>Done</Button>
           }
           {
-            current > 0 && (current !== this.steps.length - 1)
-            && <Button size="large" type="primary" onClick={this.next}>Next<Icon type="right" theme="outlined" /></Button>
+            currentStep > 0 && (currentStep !== this.steps.length - 1)
+            && <Button size="large" type="primary" onClick={this.next} loading={submitting}>Next<Icon type="right" theme="outlined" /></Button>
           }
           {
-            current === 0 && <Button size="large" type="primary"><label htmlFor="form-event">Next</label><Icon type="right" theme="outlined" /></Button>
+            currentStep === 0 && <Button size="large" type="primary" loading={submitting}><label htmlFor="form-event">Next</label><Icon type="right" theme="outlined" /></Button>
           }
         </ActionButtonGroupStyled>
       </Fragment>
@@ -61,4 +74,20 @@ class EventPlanningFlow extends Component {
   }
 }
 
-export default EventPlanningFlow;
+const mapStateToProps = (state) => {
+  const { submitting, currentStep } = state.eventPlannerReducer.event;
+
+  return {
+    submitting,
+    currentStep,
+  };
+};
+
+const mapDispatchToProps = {
+  nextEventPlanStepAction: nextEventPlanStep,
+  prevEventPlanStepAction: prevEventPlanStep,
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(EventPlanningFlow);
