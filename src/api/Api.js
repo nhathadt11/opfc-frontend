@@ -64,6 +64,8 @@ const createEvent = (_event) => {
   return axios.post('/Event/CreateEvent', event);
 };
 
+const fetchEventMany = () => axios.get('/Event/GetAllEvent');
+
 const createMeal = (meal) => {
   return axios.post('/Meal', meal);
 };
@@ -78,6 +80,7 @@ export default {
   createBrand,
   uploadImage,
   createEvent,
+  fetchEventMany,
   createMeal,
   updateMeal,
   deleteMeal,

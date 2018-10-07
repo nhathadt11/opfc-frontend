@@ -1,4 +1,4 @@
-import { CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_FAILURE } from '../actions/event';
+import { CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_FAILURE, FETCH_EVENT_MANY_REQUEST, FETCH_EVENT_MANY_SUCCESS, FETCH_EVENT_MANY_FAILURE } from '../actions/event';
 import {
   CHANGE_EVENT_PLAN_CURRENT_STEP, NEXT_EVENT_PLAN_STEP,
   PREV_EVENT_PLAN_STEP, SELECT_MENU,
@@ -8,6 +8,7 @@ const initialState = {
   eventList: [],
   event: {},
   submitting: false,
+  fetching: false,
   currentStep: 0,
   selectedMenus: [],
 };
@@ -51,6 +52,25 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedMenus: [...state, payload.menu],
+      };
+    }
+    case FETCH_EVENT_MANY_REQUEST: {
+      return {
+        ...state,
+        fetching: true,
+      };
+    }
+    case FETCH_EVENT_MANY_SUCCESS: {
+      return {
+        ...state,
+        fetching: false,
+        eventList: payload.eventList,
+      };
+    }
+    case FETCH_EVENT_MANY_FAILURE: {
+      return {
+        ...state,
+        fetching: false,
       };
     }
     default:

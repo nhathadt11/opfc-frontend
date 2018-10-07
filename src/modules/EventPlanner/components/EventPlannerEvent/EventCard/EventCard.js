@@ -1,10 +1,12 @@
 import React from 'react';
 import { Card, Row } from 'antd';
+import moment from 'moment';
+import { shape, string, number } from 'prop-types';
 import { EventNameStyled, EventInfoLabelStyled, EventInfoValueStyled } from './EventCard.styled';
 
-const EventCard = () => (
+const EventCard = ({ data }) => (
   <Card hoverable>
-    <Row><EventNameStyled>Event Name</EventNameStyled></Row>
+    <Row><EventNameStyled>{data.eventName}</EventNameStyled></Row>
     <Row>
       <EventInfoLabelStyled>Status:</EventInfoLabelStyled>
       <EventInfoValueStyled>Ongoing</EventInfoValueStyled>
@@ -12,30 +14,46 @@ const EventCard = () => (
     <Row>
       <section>
         <EventInfoLabelStyled>From:</EventInfoLabelStyled>
-        <EventInfoValueStyled>Sept, 10th 6:00 pm</EventInfoValueStyled>
+        <EventInfoValueStyled>{moment(data.startAt).format('lll')}</EventInfoValueStyled>
       </section>
       <section>
         <EventInfoLabelStyled>To:</EventInfoLabelStyled>
-        <EventInfoValueStyled>Sept, 10th 6:00 pm</EventInfoValueStyled>
+        <EventInfoValueStyled>{moment(data.endAt).format('lll')}</EventInfoValueStyled>
       </section>
     </Row>
     <Row>
       <EventInfoLabelStyled>Location:</EventInfoLabelStyled>
-      <EventInfoValueStyled>Ho Chi Minh city</EventInfoValueStyled>
+      <EventInfoValueStyled>{`${data.address}, ${data.district}, ${data.district}, ${data.ward}`}</EventInfoValueStyled>
     </Row>
     <Row>
       <EventInfoLabelStyled>Budget:</EventInfoLabelStyled>
-      <EventInfoValueStyled>$34.00</EventInfoValueStyled>
+      <EventInfoValueStyled>${data.budget}</EventInfoValueStyled>
     </Row>
     <Row>
       <EventInfoLabelStyled>Servings:</EventInfoLabelStyled>
-      <EventInfoValueStyled>5</EventInfoValueStyled>
+      <EventInfoValueStyled>{data.servingNumber}</EventInfoValueStyled>
     </Row>
     <Row>
       <EventInfoLabelStyled>Event Type:</EventInfoLabelStyled>
-      <EventInfoValueStyled>Birthday</EventInfoValueStyled>
+      <EventInfoValueStyled>{data.eventType}</EventInfoValueStyled>
     </Row>
   </Card>
 );
+
+EventCard.propTypes = {
+  data: shape({
+    id: number,
+    eventName: string,
+    startAt: string,
+    endAt: string,
+    address: string,
+    city: string,
+    district: string,
+    ward: string,
+    budget: number,
+    servingNumber: number,
+    description: string,
+  }).isRequired,
+};
 
 export default EventCard;
