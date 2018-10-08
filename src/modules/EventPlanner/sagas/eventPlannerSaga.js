@@ -3,7 +3,10 @@ import {
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { isFunction } from 'lodash';
-import { CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure, FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess } from '../actions/event';
+import {
+  CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure,
+  FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess,
+} from '../actions/event';
 import Api from '../../../api/Api';
 
 function* createEvent({ payload: { event, onSuccess } }) {

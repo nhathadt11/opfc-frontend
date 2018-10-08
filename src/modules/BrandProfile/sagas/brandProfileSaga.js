@@ -1,5 +1,5 @@
 import {
-  all, takeEvery, call, put,
+  all, takeEvery, call, put, takeLatest,
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { isFunction } from 'lodash';
@@ -7,6 +7,7 @@ import Api from '../../../api/Api';
 import {
   CREATE_MEAL_REQUEST, DELETE_MEAL_REQUEST,
   createMealSuccess, createMealFailure, deleteMealSuccess, deleteMealFailure,
+  FETCH_MEAL_MANY_REQUEST, fetchMealManyFailure, fetchMealManySuccess,
 } from '../actions/meal';
 
 function* createMeal({ payload: { meal, onSuccess } }) {
@@ -48,9 +49,24 @@ function* watchDeleteMeal() {
   yield takeEvery(DELETE_MEAL_REQUEST, deleteMeal);
 }
 
+function* fetchMealMany() {
+  try {
+    const { data } = yield call(Api.fetchMealMany);
+    yield put(fetchMealManySuccess(data.meals));
+  } catch (error) {
+    yield put(fetchMealManyFailure(error));
+    message.error('Could not fetch meals');
+  }
+}
+
+function* watchFetchMealMany() {
+  yield takeLatest(FETCH_MEAL_MANY_REQUEST, fetchMealMany);
+}
+
 export default function* brandProfielFlow() {
   yield all([
     watchCreateMeal(),
     watchDeleteMeal(),
+    watchFetchMealMany(),
   ]);
 }

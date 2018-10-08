@@ -76,6 +76,8 @@ const updateMeal = (meal) => {
 
 const deleteMeal = id => axios.delete(`/Meal/${id}`);
 
+const fetchMealMany = () => axios.get('/Meal/GetAllMeal');
+
 export default {
   createBrand,
   uploadImage,
@@ -84,4 +86,5 @@ export default {
   createMeal,
   updateMeal,
   deleteMeal,
+  fetchMealMany,
 };
