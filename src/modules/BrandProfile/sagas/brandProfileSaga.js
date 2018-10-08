@@ -25,7 +25,7 @@ function* createMeal({ payload: { meal, onSuccess } }) {
     message.success(successMessage);
     yield put(createMealSuccess(response.data));
   } catch (error) {
-    message.error('Could not create meal');
+    message.error(meal.id ? 'Could not update meal' : 'Could not create meal');
     yield put(createMealFailure(error));
   }
 }

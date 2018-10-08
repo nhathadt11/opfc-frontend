@@ -67,11 +67,19 @@ const createEvent = (_event) => {
 const fetchEventMany = () => axios.get('/Event/GetAllEvent');
 
 const createMeal = (meal) => {
-  return axios.post('/Meal', meal);
+  const toBeCreateMeal = {
+    meal,
+  };
+
+  return axios.post('/Meal/CreatMeal', toBeCreateMeal);
 };
 
 const updateMeal = (meal) => {
-  return axios.put('/Meal', meal);
+  const toBeUpdatedMeal = {
+    meal,
+  };
+
+  return axios.put('/Meal/UpdateMeal', toBeUpdatedMeal);
 };
 
 const deleteMeal = id => axios.delete(`/Meal/${id}`);

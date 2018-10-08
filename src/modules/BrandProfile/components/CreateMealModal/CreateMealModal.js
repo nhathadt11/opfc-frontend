@@ -45,10 +45,13 @@ class CreateMealModal extends Component {
       form: { validateFieldsAndScroll, setFields },
       createMealRequestAction,
       hideCreateMealModalAction,
+      meal,
     } = this.props;
 
     validateFieldsAndScroll((err, values) => {
-      if (!err) createMealRequestAction(values, () => {
+      const updateMeal = { ...meal, ...values };
+
+      if (!err) createMealRequestAction(updateMeal, () => {
         hideCreateMealModalAction();
         setFields({
           mealName: { value: null, errors: null },
