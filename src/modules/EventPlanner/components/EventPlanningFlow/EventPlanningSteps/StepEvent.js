@@ -100,7 +100,7 @@ const StepEvent = ({
           </Form.Item>
           <Form.Item label="Serving number">
             {
-              getFieldDecorator('servingNuber', {
+              getFieldDecorator('servingNumber', {
                 rules: [{ required: true, message: 'Serving number is required!' }],
               })(
                 <InputNumber />,
@@ -110,11 +110,12 @@ const StepEvent = ({
           <Form.Item label="Event Type">
             {
               getFieldDecorator('eventType', {
-                initialValue: 'lucy',
                 rules: [{ required: true, message: 'Event Type is required!' }],
               })(
                 <Select>
-                  <Select.Option value="lucy">Lucy</Select.Option>
+                  <Select.Option value="1">Wedding</Select.Option>
+                  <Select.Option value="2">Birthday</Select.Option>
+                  <Select.Option value="3">Family</Select.Option>
                 </Select>,
               )
             }

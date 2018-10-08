@@ -5,7 +5,7 @@ import { message } from 'antd';
 import { isFunction } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure,
-  FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess,
+  FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess, createEventFailure,
 } from '../actions/event';
 import Api from '../../../api/Api';
 
@@ -17,6 +17,7 @@ function* createEvent({ payload: { event, onSuccess } }) {
     message.success('Create event successfully!');
     if (isFunction(onSuccess)) onSuccess(data);
   } catch (error) {
+    yield put(createEventFailure(error));
     message.error('Could not create Event');
   }
 }
@@ -28,7 +29,7 @@ function* watchCreateEvent() {
 function* fetchEventMany() {
   try {
     const { data } = yield call(Api.fetchEventMany);
-    yield put(fetchEventManySuccess(data.events));
+    yield put(fetchEventManySuccess(data));
   } catch (error) {
     yield put(fetchEventManyFailure(error));
     message.error('Could not fetch events');

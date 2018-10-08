@@ -61,10 +61,10 @@ const createEvent = (_event) => {
     },
   };
 
-  return axios.post('/Event/CreateEvent', event);
+  return axios.post('/Event', event);
 };
 
-const fetchEventMany = () => axios.get('/Event/GetAllEvent');
+const fetchEventMany = () => axios.get('/Event');
 
 const createMeal = (meal) => {
   const toBeCreateMeal = {
