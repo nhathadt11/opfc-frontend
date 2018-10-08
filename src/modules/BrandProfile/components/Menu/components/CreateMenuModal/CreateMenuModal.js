@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import {
-  Form, Input, InputNumber, Checkbox, Upload, Button, Icon, Select, Modal, Row, Col,
+  Form, Input, InputNumber, Checkbox, Upload, Button, Icon, Select, Modal, Row, Col, message,
 } from 'antd';
 import { shape, func, bool } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import './CreateMenuModal.css';
 import { hideCreateMenuModal } from '../../../../actions/modals';
+import { createMenuRequest } from '../../../../actions/menu';
+import Api from '../../../../../../api/Api';
 
 const tags = [
   { id: 1, name: 'Wedding' },
@@ -21,30 +23,52 @@ class CreateMenuModal extends Component {
     }).isRequired,
     visible: bool.isRequired,
     hideCreateMenuModalAction: func.isRequired,
+    createMenuRequestAction: func.isRequired,
   }
 
   state = {
+    uploadedFileList: [],
+    uploading: {},
+  }
 
+  beforeUpload = () => false;
+
+  customRequest = ({ file }) => {
+    this.setState(({ uploading }) => ({
+      uploading: { ...uploading, [file.uid]: true },
+    }));
+
+    Api.uploadImage(file)
+      .then(({ data }) => {
+        this.setState(({ uploadedFileList, uploading }) => ({
+          uploadedFileList: [...uploadedFileList, data.secure_url],
+          uploading: { ...uploading, [file.uid]: false },
+        }));
+      })
+      .catch(this.handleUploadError);
   }
 
   getTagOptions = () => tags.map(tag => (
     <Select.Option key={tag.id}>{tag.name}</Select.Option>
   ))
 
-  handleChange = (value) => {
-    console.log(`selected ${value}`);
-  }
-
   handleOk = () => {
-    const { form: { validateFieldsAndScroll } } = this.props;
+    const { form: { validateFieldsAndScroll }, createMenuRequestAction } = this.props;
+    const { uploadedFileList } = this.state;
+
     validateFieldsAndScroll((err, values) => {
-      if (!err) this.handleOk(values);
+      const toBeCreatedMenu = { ...values, photos: uploadedFileList };
+      if (!err) createMenuRequestAction(toBeCreatedMenu, this.handleCancel);
     });
   }
 
   handleCancel = () => {
     const { hideCreateMenuModalAction } = this.props;
     hideCreateMenuModalAction();
+  }
+
+  handleUploadError = () => {
+    message.error('Could not upload image');
   }
 
   render() {
@@ -99,7 +123,9 @@ class CreateMenuModal extends Component {
                 )}
               </Form.Item>
               <Form.Item label="Available">
-                <Checkbox defaultChecked />
+                {
+                  getFieldDecorator('available')(<Checkbox defaultChecked />)
+                }
               </Form.Item>
             </Col>
             <Col span={12}>
@@ -113,7 +139,6 @@ class CreateMenuModal extends Component {
                     mode="tags"
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    onChange={this.handleChange}
                   >
                     {this.getTagOptions()}
                   </Select>,
@@ -129,27 +154,29 @@ class CreateMenuModal extends Component {
                     mode="tags"
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    onChange={this.handleChange}
                   >
                     {this.getTagOptions()}
                   </Select>,
                 )}
               </Form.Item>
               <Form.Item label="Tags">
-                <Select
-                  mode="tags"
-                  style={{ width: '100%' }}
-                  placeholder="Please select"
-                  onChange={this.handleChange}
-                >
-                  {this.getTagOptions()}
-                </Select>
+                {
+                  getFieldDecorator('tags')(
+                    <Select
+                      mode="tags"
+                      style={{ width: '100%' }}
+                      placeholder="Please select"
+                    >
+                      {this.getTagOptions()}
+                    </Select>,
+                  )
+                }
               </Form.Item>
               <Form.Item label="Images">
                 <Upload
-                  action="//jsonplaceholder.typicode.com/posts/"
                   listType="picture"
                   className="opfc-create-menu-images"
+                  customRequest={this.customRequest}
                 >
                   <Button>
                     <Icon type="upload" /> Upload
@@ -170,6 +197,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   hideCreateMenuModalAction: hideCreateMenuModal,
+  createMenuRequestAction: createMenuRequest,
 };
 
 export default compose(

@@ -9,6 +9,11 @@ import {
   createMealSuccess, createMealFailure, deleteMealSuccess, deleteMealFailure,
   FETCH_MEAL_MANY_REQUEST, fetchMealManyFailure, fetchMealManySuccess,
 } from '../actions/meal';
+import {
+  FETCH_MENU_MANY_REQUEST, fetchMenuManySuccess,
+  fetchMenuManyFailure, createMenuFailure,
+  CREATE_MENU_REQUEST, createMenuSuccess, deleteMenuSuccess, deleteMenuFailure, DELETE_MENU_REQUEST,
+} from '../actions/menu';
 
 function* createMeal({ payload: { meal, onSuccess } }) {
   try {
@@ -63,10 +68,66 @@ function* watchFetchMealMany() {
   yield takeLatest(FETCH_MEAL_MANY_REQUEST, fetchMealMany);
 }
 
+function* fetchMenuMany() {
+  try {
+    const { data } = yield call(Api.fetchMenuMany);
+    yield put(fetchMenuManySuccess(data.menus));
+  } catch (error) {
+    yield put(fetchMenuManyFailure(error));
+    message.error('Could not fetch menus');
+  }
+}
+
+function* watchFetchMenuMany() {
+  yield takeLatest(FETCH_MENU_MANY_REQUEST, fetchMenuMany);
+}
+
+function* createMenu({ payload: { menu, onSuccess } }) {
+  try {
+    let successMessage = 'Create menu successfully!';
+    let response = {};
+    if (menu.id) {
+      response = yield call(Api.updateMenu, menu);
+      successMessage = 'Update menu successfully!';
+    } else {
+      response = yield call(Api.createMenu, menu);
+    }
+
+    if (isFunction(onSuccess)) onSuccess(response.data);
+    message.success(successMessage);
+    yield put(createMenuSuccess(response.data));
+  } catch (error) {
+    message.error(menu.id ? 'Could not update menu' : 'Could not create menu');
+    yield put(createMenuFailure(error));
+  }
+}
+
+function* watchCreateMenu() {
+  yield takeEvery(CREATE_MENU_REQUEST, createMenu);
+}
+
+function* deleteMenu({ payload: { id } }) {
+  try {
+    yield call(Api.deleteMenu, id);
+    message.success('Delete menu successfully!');
+    yield put(deleteMenuSuccess());
+  } catch (error) {
+    message.error('Could not delete menu');
+    yield put(deleteMenuFailure(error));
+  }
+}
+
+function* watchDeleteMenu() {
+  yield takeEvery(DELETE_MENU_REQUEST, deleteMenu);
+}
+
 export default function* brandProfielFlow() {
   yield all([
     watchCreateMeal(),
     watchDeleteMeal(),
     watchFetchMealMany(),
+    watchFetchMenuMany(),
+    watchCreateMenu(),
+    watchDeleteMenu(),
   ]);
 }

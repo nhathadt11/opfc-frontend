@@ -86,6 +86,26 @@ const deleteMeal = id => axios.delete(`/Meal/${id}`);
 
 const fetchMealMany = () => axios.get('/Meal/GetAllMeal');
 
+const fetchMenuMany = () => axios.get('/Menu/GetAllMenu');
+
+const createMenu = (menu) => {
+  const toBeCreatedMenu = {
+    menu,
+  };
+
+  return axios.post('/Menu/CreateMenu', toBeCreatedMenu);
+};
+
+const updateMenu = (menu) => {
+  const toBeUpdatedMenu = {
+    menu,
+  };
+
+  return axios.post('/Menu/UpdateMenu', toBeUpdatedMenu);
+};
+
+const deleteMenu = id => axios.delete(`/Menu/${id}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -95,4 +115,8 @@ export default {
   updateMeal,
   deleteMeal,
   fetchMealMany,
+  fetchMenuMany,
+  createMenu,
+  updateMenu,
+  deleteMenu,
 };
