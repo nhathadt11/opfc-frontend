@@ -4,9 +4,12 @@ import {
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import MenuCardGrid from '../../../../../containers/MenuCardGrid/MenuCardGrid';
+import { map } from 'lodash';
+import { Row, Col } from 'antd';
 import CreateMenuModal from '../../Menu/components/CreateMenuModal/CreateMenuModal';
 import { fetchMenuManyRequest } from '../../../actions/menu';
+import BrandMenuCard from '../../BrandMenuCard/BrandMenuCard';
+import { showCreateMenuModal } from '../../../actions/modals';
 
 class MenuTab extends Component {
   static propTypes = {
@@ -15,8 +18,13 @@ class MenuTab extends Component {
       menuName: string,
       description: string,
       servingNumber: number,
-    })).isRequired,
+    })),
     fetchMenuManyRequestAction: func.isRequired,
+    showCreateMenuModalAction: func.isRequired,
+  }
+
+  static defaultProps = {
+    menuList: [],
   }
 
   componentDidMount() {
@@ -24,12 +32,31 @@ class MenuTab extends Component {
     fetchMenuManyRequestAction();
   }
 
+  openEditModal = (selectedMenu) => {
+    const { showCreateMenuModalAction } = this.props;
+    showCreateMenuModalAction(selectedMenu);
+  }
+
   render() {
     const { menuList } = this.props;
 
     return (
       <Fragment>
-        <MenuCardGrid dataList={menuList} />
+        <Row type="flex" gutter={24}>
+          {
+            map(menuList, (menu, index) => (
+              <Col
+                key={index}
+                xs={{ span: 24 }}
+                md={{ span: 12 }}
+                lg={{ span: 8 }}
+                style={{ marginTop: 16 }}
+              >
+                <BrandMenuCard menu={menu} openEditModal={() => this.openEditModal(menu)} />
+              </Col>
+            ))
+          }
+        </Row>
         <CreateMenuModal />
       </Fragment>
     );
@@ -42,6 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchMenuManyRequestAction: fetchMenuManyRequest,
+  showCreateMenuModalAction: showCreateMenuModal,
 };
 
 export default compose(

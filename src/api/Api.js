@@ -86,7 +86,48 @@ const deleteMeal = id => axios.delete(`/Meal/${id}`);
 
 const fetchMealMany = () => axios.get('/Meal/GetAllMeal');
 
-const fetchMenuMany = () => axios.get('/Menu/GetAllMenu');
+// const fetchMenuMany = () => axios.get('/Menu/GetAllMenu');
+const fetchMenuMany = () => new Promise((resolve) => {
+  setTimeout(() => resolve({
+    data: {
+      menus: [
+        {
+          id: 1,
+          menuName: 'Menu A',
+          description: 'Description A',
+          servingNumber: 2,
+          price: 12.3,
+          eventTypes: [1],
+          meals: [1],
+          tags: [2, 1],
+          photos: ['https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg', 'https://sunbasket.com/wp-content/themes/builder/library/img/landing/lean-and-clean/choose-meals-3.jpg'],
+        },
+        {
+          id: 2,
+          menuName: 'Menu B',
+          description: 'Description B',
+          servingNumber: 5,
+          price: 45.3,
+          eventTypes: [2],
+          meals: [3],
+          tags: [1, 3],
+          photos: ['https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg', 'https://sunbasket.com/wp-content/themes/builder/library/img/landing/lean-and-clean/choose-meals-3.jpg'],
+        },
+        {
+          id: 3,
+          menuName: 'Menu C',
+          description: 'Description C',
+          servingNumber: 8,
+          price: 67,
+          eventTypes: [2],
+          meals: [1],
+          tags: [1, 2],
+          photos: ['https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg', 'https://sunbasket.com/wp-content/themes/builder/library/img/landing/lean-and-clean/choose-meals-3.jpg'],
+        },
+      ],
+    },
+  }));
+});
 
 const createMenu = (menu) => {
   const toBeCreatedMenu = {

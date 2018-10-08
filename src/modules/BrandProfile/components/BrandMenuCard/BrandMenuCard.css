@@ -1,0 +1,12 @@
+.opfc-menu-title {
+  justify-content: space-between;
+}
+
+.opfc-menu-actions > button:not(:first-child) {
+  margin-left: 7px;
+}
+
+.opfc-brand-menu-card-tag {
+  margin-top: 7px;
+  text-align: left;
+}

@@ -5,6 +5,7 @@ import {
 import { shape, func, bool } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { map, filter, isEmpty } from 'lodash';
 import './CreateMenuModal.css';
 import { hideCreateMenuModal } from '../../../../actions/modals';
 import { createMenuRequest } from '../../../../actions/menu';
@@ -24,25 +25,51 @@ class CreateMenuModal extends Component {
     visible: bool.isRequired,
     hideCreateMenuModalAction: func.isRequired,
     createMenuRequestAction: func.isRequired,
+    selectedMenu: shape({}).isRequired,
   }
 
-  state = {
-    uploadedFileList: [],
-    uploading: {},
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      uploadedFileList: [],
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { selectedMenu } = this.props;
+
+    if (!isEmpty(nextProps.selectedMenu)) {
+      this.setState({
+        uploadedFileList: map(selectedMenu.photos, photo => ({
+          uid: photo,
+          name: 'photo',
+          url: photo,
+        })),
+      });
+    } else {
+      this.setState({ uploadedFileList: [] });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { visible, selectedMenu } = this.props;
+
+    if ((prevProps.visible !== visible) && (visible)) {
+      this.setFormValues(selectedMenu);
+    }
   }
 
   beforeUpload = () => false;
 
   customRequest = ({ file }) => {
-    this.setState(({ uploading }) => ({
-      uploading: { ...uploading, [file.uid]: true },
-    }));
-
     Api.uploadImage(file)
       .then(({ data }) => {
-        this.setState(({ uploadedFileList, uploading }) => ({
-          uploadedFileList: [...uploadedFileList, data.secure_url],
-          uploading: { ...uploading, [file.uid]: false },
+        this.setState(({ uploadedFileList }) => ({
+          uploadedFileList: [
+            ...uploadedFileList,
+            { uid: data.secure_url, name: data.secure_url, url: data.secure_url },
+          ],
         }));
       })
       .catch(this.handleUploadError);
@@ -57,7 +84,13 @@ class CreateMenuModal extends Component {
     const { uploadedFileList } = this.state;
 
     validateFieldsAndScroll((err, values) => {
-      const toBeCreatedMenu = { ...values, photos: uploadedFileList };
+      const toBeCreatedMenu = {
+        ...values,
+        eventTypes: map(values.eventTypes, e => Number(e)),
+        meals: map(values.meals, m => Number(m)),
+        tags: map(values.tags, t => Number(t)),
+        photos: uploadedFileList.map(f => f.url),
+      };
       if (!err) createMenuRequestAction(toBeCreatedMenu, this.handleCancel);
     });
   }
@@ -65,18 +98,46 @@ class CreateMenuModal extends Component {
   handleCancel = () => {
     const { hideCreateMenuModalAction } = this.props;
     hideCreateMenuModalAction();
+    this.resetFormValues();
   }
 
   handleUploadError = () => {
     message.error('Could not upload image');
   }
 
+  handleRemove = (_file) => {
+    this.setState(({ uploadedFileList }) => ({
+      uploadedFileList: filter(uploadedFileList, file => file.uid !== _file.uid),
+    }));
+  }
+
+  setFormValues = (menu) => {
+    const { form: { setFields } } = this.props;
+
+    setFields({
+      menuName: { value: menu.menuName, errors: null },
+      description: { value: menu.description, errors: null },
+      servingNumber: { value: menu.servingNumber, errors: null },
+      price: { value: menu.price, errors: null },
+      available: { value: menu.available, errors: null },
+      eventTypes: { value: map(menu.eventTypes, e => String(e)), errors: null },
+      meals: { value: map(menu.meals, m => String(m)), errors: null },
+      tags: { value: map(menu.tags, t => String(t)), errors: null },
+    });
+  }
+
+  resetFormValues = () => {
+    const { form: { resetFields } } = this.props;
+    resetFields();
+  }
+
   render() {
-    const { form: { getFieldDecorator }, visible } = this.props;
+    const { form: { getFieldDecorator }, visible, selectedMenu } = this.props;
+    const { uploadedFileList } = this.state;
 
     return (
       <Modal
-        title="Create new menu"
+        title={isEmpty(selectedMenu) ? 'Create new Menu' : 'Edit Menu'}
         visible={visible}
         centered
         onOk={this.handleOk}
@@ -97,6 +158,7 @@ class CreateMenuModal extends Component {
               </Form.Item>
               <Form.Item label="Description">
                 {getFieldDecorator('description', {
+                  initialValue: selectedMenu.description,
                   rules: [{
                     required: true, message: 'Description is required!',
                   }],
@@ -136,7 +198,7 @@ class CreateMenuModal extends Component {
                   }],
                 })(
                   <Select
-                    mode="tags"
+                    mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please select"
                   >
@@ -151,9 +213,10 @@ class CreateMenuModal extends Component {
                   }],
                 })(
                   <Select
-                    mode="tags"
+                    mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please select"
+                    optio
                   >
                     {this.getTagOptions()}
                   </Select>,
@@ -161,9 +224,10 @@ class CreateMenuModal extends Component {
               </Form.Item>
               <Form.Item label="Tags">
                 {
-                  getFieldDecorator('tags')(
+                  getFieldDecorator('tags', {
+                  })(
                     <Select
-                      mode="tags"
+                      mode="multiple"
                       style={{ width: '100%' }}
                       placeholder="Please select"
                     >
@@ -177,6 +241,8 @@ class CreateMenuModal extends Component {
                   listType="picture"
                   className="opfc-create-menu-images"
                   customRequest={this.customRequest}
+                  fileList={uploadedFileList}
+                  onRemove={this.handleRemove}
                 >
                   <Button>
                     <Icon type="upload" /> Upload
@@ -193,6 +259,7 @@ class CreateMenuModal extends Component {
 
 const mapStateToProps = state => ({
   visible: state.brandProfileReducer.modal.menuModalVisible,
+  selectedMenu: state.brandProfileReducer.modal.selectedMenu,
 });
 
 const mapDispatchToProps = {

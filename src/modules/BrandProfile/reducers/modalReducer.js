@@ -7,6 +7,7 @@ const initialState = {
   menuModalVisible: false,
   mealModalVisible: false,
   selectedMeal: {},
+  selectedMenu: {},
 };
 
 const modalReducer = (state = initialState, { type, payload }) => {
@@ -15,6 +16,7 @@ const modalReducer = (state = initialState, { type, payload }) => {
       return {
         ...initialState,
         menuModalVisible: true,
+        selectedMenu: payload.selectedMenu,
       };
     case SHOW_CREATE_MEAL_MODAL:
       return {

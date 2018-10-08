@@ -3,8 +3,11 @@ export const HIDE_CREATE_MENU_MODAL = 'HIDE_CREATE_MENU_MODAL';
 export const SHOW_CREATE_MEAL_MODAL = 'SHOW_CREATE_MEAL_MODAL';
 export const HIDE_CREATE_MEAL_MODAL = 'HIDE_CREATE_MEAL_MODAL';
 
-export const showCreateMenuModal = () => ({
+export const showCreateMenuModal = (selectedMenu = {}) => ({
   type: SHOW_CREATE_MENU_MODAL,
+  payload: {
+    selectedMenu,
+  },
 });
 
 export const hideCreateMenuModal = () => ({
