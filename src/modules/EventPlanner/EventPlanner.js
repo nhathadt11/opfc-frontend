@@ -31,6 +31,7 @@ const EventPlannerProfile = () => (
 const EventPlanner = () => (
   <Layout className="opfc-event-planner">
     <Switch>
+      <Route exact path="/profile/event-planner/event/create" component={EventPlanningFlow} />
       <Route path="/profile/event-planner/event/:id" component={EventPlanningFlow} />
       <Route path="/profile/event-planner" component={EventPlannerProfile} />
     </Switch>

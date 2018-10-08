@@ -1,3 +1,17 @@
 .opfc-event-card {
   margin-top: 12px;
 }
+
+.opfc-event-card-create {
+  width: 100%;
+  height: 100%;
+}
+
+.opfc-event-card-create > i {
+  font-size: 48px;
+  color: #9d9d9d;
+}
+
+.opfc-event-card-create:hover > i {
+  color: #ffae6b;
+}

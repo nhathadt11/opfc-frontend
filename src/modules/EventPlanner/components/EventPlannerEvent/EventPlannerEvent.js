@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'antd';
+import {
+  Row, Col, Button, Icon,
+} from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import {
   arrayOf, shape, number, func,
 } from 'prop-types';
@@ -17,6 +20,9 @@ class EventPlannerEvent extends Component {
       id: number,
     })).isRequired,
     fetchEventManyRequestAction: func.isRequired,
+    history: shape({
+      push: func.isRequired,
+    }).isRequired,
   }
 
   componentDidMount() {
@@ -25,7 +31,7 @@ class EventPlannerEvent extends Component {
   }
 
   render() {
-    const { eventList } = this.props;
+    const { eventList, history: { push } } = this.props;
 
     return (
       <div>
@@ -35,6 +41,13 @@ class EventPlannerEvent extends Component {
             map(eventList, (event => (
               <Col key={event.id} md={24} lg={12} xl={8} className="opfc-event-card"><EventCard data={event} /></Col>
             )))
+          }
+          {
+            <Col key="event-card-create" md={24} lg={12} xl={8} className="opfc-event-card">
+              <Button className="opfc-event-card-create" onClick={() => push('/profile/event-planner/event/create')}>
+                <Icon type="plus" />
+              </Button>
+            </Col>
           }
         </Row>
       </div>
@@ -52,4 +65,5 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(EventPlannerEvent);
