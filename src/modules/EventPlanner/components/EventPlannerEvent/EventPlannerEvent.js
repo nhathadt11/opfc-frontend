@@ -13,6 +13,7 @@ import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
 import EventCard from './EventCard/EventCard';
 import './EventCard/EventCard.css';
 import { fetchEventManyRequest } from '../../actions/event';
+import { deselectEvent } from '../../actions/planningFlow';
 
 class EventPlannerEvent extends Component {
   static propTypes = {
@@ -23,6 +24,7 @@ class EventPlannerEvent extends Component {
     history: shape({
       push: func.isRequired,
     }).isRequired,
+    deselectEventAction: func.isRequired,
   }
 
   componentDidMount() {
@@ -31,7 +33,7 @@ class EventPlannerEvent extends Component {
   }
 
   render() {
-    const { eventList, history: { push } } = this.props;
+    const { eventList, history: { push }, deselectEventAction } = this.props;
 
     return (
       <div>
@@ -44,7 +46,13 @@ class EventPlannerEvent extends Component {
           }
           {
             <Col key="event-card-create" md={24} lg={12} xl={8} className="opfc-event-card">
-              <Button className="opfc-event-card-create" onClick={() => push('/profile/event-planner/event/create')}>
+              <Button
+                className="opfc-event-card-create"
+                onClick={() => {
+                  push('/profile/event-planner/event/create');
+                  deselectEventAction();
+                }}
+              >
                 <Icon type="plus" />
               </Button>
             </Col>
@@ -61,6 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchEventManyRequestAction: fetchEventManyRequest,
+  deselectEventAction: deselectEvent,
 };
 
 export default compose(

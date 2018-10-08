@@ -5,6 +5,7 @@ import {
 import { compose } from 'redux';
 import { shape, func } from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import './StepEvent.css';
 import { createEventRequest } from '../../../actions/event';
 
@@ -38,6 +39,7 @@ const StepEvent = ({
   form: { getFieldDecorator, validateFieldsAndScroll },
   next,
   createEventRequestAction,
+  selectedEvent,
 }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -54,6 +56,7 @@ const StepEvent = ({
           <Form.Item label="Event Name">
             {
               getFieldDecorator('eventName', {
+                initialValue: selectedEvent.eventName,
                 rules: [{ required: true, message: 'Event name is required!' }],
               })(
                 <Input />,
@@ -63,6 +66,10 @@ const StepEvent = ({
           <Form.Item label="Time Range">
             {
               getFieldDecorator('timeRange', {
+                initialValue: [
+                  selectedEvent.endAt && moment(selectedEvent.startAt).isValid() ? moment(selectedEvent.startAt) : null, //eslint-disable-line
+                  selectedEvent.endAt && moment(selectedEvent.endAt).isValid() ? moment(selectedEvent.endAt) : null, //eslint-disable-line
+                ],
                 rules: [{ required: true, message: 'Time range is required!' }],
               })(
                 <RangePicker showTime format="YYYY-MM-DD HH:mm" />,
@@ -72,6 +79,7 @@ const StepEvent = ({
           <Form.Item label="City/District/Ward">
             {
               getFieldDecorator('cityDistrictWard', {
+                initialValue: [selectedEvent.city, selectedEvent.district, selectedEvent.ward],
                 rules: [{ required: true, message: 'City/District/Ward is required!' }],
               })(
                 <Cascader options={locations} />,
@@ -81,6 +89,7 @@ const StepEvent = ({
           <Form.Item label="Address">
             {
               getFieldDecorator('address', {
+                initialValue: selectedEvent.address,
                 rules: [{ required: true, message: 'Address is required!' }],
               })(
                 <Input />,
@@ -92,6 +101,7 @@ const StepEvent = ({
           <Form.Item label="Budget">
             {
               getFieldDecorator('budget', {
+                initialValue: selectedEvent.budget,
                 rules: [{ required: true, message: 'Budget is required!' }],
               })(
                 <Input />,
@@ -101,6 +111,7 @@ const StepEvent = ({
           <Form.Item label="Serving number">
             {
               getFieldDecorator('servingNumber', {
+                initialValue: selectedEvent.servingNumber,
                 rules: [{ required: true, message: 'Serving number is required!' }],
               })(
                 <InputNumber />,
@@ -110,6 +121,7 @@ const StepEvent = ({
           <Form.Item label="Event Type">
             {
               getFieldDecorator('eventType', {
+                initialValue: selectedEvent.eventType,
                 rules: [{ required: true, message: 'Event Type is required!' }],
               })(
                 <Select>
@@ -122,7 +134,9 @@ const StepEvent = ({
           </Form.Item>
           <Form.Item label="Description">
             {
-              getFieldDecorator('description')(
+              getFieldDecorator('description', {
+                initialValue: selectedEvent.description,
+              })(
                 <Input.TextArea />,
               )
             }
@@ -141,13 +155,18 @@ StepEvent.propTypes = {
   }).isRequired,
   next: func.isRequired,
   createEventRequestAction: func.isRequired,
+  selectedEvent: shape({}).isRequired,
 };
+
+const mapStateToProps = state => ({
+  selectedEvent: state.eventPlannerReducer.event.event,
+});
 
 const mapDispatchToProps = {
   createEventRequestAction: createEventRequest,
 };
 
 export default compose(
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
   Form.create(),
 )(StepEvent);

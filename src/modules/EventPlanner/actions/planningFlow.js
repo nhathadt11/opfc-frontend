@@ -4,6 +4,9 @@ export const PREV_EVENT_PLAN_STEP = 'PREV_EVENT_PLAN_STEP';
 
 export const SELECT_MENU = 'SELECT_MENU';
 
+export const SELECT_EVENT = 'SELECT_EVENT';
+export const DESELECT_EVENT = 'DESELECT_EVENT';
+
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
   payload: {
@@ -24,4 +27,15 @@ export const selectMenu = menu => ({
   payload: {
     menu,
   },
+});
+
+export const selectEvent = event => ({
+  type: SELECT_EVENT,
+  payload: {
+    event,
+  },
+});
+
+export const deselectEvent = () => ({
+  type: DESELECT_EVENT,
 });

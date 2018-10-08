@@ -5,12 +5,20 @@ import {
   shape, string, number, func,
 } from 'prop-types';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { EventNameStyled, EventInfoLabelStyled, EventInfoValueStyled } from './EventCard.styled';
+import { selectEvent } from '../../../actions/planningFlow';
 
-const EventCard = ({ data, history: { push } }) => (
+const EventCard = ({ data, history: { push }, selectEventAction }) => (
   <Tooltip title="Start picking menus for this event">
-    <Card hoverable onClick={() => push(`/profile/event-planner/event/${data.id}`)}>
+    <Card
+      hoverable
+      onClick={() => {
+        push(`/profile/event-planner/event/${data.id}`);
+        selectEventAction(data);
+      }}
+    >
       <Row><EventNameStyled>{data.eventName}</EventNameStyled></Row>
       <Row>
         <EventInfoLabelStyled>Status:</EventInfoLabelStyled>
@@ -63,8 +71,14 @@ EventCard.propTypes = {
   history: shape({
     push: func.isRequired,
   }).isRequired,
+  selectEventAction: func.isRequired,
+};
+
+const mapDispatchToProps = {
+  selectEventAction: selectEvent,
 };
 
 export default compose(
   withRouter,
+  connect(undefined, mapDispatchToProps),
 )(EventCard);
