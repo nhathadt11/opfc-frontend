@@ -3,32 +3,35 @@ import { shape, func } from 'prop-types';
 import {
   Form, Input, Cascader, Select, Button,
 } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './EventPlannerAccount.css';
 import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
+import { createAccountRequest } from '../../../Account/actions/account';
 
 const FormItem = Form.Item;
 const { Option } = Select;
 
 const residences = [{
-  value: 'zhejiang',
-  label: 'Zhejiang',
+  value: 'Ho Chi Minh',
+  label: 'Ho Chi Minh',
   children: [{
-    value: 'hangzhou',
-    label: 'Hangzhou',
+    value: 'Go Vap',
+    label: 'Go Vap',
     children: [{
-      value: 'xihu',
-      label: 'West Lake',
+      value: 'Phuong 14',
+      label: 'Phuong 14',
     }],
   }],
 }, {
-  value: 'jiangsu',
-  label: 'Jiangsu',
+  value: 'Da Nang',
+  label: 'Da Nang',
   children: [{
-    value: 'nanjing',
-    label: 'Nanjing',
+    value: 'Quan Hai Chau',
+    label: 'Quan Hai Chau',
     children: [{
-      value: 'zhonghuamen',
-      label: 'Zhong Hua Men',
+      value: 'Phuong 10',
+      label: 'Phuong 10',
     }],
   }],
 }];
@@ -38,6 +41,41 @@ class EventPlannerAccount extends Component {
     form: shape({
       validateFieldsAndScroll: func.isRequired,
     }).isRequired,
+    createAccountRequestAction: func.isRequired,
+  }
+
+  updateFormValues = (account) => {
+    const { form: { setFields } } = this.props;
+    setFields({
+      username: account.username,
+      password: account.password,
+      confirmPassword: account.password,
+      email: account.email,
+      cityDistrictWard: [account.city, account.district, account.ward],
+      phone: account.phone,
+      address: account.address,
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { form: { validateFieldsAndScroll }, createAccountRequestAction } = this.props;
+    validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        const account = {
+          username: values.username,
+          email: values.email,
+          password: values.password,
+          phone: values.phonePrefix + values.phone,
+          city: values.cityDistrictWard[0],
+          district: values.cityDistrictWard[1],
+          ward: values.cityDistrictWard[2],
+          address: values.address,
+        };
+        createAccountRequestAction(account, this.updateFormValues);
+      }
+    });
   }
 
   render() {
@@ -65,7 +103,7 @@ class EventPlannerAccount extends Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('prefix', {
+    const prefixSelector = getFieldDecorator('phoneprefix', {
       initialValue: '86',
     })(
       <Select style={{ width: 70 }}>
@@ -77,7 +115,7 @@ class EventPlannerAccount extends Component {
     return (
       <div>
         <EventPlannerTabTitleStyled>Account</EventPlannerTabTitleStyled>
-        <Form className="opfc-event-planner-account">
+        <Form className="opfc-event-planner-account" onSubmit={this.handleSubmit}>
           <FormItem
             {...formItemLayout}
             label="Username"
@@ -122,7 +160,7 @@ class EventPlannerAccount extends Component {
             {...formItemLayout}
             label="Confirm Password"
           >
-            {getFieldDecorator('confirm', {
+            {getFieldDecorator('confirmPassword', {
               rules: [{
                 required: true, message: 'Please confirm your password!',
               }, {
@@ -136,11 +174,20 @@ class EventPlannerAccount extends Component {
             {...formItemLayout}
             label="City/District/Ward"
           >
-            {getFieldDecorator('residence', {
-              initialValue: ['zhejiang', 'hangzhou', 'xihu'],
+            {getFieldDecorator('cityDistrictWard', {
               rules: [{ type: 'array', required: true, message: 'Please select your City/District/Ward!' }],
             })(
               <Cascader options={residences} />,
+            )}
+          </FormItem>
+          <FormItem
+            {...formItemLayout}
+            label="Address"
+          >
+            {getFieldDecorator('address', {
+              rules: [{ required: true, message: 'Please input your address!' }],
+            })(
+              <Input />,
             )}
           </FormItem>
           <FormItem
@@ -162,4 +209,15 @@ class EventPlannerAccount extends Component {
   }
 }
 
-export default Form.create()(EventPlannerAccount);
+const mapStateToProps = state => ({
+  account: state.accountReducer.account.account,
+});
+
+const mapDispatchToProps = {
+  createAccountRequestAction: createAccountRequest,
+};
+
+export default compose(
+  Form.create(),
+  connect(mapStateToProps, mapDispatchToProps),
+)(EventPlannerAccount);

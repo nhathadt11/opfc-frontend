@@ -147,6 +147,10 @@ const updateMenu = (menu) => {
 
 const deleteMenu = id => axios.delete(`/Menu/${id}`);
 
+const createAccount = account => axios.post('/User/CreateAccount', account);
+
+const updateAccount = account => axios.put('/User/CreateAccount', account);
+
 export default {
   createBrand,
   uploadImage,
@@ -160,4 +164,6 @@ export default {
   createMenu,
   updateMenu,
   deleteMenu,
+  createAccount,
+  updateAccount,
 };
