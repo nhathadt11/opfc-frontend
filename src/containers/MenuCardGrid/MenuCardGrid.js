@@ -26,7 +26,7 @@ class MenuCardGrid extends Component {
     const { loading } = this.state;
 
     return (
-      <Row type="flex" gutter={24} style={{ margin: 'auto 24px' }}>
+      <Row type="flex" gutter={24}>
         {
           map(dataList, (_, index) => <Col key={index} style={{ margin: '12px 0' }}><MenuCard loading={loading} /></Col>)
         }

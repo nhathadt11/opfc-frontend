@@ -12,7 +12,7 @@ const initialState = {
   event: {},
   submitting: false,
   fetching: false,
-  currentStep: 0,
+  currentStep: 1,
   selectedMenus: [],
 };
 

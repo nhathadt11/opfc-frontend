@@ -25,7 +25,7 @@ class EventPlanningFlow extends Component {
 
     this.steps = [
       { title: 'Event', content: <StepEvent next={this.next} /> },
-      { title: 'Menus', content: <StepPickMenus next={this.next} prev={this.prev} /> },
+      { title: 'Menu Suggestion', content: <StepPickMenus next={this.next} prev={this.prev} /> },
       { title: 'Cart', content: <Cart /> },
       { title: 'Payment', content: 'Payment' },
     ];

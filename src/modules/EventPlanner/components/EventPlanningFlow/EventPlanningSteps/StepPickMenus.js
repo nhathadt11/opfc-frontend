@@ -2,12 +2,19 @@ import React from 'react';
 import { arrayOf, shape, number } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Layout } from 'antd';
 import MenuCardGrid from '../../../../../containers/MenuCardGrid/MenuCardGrid';
+import StepPickMenuSider from './StepPickMenuSider';
 
 const StepPickMenus = ({ selectedMenus }) => (
-  <div>
-    <MenuCardGrid dataList={selectedMenus} />
-  </div>
+  <Layout>
+    <Layout.Sider theme="light" width={280}>
+      <StepPickMenuSider />
+    </Layout.Sider>
+    <Layout.Content>
+      <MenuCardGrid dataList={selectedMenus} />
+    </Layout.Content>
+  </Layout>
 );
 
 StepPickMenus.propTypes = {
