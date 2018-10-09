@@ -12,7 +12,7 @@ const initialState = {
   event: {},
   submitting: false,
   fetching: false,
-  currentStep: 1,
+  currentStep: 0,
   selectedMenus: [],
 };
 
@@ -86,6 +86,7 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         event: {},
+        currentStep: 0,
       };
     }
     default:
