@@ -15,6 +15,7 @@ import RoleChoiceModal from '../modules/Account/components/RoleChoice/RoleChoice
 import CreateBrandModal from './CreateBrandModal/CreateBrandModal';
 import CreateEventPlannerModal from '../modules/Account/components/CreateEventPlannerModal/CreateEventPlannerModal';
 import LoginModal from '../modules/Account/components/LoginModal/LoginModal';
+import RatingModal from '../modules/EventPlanner/components/RatingModal/RatingModal';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -50,6 +51,7 @@ const MainLayout = () => (
     <CreateBrandModal />
     <CreateEventPlannerModal />
     <LoginModal />
+    <RatingModal />
 
     <Footer>Footer</Footer>
   </Layout>

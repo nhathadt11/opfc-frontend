@@ -9,9 +9,10 @@ import { UserIconGroupStyled, LogoStyled } from './Header.styled';
 import MenuBrowse from './MenuBrowse/MenuBrowse';
 import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButton';
 import { showLoginModal } from '../../modules/Account/actions/modal';
+import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
 
 const Header = ({
-  history: { push }, account, loggedIn, showLoginModalAction,
+  history: { push }, account, loggedIn, showLoginModalAction, showRatingModalAction,
 }) => (
   <Layout.Header className="header">
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
@@ -29,7 +30,7 @@ const Header = ({
 
     <UserIconGroupStyled>
       <Button icon="notification" size="large" shape="circle" className="header-icon" />
-      <Button icon="heart" size="large" shape="circle" className="header-icon" />
+      <Button icon="heart" size="large" shape="circle" className="header-icon" onClick={showRatingModalAction} />
       {
         loggedIn ? (
           <Link to={
@@ -58,6 +59,7 @@ Header.propTypes = {
   }).isRequired,
   loggedIn: bool.isRequired,
   showLoginModalAction: func.isRequired,
+  showRatingModalAction: func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -67,6 +69,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   showLoginModalAction: showLoginModal,
+  showRatingModalAction: showRatingModal,
 };
 
 export default compose(

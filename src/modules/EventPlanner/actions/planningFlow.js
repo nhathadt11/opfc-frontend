@@ -7,6 +7,9 @@ export const SELECT_MENU = 'SELECT_MENU';
 export const SELECT_EVENT = 'SELECT_EVENT';
 export const DESELECT_EVENT = 'DESELECT_EVENT';
 
+export const SHOW_RATING_MODAL = 'SHOW_RATING_MODAL';
+export const HIDE_RATING_MODAL = 'HIDE_RATING_MODAL';
+
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
   payload: {
@@ -38,4 +41,12 @@ export const selectEvent = event => ({
 
 export const deselectEvent = () => ({
   type: DESELECT_EVENT,
+});
+
+export const showRatingModal = () => ({
+  type: SHOW_RATING_MODAL,
+});
+
+export const hideRatingModal = () => ({
+  type: HIDE_RATING_MODAL,
 });

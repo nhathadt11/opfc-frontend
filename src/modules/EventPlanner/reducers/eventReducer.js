@@ -5,6 +5,7 @@ import {
 import {
   CHANGE_EVENT_PLAN_CURRENT_STEP, NEXT_EVENT_PLAN_STEP,
   PREV_EVENT_PLAN_STEP, SELECT_MENU, SELECT_EVENT, DESELECT_EVENT,
+  SHOW_RATING_MODAL, HIDE_RATING_MODAL,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -14,6 +15,7 @@ const initialState = {
   fetching: false,
   currentStep: 0,
   selectedMenus: [],
+  ratingModalVisible: false,
 };
 
 const eventPlannerReducer = (state = initialState, { type, payload }) => {
@@ -87,6 +89,18 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
         ...state,
         event: {},
         currentStep: 0,
+      };
+    }
+    case SHOW_RATING_MODAL: {
+      return {
+        ...state,
+        ratingModalVisible: true,
+      };
+    }
+    case HIDE_RATING_MODAL: {
+      return {
+        ...state,
+        ratingModalVisible: false,
       };
     }
     default:
