@@ -1,11 +1,15 @@
 import {
-  takeEvery, all, put, call,
+  takeEvery, all, put, call, fork,
 } from 'redux-saga/effects';
 import { isFunction } from 'lodash';
 import { message } from 'antd';
 import { CREATE_BRAND_REQUEST, createBrandFailure, createBrandSuccess } from '../actions/createBrand';
 import Api from '../../../api/Api';
-import { CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess } from '../actions/account';
+import {
+  CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess,
+  LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess,
+} from '../actions/account';
+import { parseErrorMessage, persistAuthentication } from '../../../utils/Utils';
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -46,9 +50,27 @@ function* watchCreateAccount() {
   yield takeEvery(CREATE_ACCOUNT_REQUEST, createAccount);
 }
 
+function* loginAccount({ payload: { username, password } }) {
+  try {
+    const { data } = yield call(Api.loginAccount, username, password);
+
+    yield put(loginAccountSuccess(data));
+    message.success('Login successfully!');
+    yield fork(persistAuthentication, data);
+  } catch (error) {
+    message.error(parseErrorMessage(error));
+    yield put(loginAccountFailure(error));
+  }
+}
+
+function* watchLoginAccount() {
+  yield takeEvery(LOGIN_ACCOUNT_REQUEST, loginAccount);
+}
+
 export default function* accountFlow() {
   yield all([
     watchCreateBrand(),
     watchCreateAccount(),
+    watchLoginAccount(),
   ]);
 }

@@ -151,6 +151,8 @@ const createAccount = account => axios.post('/User/CreateAccount', account);
 
 const updateAccount = account => axios.put('/User/CreateAccount', account);
 
+const loginAccount = (username, password) => axios.post('/User/Authenticate', { username, password });
+
 export default {
   createBrand,
   uploadImage,
@@ -166,4 +168,5 @@ export default {
   deleteMenu,
   createAccount,
   updateAccount,
+  loginAccount,
 };

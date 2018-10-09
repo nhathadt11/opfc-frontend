@@ -16,7 +16,7 @@ const LoginModal = ({ visible, hideLoginModalAction, showRoleChoiceModalAction }
     width={350}
     onCancel={hideLoginModalAction}
   >
-    <Login registerNow={showRoleChoiceModalAction} />
+    <Login registerNow={showRoleChoiceModalAction} hideLoginModal={hideLoginModalAction} />
   </Modal>
 );
 

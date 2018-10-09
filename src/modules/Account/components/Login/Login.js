@@ -3,7 +3,10 @@ import { shape, func } from 'prop-types';
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './Login.css';
+import { loginAccountRequest } from '../../actions/account';
 
 const FormItem = Form.Item;
 
@@ -14,15 +17,18 @@ class Login extends Component {
       getFieldDecorator: func.isRequired,
     }).isRequired,
     registerNow: func.isRequired,
+    loginAccountRequestAction: func.isRequired,
+    hideLoginModal: func.isRequired,
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { form: { validateFields } } = this.props;
+    const { form: { validateFields }, loginAccountRequestAction, hideLoginModal } = this.props;
     validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        loginAccountRequestAction(values.username, values.password);
+        hideLoginModal();
       }
     });
   }
@@ -33,7 +39,7 @@ class Login extends Component {
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
         <FormItem>
-          {getFieldDecorator('userName', {
+          {getFieldDecorator('username', {
             rules: [{ required: true, message: 'Please input your username!' }],
           })(
             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />,
@@ -62,4 +68,11 @@ class Login extends Component {
   }
 }
 
-export default Form.create()(Login);
+const mapDispatchToProps = {
+  loginAccountRequestAction: loginAccountRequest,
+};
+
+export default compose(
+  Form.create(),
+  connect(undefined, mapDispatchToProps),
+)(Login);
