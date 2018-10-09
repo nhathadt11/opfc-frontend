@@ -44,9 +44,14 @@ class EventPlannerAccount extends Component {
     createAccountRequestAction: func.isRequired,
   }
 
+  componentDidMount() {
+    const { account: { user } } = this.props;
+    this.updateFormValues(user);
+  }
+
   updateFormValues = (account) => {
-    const { form: { setFields } } = this.props;
-    setFields({
+    const { form: { setFieldsValue } } = this.props;
+    setFieldsValue({
       username: account.username,
       password: account.password,
       confirmPassword: account.password,
@@ -60,10 +65,15 @@ class EventPlannerAccount extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { form: { validateFieldsAndScroll }, createAccountRequestAction } = this.props;
+    const {
+      form: { validateFieldsAndScroll },
+      createAccountRequestAction,
+      account: { user },
+    } = this.props;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         const account = {
+          ...user,
           username: values.username,
           email: values.email,
           password: values.password,
