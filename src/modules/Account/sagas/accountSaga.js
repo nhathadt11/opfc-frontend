@@ -9,7 +9,7 @@ import {
   CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess,
   LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess,
 } from '../actions/account';
-import { parseErrorMessage, persistAuthentication } from '../../../utils/Utils';
+import { parseErrorMessage, persistAuthentication, configAxiosAuthHeader } from '../../../utils/Utils';
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -57,6 +57,7 @@ function* loginAccount({ payload: { username, password } }) {
     yield put(loginAccountSuccess(data));
     message.success('Login successfully!');
     yield fork(persistAuthentication, data);
+    yield fork(configAxiosAuthHeader, data.token);
   } catch (error) {
     message.error(parseErrorMessage(error));
     yield put(loginAccountFailure(error));

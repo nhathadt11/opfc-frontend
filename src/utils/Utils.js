@@ -1,6 +1,7 @@
 import {
   find, isArray, isObject, map, uniq,
 } from 'lodash';
+import axios from 'axios';
 
 const tags = [
   { id: 1, name: 'Wedding' },
@@ -41,3 +42,7 @@ export const unpersistAuthentication = () => {
 };
 
 export const getAuthentication = () => localStorage.getItem('authentication');
+
+export const configAxiosAuthHeader = (authToken) => {
+  axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+};
