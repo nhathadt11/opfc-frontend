@@ -28,10 +28,7 @@ const Header = ({
     </div>
 
     <UserIconGroupStyled>
-      <Link to="/cart">
-        <Button icon="notification" size="large" shape="circle" className="header-icon" />
-      </Link>
-
+      <Button icon="notification" size="large" shape="circle" className="header-icon" />
       <Button icon="heart" size="large" shape="circle" className="header-icon" />
       {
         loggedIn ? (
