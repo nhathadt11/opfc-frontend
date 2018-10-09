@@ -10,7 +10,9 @@ import MenuBrowse from './MenuBrowse/MenuBrowse';
 import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButton';
 import { showLoginModal } from '../../modules/Account/actions/modal';
 
-const Header = ({ history: { push }, account, loggedIn, showLoginModalAction }) => (
+const Header = ({
+  history: { push }, account, loggedIn, showLoginModalAction,
+}) => (
   <Layout.Header className="header">
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
 
@@ -29,12 +31,14 @@ const Header = ({ history: { push }, account, loggedIn, showLoginModalAction }) 
       <Link to="/cart">
         <Button icon="notification" size="large" shape="circle" className="header-icon" />
       </Link>
-      <Link to="/profile/event-planner/account">
-        <Button icon="heart" size="large" shape="circle" className="header-icon" />
-      </Link>
+
+      <Button icon="heart" size="large" shape="circle" className="header-icon" />
       {
         loggedIn ? (
-          <Link to="/profile/brand">
+          <Link to={
+              account.user.userRoleId === 2 ? '/profile/brand' : '/profile/event-planner/account'
+            }
+          >
             <Button icon="smile" size="large" shape="circle" className="header-icon" />
           </Link>
         ) : (
