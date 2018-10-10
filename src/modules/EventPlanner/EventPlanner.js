@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { Layout } from 'antd';
 import EventPlannerSider from './components/EventPlannerSider/EventPlannerSider';
 import EventPlannerAccount from './components/EventPlannerAccount/EventPlannerAccount';
@@ -11,18 +11,19 @@ import EventPlannerPayment from './components/EventPlannerPayment/EventPlannerPa
 import EventPlannerBookmark from './components/EventPlannerBookmark/EventPlannerBookmark';
 import EventPlannerEvent from './components/EventPlannerEvent/EventPlannerEvent';
 import EventPlanningFlow from './components/EventPlanningFlow/EventPlanningFlow';
+import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 
 const EventPlannerProfile = () => (
   <Fragment>
     <EventPlannerSider />
     <EventPlannerTabContentStyled>
       <Switch>
-        <Route path="/profile/event-planner/account" component={EventPlannerAccount} />
-        <Route path="/profile/event-planner/event" component={EventPlannerEvent} />
-        <Route path="/profile/event-planner/order" component={EventPlannerOrder} />
-        <Route path="/profile/event-planner/address" component={EventPlannerAddress} />
-        <Route path="/profile/event-planner/payment" component={EventPlannerPayment} />
-        <Route path="/profile/event-planner/bookmark" component={EventPlannerBookmark} />
+        <PrivateRoute path="/profile/event-planner/account" component={EventPlannerAccount} />
+        <PrivateRoute path="/profile/event-planner/event" component={EventPlannerEvent} />
+        <PrivateRoute path="/profile/event-planner/order" component={EventPlannerOrder} />
+        <PrivateRoute path="/profile/event-planner/address" component={EventPlannerAddress} />
+        <PrivateRoute path="/profile/event-planner/payment" component={EventPlannerPayment} />
+        <PrivateRoute path="/profile/event-planner/bookmark" component={EventPlannerBookmark} />
       </Switch>
     </EventPlannerTabContentStyled>
   </Fragment>
@@ -31,9 +32,9 @@ const EventPlannerProfile = () => (
 const EventPlanner = () => (
   <Layout className="opfc-event-planner">
     <Switch>
-      <Route exact path="/profile/event-planner/event/create" component={EventPlanningFlow} />
-      <Route path="/profile/event-planner/event/:id" component={EventPlanningFlow} />
-      <Route path="/profile/event-planner" component={EventPlannerProfile} />
+      <PrivateRoute exact path="/profile/event-planner/event/create" component={EventPlanningFlow} />
+      <PrivateRoute path="/profile/event-planner/event/:id" component={EventPlanningFlow} />
+      <PrivateRoute path="/profile/event-planner" component={EventPlannerProfile} />
     </Switch>
   </Layout>
 );

@@ -16,6 +16,7 @@ import CreateBrandModal from './CreateBrandModal/CreateBrandModal';
 import CreateEventPlannerModal from '../modules/Account/components/CreateEventPlannerModal/CreateEventPlannerModal';
 import LoginModal from '../modules/Account/components/LoginModal/LoginModal';
 import RatingModal from '../modules/EventPlanner/components/RatingModal/RatingModal';
+import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 
 const { Footer, Content, Sider } = Layout;
 
@@ -40,11 +41,11 @@ const MainLayout = () => (
 
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/profile/brand" component={BrandProfile} />
+      <Route path="/brand/:id" component={BrandProfile} />
       <Route path="/menus/:id" component={MenuDetail} />
-      <Route path="/profile/event-planner" component={EventPlanner} />
-      <Route path="/cart" component={Cart} />
-      <Route path="/checkout" component={Checkout} />
+      <PrivateRoute path="/profile/event-planner" component={EventPlanner} />
+      <PrivateRoute path="/cart" component={Cart} />
+      <PrivateRoute path="/checkout" component={Checkout} />
     </Switch>
 
     <RoleChoiceModal />

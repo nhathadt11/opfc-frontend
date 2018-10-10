@@ -1,9 +1,10 @@
 import React from 'react';
 import { List } from 'antd';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
 import EventPlannerOrderItem from './EventPlannerOrderItem/EventPlannerOrderItem';
 import EventPlannerOrderDetail from './EventPlannerOrderDetail/EventPlannerOrderDetail';
+import PrivateRoute from '../../../../components/PrivateRoute/PrivateRoute';
 
 const data = [
   <EventPlannerOrderItem id={1} orderNumber={47362} />,
@@ -22,8 +23,8 @@ const EventPlannerOrder = () => (
   <div>
     <EventPlannerTabTitleStyled>Order</EventPlannerTabTitleStyled>
     <Switch>
-      <Route exact path="/profile/event-planner/order" component={EventPlannerOrderList} />
-      <Route path="/profile/event-planner/order/:id" component={EventPlannerOrderDetail} />
+      <PrivateRoute exact path="/profile/event-planner/order" component={EventPlannerOrderList} />
+      <PrivateRoute path="/profile/event-planner/order/:id" component={EventPlannerOrderDetail} />
     </Switch>
   </div>
 );
