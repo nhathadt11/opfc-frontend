@@ -20,7 +20,7 @@ function* createMeal({ payload: { meal, onSuccess } }) {
     let successMessage = 'Create meal successfully!';
     let response = {};
     if (meal.id) {
-      response = yield call(Api.updateMeal, meal);
+      response = yield call(Api.updateMeal, meal.id, meal);
       successMessage = 'Update meal successfully!';
     } else {
       response = yield call(Api.createMeal, meal);
@@ -57,7 +57,7 @@ function* watchDeleteMeal() {
 function* fetchMealMany() {
   try {
     const { data } = yield call(Api.fetchMealMany);
-    yield put(fetchMealManySuccess(data.meals));
+    yield put(fetchMealManySuccess(data));
   } catch (error) {
     yield put(fetchMealManyFailure(error));
     message.error('Could not fetch meals');
@@ -87,7 +87,7 @@ function* createMenu({ payload: { menu, onSuccess } }) {
     let successMessage = 'Create menu successfully!';
     let response = {};
     if (menu.id) {
-      response = yield call(Api.updateMenu, menu);
+      response = yield call(Api.updateMenu, menu.id, menu);
       successMessage = 'Update menu successfully!';
     } else {
       response = yield call(Api.createMenu, menu);

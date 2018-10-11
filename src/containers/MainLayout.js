@@ -44,6 +44,7 @@ const MainLayout = () => (
       <Route path="/brand/:id" component={BrandProfile} />
       <Route path="/menus/:id" component={MenuDetail} />
       <PrivateRoute path="/profile/event-planner" component={EventPlanner} />
+      <PrivateRoute path="/profile/brand" component={BrandProfile} />
       <PrivateRoute path="/cart" component={Cart} />
       <PrivateRoute path="/checkout" component={Checkout} />
     </Switch>

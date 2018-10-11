@@ -71,20 +71,20 @@ const createMeal = (meal) => {
     meal,
   };
 
-  return axios.post('/Meal/CreatMeal', toBeCreateMeal);
+  return axios.post('/Meal', toBeCreateMeal);
 };
 
-const updateMeal = (meal) => {
+const updateMeal = (id, meal) => {
   const toBeUpdatedMeal = {
     meal,
   };
 
-  return axios.put('/Meal/UpdateMeal', toBeUpdatedMeal);
+  return axios.put(`/Meal/${id}`, toBeUpdatedMeal);
 };
 
 const deleteMeal = id => axios.delete(`/Meal/${id}`);
 
-const fetchMealMany = () => axios.get('/Meal/GetAllMeal');
+const fetchMealMany = () => axios.get('/Meal');
 
 // const fetchMenuMany = () => axios.get('/Menu/GetAllMenu');
 const fetchMenuMany = () => new Promise((resolve) => {
@@ -134,15 +134,15 @@ const createMenu = (menu) => {
     menu,
   };
 
-  return axios.post('/Menu/CreateMenu', toBeCreatedMenu);
+  return axios.post('/Menu', toBeCreatedMenu);
 };
 
-const updateMenu = (menu) => {
+const updateMenu = (id, menu) => {
   const toBeUpdatedMenu = {
     menu,
   };
 
-  return axios.post('/Menu/UpdateMenu', toBeUpdatedMenu);
+  return axios.post(`/Menu/${id}`, toBeUpdatedMenu);
 };
 
 const deleteMenu = id => axios.delete(`/Menu/${id}`);
