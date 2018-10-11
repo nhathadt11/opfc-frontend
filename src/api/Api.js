@@ -66,6 +66,8 @@ const createEvent = (_event) => {
 
 const fetchEventMany = () => axios.get('/Event');
 
+const fetchEventManyByUserId = id => axios.get(`/Event/User/${id}`);
+
 const createMeal = (meal) => {
   const toBeCreateMeal = {
     meal,
@@ -172,4 +174,5 @@ export default {
   updateAccount,
   loginAccount,
   fetchEventTypeMany,
+  fetchEventManyByUserId,
 };

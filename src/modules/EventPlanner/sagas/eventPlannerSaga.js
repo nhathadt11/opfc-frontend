@@ -1,5 +1,5 @@
 import {
-  all, takeEvery, call, put, takeLatest,
+  all, takeEvery, call, put, takeLatest, select,
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { isFunction } from 'lodash';
@@ -28,7 +28,8 @@ function* watchCreateEvent() {
 
 function* fetchEventMany() {
   try {
-    const { data } = yield call(Api.fetchEventMany);
+    const userId = yield select(state => state.accountReducer.account.account.user.id);
+    const { data } = yield call(Api.fetchEventManyByUserId, userId);
     yield put(fetchEventManySuccess(data));
   } catch (error) {
     yield put(fetchEventManyFailure(error));
