@@ -50,14 +50,16 @@ function* watchCreateAccount() {
   yield takeEvery(CREATE_ACCOUNT_REQUEST, createAccount);
 }
 
-function* loginAccount({ payload: { username, password } }) {
+function* loginAccount({ payload: { username, password, onSuccess } }) {
   try {
     const { data } = yield call(Api.loginAccount, username, password);
 
     yield put(loginAccountSuccess(data));
+
     message.success('Login successfully!');
     yield fork(persistAuthentication, data);
     yield fork(configAxiosAuthHeader, data.token);
+    if (isFunction(onSuccess)) onSuccess(data);
   } catch (error) {
     message.error(parseErrorMessage(error));
     yield put(loginAccountFailure(error));

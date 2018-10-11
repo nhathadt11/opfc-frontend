@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { shape, func } from 'prop-types';
+import { shape, func, bool } from 'prop-types';
 import {
   Form, Icon, Input, Button, Checkbox,
 } from 'antd';
@@ -19,6 +19,7 @@ class Login extends Component {
     registerNow: func.isRequired,
     loginAccountRequestAction: func.isRequired,
     hideLoginModal: func.isRequired,
+    submitting: bool.isRequired,
   }
 
   handleSubmit = (e) => {
@@ -27,14 +28,13 @@ class Login extends Component {
     const { form: { validateFields }, loginAccountRequestAction, hideLoginModal } = this.props;
     validateFields((err, values) => {
       if (!err) {
-        loginAccountRequestAction(values.username, values.password);
-        hideLoginModal();
+        loginAccountRequestAction(values.username, values.password, hideLoginModal);
       }
     });
   }
 
   render() {
-    const { form: { getFieldDecorator }, registerNow } = this.props;
+    const { form: { getFieldDecorator }, registerNow, submitting } = this.props;
 
     return (
       <Form onSubmit={this.handleSubmit} className="login-form">
@@ -60,7 +60,7 @@ class Login extends Component {
             <Checkbox>Remember me</Checkbox>,
           )}
           <a href="#" className="opfc-event-planner-forget-password">Forgot password</a> {/*eslint-disable-line*/}
-          <Button type="primary" htmlType="submit" className="opfc-event-planner-login">Log in</Button>
+          <Button type="primary" htmlType="submit" className="opfc-event-planner-login" loading={submitting}>Log in</Button>
           Or <a href="#" onClick={registerNow}>register now!</a> {/*eslint-disable-line*/}
         </FormItem>
       </Form>
@@ -68,11 +68,15 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  submitting: state.accountReducer.account.submitting,
+});
+
 const mapDispatchToProps = {
   loginAccountRequestAction: loginAccountRequest,
 };
 
 export default compose(
   Form.create(),
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(Login);

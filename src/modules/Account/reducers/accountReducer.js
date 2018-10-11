@@ -40,6 +40,7 @@ const accountReducer = (state = initialState, { type, payload }) => {
         ...state,
         account: payload.account,
         loggedIn: true,
+        submitting: false,
       };
     }
     case CREATE_BRAND_FAILURE:
