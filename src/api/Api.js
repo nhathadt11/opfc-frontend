@@ -147,9 +147,9 @@ const updateMenu = (menu) => {
 
 const deleteMenu = id => axios.delete(`/Menu/${id}`);
 
-const createAccount = account => axios.post('/User/CreateAccount', account);
+const createAccount = account => axios.post('/User', account);
 
-const updateAccount = account => axios.put('/User/CreateAccount', account);
+const updateAccount = (id, account) => axios.put(`/User/${id}`, { user: { ...account } });
 
 const loginAccount = (username, password) => axios.post('/User/Authenticate', { username, password });
 

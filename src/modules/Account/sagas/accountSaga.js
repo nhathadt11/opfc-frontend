@@ -31,7 +31,7 @@ function* createAccount({ payload: { account, onSuccess } }) {
     let successMessage = 'Create account successfully!';
     let response = {};
     if (account.id) {
-      response = yield call(Api.updateAccount, account);
+      response = yield call(Api.updateAccount, account.id, account);
       successMessage = 'Update account successfully!';
     } else {
       response = yield call(Api.createAccount, account);
