@@ -113,7 +113,7 @@ class EventPlannerAccount extends Component {
         },
       },
     };
-    const prefixSelector = getFieldDecorator('phoneprefix', {
+    const prefixSelector = getFieldDecorator('phonePrefix', {
       initialValue: '86',
     })(
       <Select style={{ width: 70 }}>
