@@ -153,6 +153,8 @@ const updateAccount = (id, account) => axios.put(`/User/${id}`, { user: { ...acc
 
 const loginAccount = (username, password) => axios.post('/User/Authenticate', { username, password });
 
+const fetchEventTypeMany = () => axios.get('/EventType');
+
 export default {
   createBrand,
   uploadImage,
@@ -169,4 +171,5 @@ export default {
   createAccount,
   updateAccount,
   loginAccount,
+  fetchEventTypeMany,
 };
