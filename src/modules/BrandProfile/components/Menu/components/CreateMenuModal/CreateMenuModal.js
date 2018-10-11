@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
   Form, Input, InputNumber, Checkbox, Upload, Button, Icon, Select, Modal, Row, Col, message,
 } from 'antd';
-import { shape, func, bool } from 'prop-types';
+import {
+  shape, func, bool, arrayOf,
+} from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map, filter, isEmpty } from 'lodash';
@@ -26,6 +28,8 @@ class CreateMenuModal extends Component {
     hideCreateMenuModalAction: func.isRequired,
     createMenuRequestAction: func.isRequired,
     selectedMenu: shape({}).isRequired,
+    eventTypeList: arrayOf(shape({})).isRequired,
+    mealList: arrayOf(shape({})).isRequired,
   }
 
   constructor(props) {
@@ -132,7 +136,13 @@ class CreateMenuModal extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator }, visible, selectedMenu } = this.props;
+    const {
+      form: { getFieldDecorator },
+      visible,
+      selectedMenu,
+      eventTypeList,
+      mealList,
+    } = this.props;
     const { uploadedFileList } = this.state;
 
     return (
@@ -202,7 +212,12 @@ class CreateMenuModal extends Component {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                   >
-                    {this.getTagOptions()}
+                    {
+                      map(
+                        eventTypeList,
+                        t => <Select.Option key={t.id}>{t.eventTypeName}</Select.Option>,
+                      )
+                    }
                   </Select>,
                 )}
               </Form.Item>
@@ -216,9 +231,13 @@ class CreateMenuModal extends Component {
                     mode="multiple"
                     style={{ width: '100%' }}
                     placeholder="Please select"
-                    optio
                   >
-                    {this.getTagOptions()}
+                    {
+                      map(
+                        mealList,
+                        m => <Select.Option key={m.id}>{m.mealName}</Select.Option>,
+                      )
+                    }
                   </Select>,
                 )}
               </Form.Item>
@@ -260,6 +279,8 @@ class CreateMenuModal extends Component {
 const mapStateToProps = state => ({
   visible: state.brandProfileReducer.modal.menuModalVisible,
   selectedMenu: state.brandProfileReducer.modal.selectedMenu,
+  eventTypeList: state.generalReducer.eventTypeList,
+  mealList: state.brandProfileReducer.meal.mealList,
 });
 
 const mapDispatchToProps = {

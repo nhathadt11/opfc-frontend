@@ -1,5 +1,5 @@
 import {
-  all, call, takeLatest, put,
+  all, call, takeLatest, put, fork,
 } from 'redux-saga/effects';
 
 import { message } from 'antd';
@@ -25,5 +25,6 @@ function* watchFetchEventTypeMany() {
 export default function* generalFlow() {
   yield all([
     watchFetchEventTypeMany(),
+    fork(fetchEventTypeMany),
   ]);
 }

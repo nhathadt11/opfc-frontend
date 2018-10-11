@@ -3,9 +3,10 @@ import {
   Form, Input, DatePicker, Cascader, InputNumber, Select, Row, Col,
 } from 'antd';
 import { compose } from 'redux';
-import { shape, func } from 'prop-types';
+import { shape, func, arrayOf } from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { map } from 'lodash';
 import './StepEvent.css';
 import { createEventRequest } from '../../../actions/event';
 
@@ -40,6 +41,7 @@ const StepEvent = ({
   next,
   createEventRequestAction,
   selectedEvent,
+  eventTypeList,
 }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -125,9 +127,12 @@ const StepEvent = ({
                 rules: [{ required: true, message: 'Event Type is required!' }],
               })(
                 <Select>
-                  <Select.Option value="1">Wedding</Select.Option>
-                  <Select.Option value="2">Birthday</Select.Option>
-                  <Select.Option value="3">Family</Select.Option>
+                  {
+                    map(
+                      eventTypeList,
+                      t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>
+                    )
+                  }
                 </Select>,
               )
             }
@@ -156,10 +161,12 @@ StepEvent.propTypes = {
   next: func.isRequired,
   createEventRequestAction: func.isRequired,
   selectedEvent: shape({}).isRequired,
+  eventTypeList: arrayOf(shape({})).isRequired,
 };
 
 const mapStateToProps = state => ({
   selectedEvent: state.eventPlannerReducer.event.event,
+  eventTypeList: state.generalReducer.eventTypeList,
 });
 
 const mapDispatchToProps = {
