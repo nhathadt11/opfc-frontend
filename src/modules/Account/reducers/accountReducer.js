@@ -6,7 +6,6 @@ import {
 } from '../actions/account';
 
 const initialState = {
-  brand: {},
   account: {},
   submitting: false,
   loggedIn: false,
