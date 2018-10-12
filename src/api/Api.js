@@ -157,6 +157,12 @@ const loginAccount = (username, password) => axios.post('/User/Authenticate', { 
 
 const fetchEventTypeMany = () => axios.get('/EventType');
 
+const fetchBrandDetail = id => axios.get(`/Brand/${id}`);
+
+const fetchBrandMenuMany = id => axios.get(`/Menu/Brand/${id}`);
+
+const fetchBrandMealMany = id => axios.get(`/Meal/Brand/${id}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -175,4 +181,7 @@ export default {
   loginAccount,
   fetchEventTypeMany,
   fetchEventManyByUserId,
+  fetchBrandDetail,
+  fetchBrandMenuMany,
+  fetchBrandMealMany,
 };

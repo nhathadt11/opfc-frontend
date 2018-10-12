@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import {
   arrayOf, shape, string, number, func,
 } from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import MealCard from '../../MealCard/MealCard';
 import CreateMealModal from '../../CreateMealModal/CreateMealModal';
-import { fetchMealManyRequest } from '../../../actions/meal';
+import { fetchBrandMealManyRequest } from '../../../actions/brand';
 
 class MealTab extends Component {
   static propTypes = {
@@ -16,12 +17,15 @@ class MealTab extends Component {
       mealName: string,
       description: string,
     })).isRequired,
-    fetchMealManyRequestAction: func.isRequired,
+    fetchBrandMealManyRequestAction: func.isRequired,
+    match: shape({}).isRequired,
   }
 
   componentDidMount() {
-    const { fetchMealManyRequestAction } = this.props;
-    fetchMealManyRequestAction();
+    const { fetchBrandMealManyRequestAction, match } = this.props;
+    const { params: { id } } = match;
+
+    fetchBrandMealManyRequestAction(id);
   }
 
   render() {
@@ -51,13 +55,14 @@ class MealTab extends Component {
 }
 
 const mapStateToProps = state => ({
-  mealList: state.brandProfileReducer.meal.mealList,
+  mealList: state.brandProfileReducer.brand.mealList,
 });
 
 const mapDispatchToProps = {
-  fetchMealManyRequestAction: fetchMealManyRequest,
+  fetchBrandMealManyRequestAction: fetchBrandMealManyRequest,
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(MealTab);

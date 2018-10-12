@@ -3,7 +3,7 @@ import {
   Card, Row, Col, Button, Icon, Modal, Tag,
 } from 'antd';
 import { shape, func } from 'prop-types';
-import { find } from 'lodash';
+import { find, map } from 'lodash';
 import './BrandMenuCard.css';
 import { MenuInfoTitleStyled, MenuInfoValueStyled } from './BrandMenuCard.styled';
 
@@ -61,7 +61,7 @@ const BrandMenuCard = ({ menu, openEditModal }) => {
       <Row>
         <Col>
           <MenuInfoTitleStyled>Number of meals:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{[...menu.meals].length}</MenuInfoValueStyled>
+          <MenuInfoValueStyled>{[...menu.mealList].length}</MenuInfoValueStyled>
         </Col>
       </Row>
       <Row>
@@ -72,7 +72,7 @@ const BrandMenuCard = ({ menu, openEditModal }) => {
       </Row>
       <Row className="opfc-brand-menu-card-tag">
         {
-          menu.tags.map(tag => <Tag key={tag}>{tagById(tag)}</Tag>)
+          map(menu.tagList, tag => <Tag key={tag}>{tagById(tag)}</Tag>)
         }
       </Row>
     </Card>

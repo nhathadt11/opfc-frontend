@@ -1,5 +1,5 @@
 import {
-  all, takeEvery, call, put, takeLatest,
+  all, takeEvery, call, put, takeLatest, select,
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { isFunction } from 'lodash';
@@ -14,6 +14,13 @@ import {
   fetchMenuManyFailure, createMenuFailure,
   CREATE_MENU_REQUEST, createMenuSuccess, deleteMenuSuccess, deleteMenuFailure, DELETE_MENU_REQUEST,
 } from '../actions/menu';
+import {
+  FETCH_BRAND_DETAIL_REQUEST, fetchBrandDetailSuccess, fetchBrandDetailFailure,
+  FETCH_BRAND_MENU_MANY_REQUEST, FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealManySuccess,
+  fetchBrandMenuManySuccess, fetchBrandMealManyRequest,
+} from '../actions/brand';
+
+const getBrandId = state => state.brandProfileReducer.brand.brandDetail.id;
 
 function* createMeal({ payload: { meal, onSuccess } }) {
   try {
@@ -29,6 +36,9 @@ function* createMeal({ payload: { meal, onSuccess } }) {
     if (isFunction(onSuccess)) onSuccess(response.data);
     message.success(successMessage);
     yield put(createMealSuccess(response.data));
+
+    const brandId = yield select(getBrandId);
+    yield put(fetchBrandMealManyRequest(brandId));
   } catch (error) {
     message.error(meal.id ? 'Could not update meal' : 'Could not create meal');
     yield put(createMealFailure(error));
@@ -121,6 +131,46 @@ function* watchDeleteMenu() {
   yield takeEvery(DELETE_MENU_REQUEST, deleteMenu);
 }
 
+function* fetchBrandDetail({ payload: { id } }) {
+  try {
+    const { data } = yield call(Api.fetchBrandDetail, id);
+    yield put(fetchBrandDetailSuccess(data));
+  } catch (error) {
+    message.error('Brand detail could not be fetched.');
+    yield put(fetchBrandDetailFailure(error));
+  }
+}
+
+function* watchFetchBrandDetail() {
+  yield takeLatest(FETCH_BRAND_DETAIL_REQUEST, fetchBrandDetail);
+}
+
+function* fetchBrandMenu({ payload: { id } }) {
+  try {
+    const { data } = yield call(Api.fetchBrandMenuMany, id);
+    yield put(fetchBrandMenuManySuccess(data));
+  } catch (error) {
+    message.error('Menus could not be fetched.');
+  }
+}
+
+function* watchFetchBrandMenuMany() {
+  yield takeLatest(FETCH_BRAND_MENU_MANY_REQUEST, fetchBrandMenu);
+}
+
+function* fetchBrandMealMany({ payload: { id } }) {
+  try {
+    const { data } = yield call(Api.fetchBrandMealMany, id);
+    yield put(fetchBrandMealManySuccess(data));
+  } catch (error) {
+    message.error('Meals could not be fetched.');
+  }
+}
+
+function* watchFetchBrandMealMany() {
+  yield takeLatest(FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealMany);
+}
+
 export default function* brandProfielFlow() {
   yield all([
     watchCreateMeal(),
@@ -129,5 +179,8 @@ export default function* brandProfielFlow() {
     watchFetchMenuMany(),
     watchCreateMenu(),
     watchDeleteMenu(),
+    watchFetchBrandDetail(),
+    watchFetchBrandMenuMany(),
+    watchFetchBrandMealMany(),
   ]);
 }

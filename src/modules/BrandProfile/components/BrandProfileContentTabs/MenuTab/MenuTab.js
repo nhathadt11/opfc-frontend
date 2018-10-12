@@ -6,10 +6,11 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
 import { Row, Col } from 'antd';
+import { withRouter } from 'react-router-dom';
 import CreateMenuModal from '../../Menu/components/CreateMenuModal/CreateMenuModal';
-import { fetchMenuManyRequest } from '../../../actions/menu';
 import BrandMenuCard from '../../BrandMenuCard/BrandMenuCard';
 import { showCreateMenuModal } from '../../../actions/modals';
+import { fetchBrandMenuManyRequest } from '../../../actions/brand';
 
 class MenuTab extends Component {
   static propTypes = {
@@ -19,8 +20,9 @@ class MenuTab extends Component {
       description: string,
       servingNumber: number,
     })),
-    fetchMenuManyRequestAction: func.isRequired,
+    fetchBrandMenuManyRequestAction: func.isRequired,
     showCreateMenuModalAction: func.isRequired,
+    match: shape({}).isRequired,
   }
 
   static defaultProps = {
@@ -28,8 +30,9 @@ class MenuTab extends Component {
   }
 
   componentDidMount() {
-    const { fetchMenuManyRequestAction } = this.props;
-    fetchMenuManyRequestAction();
+    const { fetchBrandMenuManyRequestAction, match } = this.props;
+    const { params: { id } } = match;
+    fetchBrandMenuManyRequestAction(id);
   }
 
   openEditModal = (selectedMenu) => {
@@ -64,14 +67,15 @@ class MenuTab extends Component {
 }
 
 const mapStateToProps = state => ({
-  menuList: state.brandProfileReducer.menu.menuList,
+  menuList: state.brandProfileReducer.brand.menuList,
 });
 
 const mapDispatchToProps = {
-  fetchMenuManyRequestAction: fetchMenuManyRequest,
+  fetchBrandMenuManyRequestAction: fetchBrandMenuManyRequest,
   showCreateMenuModalAction: showCreateMenuModal,
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(MenuTab);
