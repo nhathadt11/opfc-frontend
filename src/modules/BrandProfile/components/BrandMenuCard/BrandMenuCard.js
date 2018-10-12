@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Card, Row, Col, Button, Icon, Modal, Tag,
 } from 'antd';
-import { shape, func } from 'prop-types';
+import { shape, func, bool } from 'prop-types';
 import { find, map } from 'lodash';
 import './BrandMenuCard.css';
 import { MenuInfoTitleStyled, MenuInfoValueStyled } from './BrandMenuCard.styled';
@@ -19,7 +19,7 @@ const tagById = (id) => {
   return found ? found.name : undefined;
 };
 
-const BrandMenuCard = ({ menu, openEditModal }) => {
+const BrandMenuCard = ({ menu, openEditModal, profiling }) => {
   const confirmDelete = () => Modal.confirm({
     title: 'Delete Menu',
     content: 'Are you sure to delete this menu?',
@@ -31,14 +31,18 @@ const BrandMenuCard = ({ menu, openEditModal }) => {
     <Card hoverable>
       <Row type="flex" className="opfc-meal-title">
         <Col><h3>{menu.menuName}</h3></Col>
-        <Col className="opfc-meal-actions">
-          <Button shape="circle" onClick={openEditModal}>
-            <Icon type="edit" theme="outlined" />
-          </Button>
-          <Button type="danger" shape="circle" onClick={confirmDelete}>
-            <Icon type="delete" theme="outlined" />
-          </Button>
-        </Col>
+        {
+          profiling && (
+            <Col className="opfc-meal-actions">
+              <Button shape="circle" onClick={openEditModal}>
+                <Icon type="edit" theme="outlined" />
+              </Button>
+              <Button type="danger" shape="circle" onClick={confirmDelete}>
+                <Icon type="delete" theme="outlined" />
+              </Button>
+            </Col>
+          )
+        }
       </Row>
       <Row>
         <Col>
@@ -82,6 +86,7 @@ const BrandMenuCard = ({ menu, openEditModal }) => {
 BrandMenuCard.propTypes = {
   menu: shape({}),
   openEditModal: func.isRequired,
+  profiling: bool.isRequired,
 };
 
 BrandMenuCard.defaultProps = {

@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import {
-  arrayOf, shape, string, number, func,
+  arrayOf, shape, string, number, func, bool,
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -23,6 +23,7 @@ class MenuTab extends Component {
     fetchBrandMenuManyRequestAction: func.isRequired,
     showCreateMenuModalAction: func.isRequired,
     match: shape({}).isRequired,
+    profiling: bool.isRequired,
   }
 
   static defaultProps = {
@@ -41,7 +42,7 @@ class MenuTab extends Component {
   }
 
   render() {
-    const { menuList } = this.props;
+    const { menuList, profiling } = this.props;
 
     return (
       <Fragment>
@@ -55,7 +56,11 @@ class MenuTab extends Component {
                 lg={{ span: 8 }}
                 style={{ marginTop: 16 }}
               >
-                <BrandMenuCard menu={menu} openEditModal={() => this.openEditModal(menu)} />
+                <BrandMenuCard
+                  menu={menu}
+                  openEditModal={() => this.openEditModal(menu)}
+                  profiling={profiling}
+                />
               </Col>
             ))
           }

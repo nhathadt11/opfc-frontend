@@ -280,7 +280,7 @@ const mapStateToProps = state => ({
   visible: state.brandProfileReducer.modal.menuModalVisible,
   selectedMenu: state.brandProfileReducer.modal.selectedMenu,
   eventTypeList: state.generalReducer.eventTypeList,
-  mealList: state.brandProfileReducer.meal.mealList,
+  mealList: state.brandProfileReducer.brand.mealList,
 });
 
 const mapDispatchToProps = {

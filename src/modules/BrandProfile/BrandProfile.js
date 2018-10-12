@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { func, shape } from 'prop-types';
+import { func, shape, bool } from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import BrandProfileHeader from './components/BrandProfileHeader/BrandProfileHeader';
 import BrandProfileContent from './components/BrandProfileContent/BrandProfileContent';
@@ -16,6 +16,8 @@ class BrandProfile extends Component {
     fetchBrandMealManyRequestAction: func.isRequired,
     brand: shape({}).isRequired,
     match: shape({}).isRequired,
+    profiling: bool.isRequired,
+    loggedInBrand: shape({}).isRequired,
   }
 
   componentDidMount() {
@@ -24,21 +26,28 @@ class BrandProfile extends Component {
       fetchBrandMenuManyRequestAction,
       fetchBrandMealManyRequestAction,
       match,
+      profiling,
     } = this.props;
-    const { params: { id } } = match;
 
-    fetchBrandDetailRequestAction(id);
-    fetchBrandMenuManyRequestAction(id);
-    fetchBrandMealManyRequestAction(id);
+    let brandId = match.params.id;
+
+    if (profiling) {
+      const { loggedInBrand } = this.props;
+      brandId = loggedInBrand.id;
+    }
+
+    fetchBrandDetailRequestAction(brandId);
+    fetchBrandMenuManyRequestAction(brandId);
+    fetchBrandMealManyRequestAction(brandId);
   }
 
   render() {
-    const { brand } = this.props;
+    const { brand, profiling } = this.props;
 
     return (
       <BrandProfileStyled>
         <BrandProfileHeader brand={brand} />
-        <BrandProfileContent brand={brand} />
+        <BrandProfileContent profiling={profiling} />
       </BrandProfileStyled>
     );
   }
@@ -46,6 +55,7 @@ class BrandProfile extends Component {
 
 const mapStateToProps = state => ({
   brand: state.brandProfileReducer.brand.brandDetail,
+  loggedInBrand: state.accountReducer.account.account.brand,
 });
 
 const mapDispatchToProps = {
