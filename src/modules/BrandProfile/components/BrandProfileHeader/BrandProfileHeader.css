@@ -3,6 +3,10 @@
   padding: 20px 30px 30px;
 }
 
+.ant-row-flex.opfc-brand-profile-header > div:nth-child(3) {
+  flex: 1;
+}
+
 .opfc-brand-info-label {
   font-weight: 600;
 }
