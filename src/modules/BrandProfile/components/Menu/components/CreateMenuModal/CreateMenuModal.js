@@ -124,8 +124,8 @@ class CreateMenuModal extends Component {
       servingNumber: { value: menu.servingNumber, errors: null },
       price: { value: menu.price, errors: null },
       available: { value: menu.available, errors: null },
-      eventTypes: { value: map(menu.eventTypes, e => String(e)), errors: null },
-      meals: { value: map(menu.meals, m => String(m)), errors: null },
+      eventTypeIds: { value: map(menu.eventTypeIds, id => id), errors: null },
+      mealIds: { value: map(menu.mealIds, id => id), errors: null },
       tags: { value: map(menu.tags, t => String(t)), errors: null },
     });
   }
@@ -202,7 +202,7 @@ class CreateMenuModal extends Component {
             </Col>
             <Col span={12}>
               <Form.Item label="Event Types">
-                {getFieldDecorator('eventTypes', {
+                {getFieldDecorator('eventTypeIds', {
                   rules: [{
                     required: true, message: 'Event Types is required!',
                   }],
@@ -215,14 +215,14 @@ class CreateMenuModal extends Component {
                     {
                       map(
                         eventTypeList,
-                        t => <Select.Option key={t.id}>{t.eventTypeName}</Select.Option>,
+                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
                       )
                     }
                   </Select>,
                 )}
               </Form.Item>
               <Form.Item label="Meals">
-                {getFieldDecorator('meals', {
+                {getFieldDecorator('mealIds', {
                   rules: [{
                     required: true, message: 'Meals is required!',
                   }],
@@ -235,7 +235,7 @@ class CreateMenuModal extends Component {
                     {
                       map(
                         mealList,
-                        m => <Select.Option key={m.id}>{m.mealName}</Select.Option>,
+                        m => <Select.Option key={m.id} value={m.id}>{m.mealName}</Select.Option>,
                       )
                     }
                   </Select>,

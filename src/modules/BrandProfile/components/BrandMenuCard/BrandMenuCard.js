@@ -3,7 +3,9 @@ import {
   Card, Row, Col, Button, Icon, Modal, Tag,
 } from 'antd';
 import { shape, func, bool } from 'prop-types';
-import { find, map } from 'lodash';
+import {
+  find, map, join, isEmpty,
+} from 'lodash';
 import './BrandMenuCard.css';
 import { MenuInfoTitleStyled, MenuInfoValueStyled } from './BrandMenuCard.styled';
 
@@ -58,20 +60,20 @@ const BrandMenuCard = ({ menu, openEditModal, profiling }) => {
       </Row>
       <Row>
         <Col>
-          <MenuInfoTitleStyled>Event Type:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{menu.eventType}</MenuInfoValueStyled>
+          <MenuInfoTitleStyled>Event Types:</MenuInfoTitleStyled>
+          <MenuInfoValueStyled>{isEmpty(menu.eventTypeNames) ? 'N/A' : join(menu.eventTypeNames, ', ')}</MenuInfoValueStyled>
         </Col>
       </Row>
       <Row>
         <Col>
-          <MenuInfoTitleStyled>Number of meals:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{[...menu.mealList].length}</MenuInfoValueStyled>
+          <MenuInfoTitleStyled>Meals:</MenuInfoTitleStyled>
+          <MenuInfoValueStyled>{isEmpty(menu.mealNames) ? 'N/A' : join(menu.mealNames, ', ')}</MenuInfoValueStyled>
         </Col>
       </Row>
       <Row>
         <Col>
           <MenuInfoTitleStyled>Descrition:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{menu.description}</MenuInfoValueStyled>
+          <MenuInfoValueStyled>{menu.description ? menu.description : 'N/A'}</MenuInfoValueStyled>
         </Col>
       </Row>
       <Row className="opfc-brand-menu-card-tag">
@@ -86,11 +88,12 @@ const BrandMenuCard = ({ menu, openEditModal, profiling }) => {
 BrandMenuCard.propTypes = {
   menu: shape({}),
   openEditModal: func.isRequired,
-  profiling: bool.isRequired,
+  profiling: bool,
 };
 
 BrandMenuCard.defaultProps = {
   menu: {},
+  profiling: false,
 };
 
 export default BrandMenuCard;

@@ -2,15 +2,27 @@ import React from 'react';
 import { Card, Row, Tooltip } from 'antd';
 import moment from 'moment';
 import {
-  shape, string, number, func,
+  shape, string, number, func, arrayOf,
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { find } from 'lodash';
 import { EventNameStyled, EventInfoLabelStyled, EventInfoValueStyled } from './EventCard.styled';
 import { selectEvent } from '../../../actions/planningFlow';
 
-const EventCard = ({ data, history: { push }, selectEventAction }) => (
+const getEventTypeNameFromId = (id, eventTypes) => {
+  const found = find(eventTypes, t => t.id === id);
+
+  return found ? found.eventTypeName : 'N/A';
+};
+
+const EventCard = ({
+  data,
+  history: { push },
+  selectEventAction,
+  eventTypeList,
+}) => (
   <Tooltip title="Start picking menus for this event">
     <Card
       hoverable
@@ -48,7 +60,7 @@ const EventCard = ({ data, history: { push }, selectEventAction }) => (
       </Row>
       <Row>
         <EventInfoLabelStyled>Event Type:</EventInfoLabelStyled>
-        <EventInfoValueStyled>{data.eventType}</EventInfoValueStyled>
+        <EventInfoValueStyled>{getEventTypeNameFromId(data.eventTypeId, eventTypeList)}</EventInfoValueStyled>
       </Row>
     </Card>
   </Tooltip>
@@ -72,7 +84,15 @@ EventCard.propTypes = {
     push: func.isRequired,
   }).isRequired,
   selectEventAction: func.isRequired,
+  eventTypeList: arrayOf(shape({
+    id: number,
+    eventTypeName: string,
+  })).isRequired,
 };
+
+const mapStateToProps = state => ({
+  eventTypeList: state.generalReducer.eventTypeList,
+});
 
 const mapDispatchToProps = {
   selectEventAction: selectEvent,
@@ -80,5 +100,5 @@ const mapDispatchToProps = {
 
 export default compose(
   withRouter,
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(EventCard);

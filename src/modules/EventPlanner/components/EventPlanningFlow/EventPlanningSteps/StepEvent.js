@@ -123,14 +123,14 @@ const StepEvent = ({
           <Form.Item label="Event Type">
             {
               getFieldDecorator('eventType', {
-                initialValue: selectedEvent.eventType,
+                initialValue: selectedEvent.eventTypeId,
                 rules: [{ required: true, message: 'Event Type is required!' }],
               })(
                 <Select>
                   {
                     map(
                       eventTypeList,
-                      t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>
+                      t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
                     )
                   }
                 </Select>,
