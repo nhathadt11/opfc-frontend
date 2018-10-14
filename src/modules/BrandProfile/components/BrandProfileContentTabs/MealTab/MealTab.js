@@ -3,13 +3,13 @@ import { Row, Col } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  arrayOf, shape, string, number, func,
+  arrayOf, shape, string, number,
 } from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import MealCard from '../../MealCard/MealCard';
 import CreateMealModal from '../../CreateMealModal/CreateMealModal';
 import { fetchBrandMealManyRequest } from '../../../actions/brand';
 
+// eslint-disable-next-line
 class MealTab extends Component {
   static propTypes = {
     mealList: arrayOf(shape({
@@ -17,15 +17,6 @@ class MealTab extends Component {
       mealName: string,
       description: string,
     })).isRequired,
-    fetchBrandMealManyRequestAction: func.isRequired,
-    match: shape({}).isRequired,
-  }
-
-  componentDidMount() {
-    const { fetchBrandMealManyRequestAction, match } = this.props;
-    const { params: { id } } = match;
-
-    fetchBrandMealManyRequestAction(id);
   }
 
   render() {
@@ -64,5 +55,4 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withRouter,
 )(MealTab);

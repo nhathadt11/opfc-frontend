@@ -6,7 +6,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
 import { Row, Col } from 'antd';
-import { withRouter } from 'react-router-dom';
 import CreateMenuModal from '../../Menu/components/CreateMenuModal/CreateMenuModal';
 import BrandMenuCard from '../../BrandMenuCard/BrandMenuCard';
 import { showCreateMenuModal } from '../../../actions/modals';
@@ -20,20 +19,12 @@ class MenuTab extends Component {
       description: string,
       servingNumber: number,
     })),
-    fetchBrandMenuManyRequestAction: func.isRequired,
     showCreateMenuModalAction: func.isRequired,
-    match: shape({}).isRequired,
     profiling: bool.isRequired,
   }
 
   static defaultProps = {
     menuList: [],
-  }
-
-  componentDidMount() {
-    const { fetchBrandMenuManyRequestAction, match } = this.props;
-    const { params: { id } } = match;
-    fetchBrandMenuManyRequestAction(id);
   }
 
   openEditModal = (selectedMenu) => {
@@ -82,5 +73,4 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withRouter,
 )(MenuTab);
