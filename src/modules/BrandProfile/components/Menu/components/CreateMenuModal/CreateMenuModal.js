@@ -84,11 +84,12 @@ class CreateMenuModal extends Component {
   ))
 
   handleOk = () => {
-    const { form: { validateFieldsAndScroll }, createMenuRequestAction } = this.props;
+    const { form: { validateFieldsAndScroll }, createMenuRequestAction, selectedMenu } = this.props;
     const { uploadedFileList } = this.state;
 
     validateFieldsAndScroll((err, values) => {
       const toBeCreatedMenu = {
+        ...selectedMenu,
         ...values,
         eventTypes: map(values.eventTypes, e => Number(e)),
         meals: map(values.meals, m => Number(m)),
