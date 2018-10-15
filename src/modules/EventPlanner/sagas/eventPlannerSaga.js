@@ -9,13 +9,24 @@ import {
 } from '../actions/event';
 import Api from '../../../api/Api';
 
+const getUserId = state => state.accountReducer.account.account.user.id;
+
 function* createEvent({ payload: { event, onSuccess } }) {
   try {
-    const { data } = yield call(Api.createEvent, event);
-    yield put(createEventSuccess(data));
+    const userId = yield select(getUserId);
+    let response = {};
+    let successMessage = 'Update event successfully!';
 
-    message.success('Create event successfully!');
-    if (isFunction(onSuccess)) onSuccess(data);
+    if (event.id) {
+      response = yield call(Api.updateEvent, userId, event);
+    } else {
+      response = yield call(Api.createEvent, userId, event);
+      successMessage = 'Create event successfully!';
+    }
+    yield put(createEventSuccess(response.data));
+
+    message.success(successMessage);
+    if (isFunction(onSuccess)) onSuccess(response.data);
   } catch (error) {
     yield put(createEventFailure(error));
     message.error('Could not create Event');

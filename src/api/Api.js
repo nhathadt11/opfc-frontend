@@ -44,7 +44,7 @@ const uploadImage = (file) => {
   });
 };
 
-const createEvent = (_event) => {
+const createEvent = (userId, _event) => {
   const event = {
     event: {
       eventName: _event.eventName,
@@ -53,15 +53,36 @@ const createEvent = (_event) => {
       endAt: _event.timeRange[1].toISOString(),
       budget: _event.budget,
       servingNumber: _event.servingNumber,
-      city: _event.cityDistrictWard[0],
-      district: _event.cityDistrictWard[1],
-      ward: _event.cityDistrictWard[2],
+      cityId: _event.cityDistrict[0],
+      districtId: _event.cityDistrict[1],
       address: _event.address,
-      eventTypes: _event.eventTypes,
+      eventTypeId: _event.eventTypeId,
+      userId,
     },
   };
 
-  return axios.post('/Event', event);
+  return axios.post(`/Event/User/${userId}`, event);
+};
+
+const updateEvent = (userId, _event) => {
+  const event = {
+    event: {
+      eventName: _event.eventName,
+      description: _event.description,
+      startAt: _event.timeRange[0].toISOString(),
+      endAt: _event.timeRange[1].toISOString(),
+      budget: _event.budget,
+      servingNumber: _event.servingNumber,
+      cityId: _event.cityDistrict[0],
+      districtId: _event.cityDistrict[1],
+      address: _event.address,
+      eventTypeId: _event.eventTypeId,
+      userId,
+      id: _event.id,
+    },
+  };
+
+  return axios.put(`/Event/User/${userId}/${_event.id}`, event);
 };
 
 const fetchEventMany = () => axios.get('/Event');
@@ -159,6 +180,7 @@ export default {
   createBrand,
   uploadImage,
   createEvent,
+  updateEvent,
   fetchEventMany,
   createMeal,
   updateMeal,

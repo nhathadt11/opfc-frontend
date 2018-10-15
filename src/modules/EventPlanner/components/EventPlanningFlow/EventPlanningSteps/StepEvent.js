@@ -24,7 +24,13 @@ const StepEvent = ({
     e.preventDefault();
 
     validateFieldsAndScroll((err, values) => {
-      if (!err) createEventRequestAction(values, next);
+      if (!err) {
+        createEventRequestAction({
+          id: selectedEvent.id,
+          userId: selectedEvent.userId,
+          ...values,
+        }, next);
+      }
     });
   };
 
@@ -55,11 +61,11 @@ const StepEvent = ({
               )
             }
           </Form.Item>
-          <Form.Item label="City/District/Ward">
+          <Form.Item label="City and District">
             {
-              getFieldDecorator('cityDistrictWard', {
-                initialValue: [selectedEvent.city, selectedEvent.district, selectedEvent.ward],
-                rules: [{ required: true, message: 'City/District/Ward is required!' }],
+              getFieldDecorator('cityDistrict', {
+                initialValue: [selectedEvent.cityId, selectedEvent.districtId],
+                rules: [{ required: true, message: 'City and District is required!' }],
               })(
                 <Cascader options={cityAndDistrictList} />,
               )
@@ -99,7 +105,7 @@ const StepEvent = ({
           </Form.Item>
           <Form.Item label="Event Type">
             {
-              getFieldDecorator('eventType', {
+              getFieldDecorator('eventTypeId', {
                 initialValue: selectedEvent.eventTypeId,
                 rules: [{ required: true, message: 'Event Type is required!' }],
               })(
