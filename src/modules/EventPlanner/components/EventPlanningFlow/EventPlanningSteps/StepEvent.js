@@ -12,36 +12,13 @@ import { createEventRequest } from '../../../actions/event';
 
 const { RangePicker } = DatePicker;
 
-const locations = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
-
 const StepEvent = ({
   form: { getFieldDecorator, validateFieldsAndScroll },
   next,
   createEventRequestAction,
   selectedEvent,
   eventTypeList,
+  cityAndDistrictList,
 }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +61,7 @@ const StepEvent = ({
                 initialValue: [selectedEvent.city, selectedEvent.district, selectedEvent.ward],
                 rules: [{ required: true, message: 'City/District/Ward is required!' }],
               })(
-                <Cascader options={locations} />,
+                <Cascader options={cityAndDistrictList} />,
               )
             }
           </Form.Item>
@@ -162,11 +139,13 @@ StepEvent.propTypes = {
   createEventRequestAction: func.isRequired,
   selectedEvent: shape({}).isRequired,
   eventTypeList: arrayOf(shape({})).isRequired,
+  cityAndDistrictList: arrayOf(shape({})).isRequired,
 };
 
 const mapStateToProps = state => ({
   selectedEvent: state.eventPlannerReducer.event.event,
   eventTypeList: state.generalReducer.eventTypeList,
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
 });
 
 const mapDispatchToProps = {

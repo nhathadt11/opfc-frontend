@@ -151,6 +151,10 @@ const fetchBrandMenuMany = id => axios.get(`/Menu/Brand/${id}`);
 
 const fetchBrandMealMany = id => axios.get(`/Meal/Brand/${id}`);
 
+const fetchCityMany = () => axios.get('/City');
+
+const fetchDistrictMany = () => axios.get('/District');
+
 export default {
   createBrand,
   uploadImage,
@@ -172,4 +176,6 @@ export default {
   fetchBrandDetail,
   fetchBrandMenuMany,
   fetchBrandMealMany,
+  fetchCityMany,
+  fetchDistrictMany,
 };
