@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { shape, func } from 'prop-types';
+import { shape, func, arrayOf } from 'prop-types';
 import {
   Form, Input, Cascader, Select, Button,
 } from 'antd';
@@ -12,29 +12,28 @@ import { createAccountRequest } from '../../../Account/actions/account';
 const FormItem = Form.Item;
 const { Option } = Select;
 
-const residences = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    xs: {
+      span: 24,
+      offset: 0,
+    },
+    sm: {
+      span: 16,
+      offset: 8,
+    },
+  },
+};
 
 class EventPlannerAccount extends Component {
   static propTypes = {
@@ -42,6 +41,7 @@ class EventPlannerAccount extends Component {
       validateFieldsAndScroll: func.isRequired,
     }).isRequired,
     createAccountRequestAction: func.isRequired,
+    cityAndDistrictList: arrayOf(shape({})).isRequired,
   }
 
   componentDidMount() {
@@ -56,7 +56,7 @@ class EventPlannerAccount extends Component {
       password: account.password,
       confirmPassword: account.password,
       email: account.email,
-      cityDistrictWard: [account.city, account.district, account.ward],
+      cityDistrictWard: [account.cityId, account.districtId],
       phone: account.phone,
       address: account.address,
     });
@@ -89,30 +89,8 @@ class EventPlannerAccount extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator } } = this.props;
+    const { form: { getFieldDecorator }, cityAndDistrictList } = this.props;
 
-    const formItemLayout = {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 8 },
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 16 },
-      },
-    };
-    const tailFormItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-          offset: 0,
-        },
-        sm: {
-          span: 16,
-          offset: 8,
-        },
-      },
-    };
     const prefixSelector = getFieldDecorator('phonePrefix', {
       initialValue: '86',
     })(
@@ -182,12 +160,12 @@ class EventPlannerAccount extends Component {
           </FormItem>
           <FormItem
             {...formItemLayout}
-            label="City/District/Ward"
+            label="City and District"
           >
-            {getFieldDecorator('cityDistrictWard', {
-              rules: [{ type: 'array', required: true, message: 'Please select your City/District/Ward!' }],
+            {getFieldDecorator('cityDistrict', {
+              rules: [{ type: 'array', required: true, message: 'Please select your City and District!' }],
             })(
-              <Cascader options={residences} />,
+              <Cascader options={cityAndDistrictList} />,
             )}
           </FormItem>
           <FormItem
@@ -221,6 +199,7 @@ class EventPlannerAccount extends Component {
 
 const mapStateToProps = state => ({
   account: state.accountReducer.account.account,
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
 });
 
 const mapDispatchToProps = {

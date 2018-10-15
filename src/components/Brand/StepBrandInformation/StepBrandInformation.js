@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import {
   Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader, message,
 } from 'antd';
-import { func, shape, string } from 'prop-types';
+import {
+  func, shape, string, arrayOf,
+} from 'prop-types';
 import { filter } from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './StepBrandInformation.css';
 import Api from '../../../api/Api';
 
@@ -14,30 +18,6 @@ const getBase64 = (img, callback) => {
   reader.addEventListener('load', () => callback(reader.result));
   reader.readAsDataURL(img);
 };
-
-const locations = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
 
 class StepBrandInformation extends Component {
   static propTypes = {
@@ -50,6 +30,7 @@ class StepBrandInformation extends Component {
     }).isRequired,
     onFormValueChange: func.isRequired,
     next: func.isRequired,
+    cityAndDistrictList: arrayOf(shape({})).isRequired,
   }
 
   state = {
@@ -87,7 +68,12 @@ class StepBrandInformation extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator }, formValues, onFormValueChange } = this.props;
+    const {
+      form: { getFieldDecorator },
+      formValues,
+      onFormValueChange,
+      cityAndDistrictList,
+    } = this.props;
     const { imageUrl, loading } = this.state;
     const uploadButton = (
       <div>
@@ -187,22 +173,21 @@ class StepBrandInformation extends Component {
             </FormItem>
             <Row>
               <FormItem
-                label="City/District/Ward"
+                label="City and District"
               >
-                {getFieldDecorator('cityDistrictWard', {
+                {getFieldDecorator('cityDistrict', {
                   initialValue: filter(
-                    [formValues.city, formValues.district, formValues.ward],
+                    [formValues.cityId, formValues.districtId],
                     item => item,
                   ),
-                  rules: [{ type: 'array', required: true, message: 'Please select City/District/Ward!' }],
+                  rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
                 })(
                   <Cascader
-                    options={locations}
+                    options={cityAndDistrictList}
                     onChange={
                       (values) => {
-                        onFormValueChange('city', values[0]);
-                        onFormValueChange('district', values[1]);
-                        onFormValueChange('ward', values[2]);
+                        onFormValueChange('cityId', values[0]);
+                        onFormValueChange('districtId', values[1]);
                       }
                     }
                   />,
@@ -217,4 +202,11 @@ class StepBrandInformation extends Component {
   }
 }
 
-export default Form.create()(StepBrandInformation);
+const mapStateToProps = state => ({
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
+});
+
+export default compose(
+  Form.create(),
+  connect(mapStateToProps),
+)(StepBrandInformation);

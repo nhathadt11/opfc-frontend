@@ -3,8 +3,10 @@ import {
   Modal, Form, Input, Cascader, Select,
 } from 'antd';
 import {
-  bool, func, shape, string,
+  bool, func, shape, string, arrayOf,
 } from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -20,32 +22,8 @@ const formItemLayout = {
   },
 };
 
-const residences = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
-
 const EditEventPlannerAddressModal = ({
-  title, visible, handleOk, handleCancel, form: { getFieldDecorator }, data,
+  title, visible, handleOk, handleCancel, form: { getFieldDecorator }, data, cityAndDistrictList,
 }) => {
   const prefixSelector = getFieldDecorator('prefix', {
     initialValue: '86',
@@ -90,13 +68,13 @@ const EditEventPlannerAddressModal = ({
         </FormItem>
         <FormItem
           {...formItemLayout}
-          label="City/District/Ward"
+          label="City and District"
         >
-          {getFieldDecorator('residence', {
+          {getFieldDecorator('cityDistrict', {
             initialValue: [data.city, data.district, data.ward],
-            rules: [{ type: 'array', required: true, message: 'Please select your City/District/Ward!' }],
+            rules: [{ type: 'array', required: true, message: 'Please select your City and District!' }],
           })(
-            <Cascader options={residences} />,
+            <Cascader options={cityAndDistrictList} />,
           )}
         </FormItem>
       </Form>
@@ -119,10 +97,18 @@ EditEventPlannerAddressModal.propTypes = {
     ward: string,
     phoneNumber: string,
   }).isRequired,
+  cityAndDistrictList: arrayOf(shape({})).isRequired,
 };
 
 EditEventPlannerAddressModal.defaultProps = {
   title: 'Create Address',
 };
 
-export default Form.create()(EditEventPlannerAddressModal);
+const mapStateToProps = state => ({
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
+});
+
+export default compose(
+  Form.create(),
+  connect(mapStateToProps),
+)(EditEventPlannerAddressModal);

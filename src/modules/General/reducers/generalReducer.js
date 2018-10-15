@@ -11,7 +11,7 @@ const initialState = {
   eventTypeList: [],
   cityList: [],
   districtList: [],
-  cityAndDistrict: [],
+  cityAndDistrictList: [],
 };
 
 const generalReducer = (state = initialState, { type, payload }) => {

@@ -2,35 +2,13 @@ import React, { Component } from 'react';
 import {
   Form, Row, Col, Input, Upload, Icon, Select, message, Button, Cascader,
 } from 'antd';
-import { func, shape } from 'prop-types';
+import { func, shape, arrayOf } from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './CreateEventPlanner.css';
 import Api from '../../../../../api/Api';
 
 const FormItem = Form.Item;
-
-const locations = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
 
 class CreateEventPlanner extends Component {
   static propTypes = {
@@ -38,6 +16,7 @@ class CreateEventPlanner extends Component {
       getFieldDecorator: func.isRequired,
       validateFieldsAndScroll: func.isRequired,
     }).isRequired,
+    cityAndDistrictList: arrayOf(shape({})).isRequired,
   }
 
   state = {
@@ -80,7 +59,7 @@ class CreateEventPlanner extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator } } = this.props;
+    const { form: { getFieldDecorator }, cityAndDistrictList } = this.props;
     const { imageUrl, loading } = this.state;
     const uploadButton = (
       <div>
@@ -187,12 +166,12 @@ class CreateEventPlanner extends Component {
               }
             </FormItem>
             <FormItem
-              label="City/District/Ward"
+              label="City and District"
             >
-              {getFieldDecorator('cityDistrictWard', {
-                rules: [{ type: 'array', required: true, message: 'Please select City/District/Ward!' }],
+              {getFieldDecorator('cityDistrict', {
+                rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
               })(
-                <Cascader options={locations} />,
+                <Cascader options={cityAndDistrictList} />,
               )}
             </FormItem>
             <div className="opfc-event-planner-register-actions">
@@ -206,4 +185,11 @@ class CreateEventPlanner extends Component {
   }
 }
 
-export default Form.create()(CreateEventPlanner);
+const mapStateToProps = state => ({
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
+});
+
+export default compose(
+  Form.create(),
+  connect(mapStateToProps),
+)(CreateEventPlanner);
