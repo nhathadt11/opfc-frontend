@@ -66,7 +66,12 @@ class EventPlanningFlow extends Component {
             && <Button size="large" type="primary" onClick={this.next} loading={submitting}>Next<Icon type="right" theme="outlined" /></Button>
           }
           {
-            currentStep === 0 && <Button size="large" type="primary" loading={submitting}><label htmlFor="form-event">Next</label><Icon type="right" theme="outlined" /></Button>
+            currentStep === 0 && (
+              <Button size="large" type="primary" loading={submitting}>
+                <label htmlFor="form-event" className="opfc-pointer-cursor">Next</label>
+                <Icon type="right" theme="outlined" />
+              </Button>
+            )
           }
         </ActionButtonGroupStyled>
       </Fragment>

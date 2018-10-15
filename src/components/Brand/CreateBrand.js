@@ -82,11 +82,11 @@ class CreateBrand extends Component {
           <div className="steps-action">
             {
               (current < this.steps.length - 1) && (current !== 0)
-              && <Button type="primary" size="large"><label htmlFor="brand-form">Next</label></Button> //eslint-disable-line
+              && <Button type="primary" size="large"><label htmlFor="brand-form" className="opfc-pointer-cursor">Next</label></Button> //eslint-disable-line
             }
             {
               current === this.steps.length - 1
-              && <Button type="primary" size="large" loading={submitting}><label htmlFor="brand-form">Done</label></Button> //eslint-disable-line
+              && <Button type="primary" size="large" loading={submitting}><label htmlFor="brand-form" className="opfc-pointer-cursor">Done</label></Button> //eslint-disable-line
             }
             {
               current > 0
