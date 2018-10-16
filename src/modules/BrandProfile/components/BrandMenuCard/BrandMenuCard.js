@@ -35,7 +35,7 @@ const BrandMenuCard = ({
   const { push } = history;
 
   return (
-    <Card hoverable onClick={() => push(`/menus/${menu.id}`)}>
+    <Card hoverable onClick={() => push(`/menus/${menu.id}`)} style={{ height: '100%' }}>
       <Row type="flex" className="opfc-meal-title">
         <Col><h3>{menu.menuName}</h3></Col>
         {
@@ -77,8 +77,8 @@ const BrandMenuCard = ({
       </Row>
       <Row>
         <Col>
-          <MenuInfoTitleStyled>Descrition:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{menu.description ? menu.description : 'N/A'}</MenuInfoValueStyled>
+          <MenuInfoTitleStyled>Description:</MenuInfoTitleStyled>
+          <MenuInfoValueStyled desc>{menu.description ? menu.description : 'N/A'}</MenuInfoValueStyled>
         </Col>
       </Row>
       <Row className="opfc-brand-menu-card-tag">

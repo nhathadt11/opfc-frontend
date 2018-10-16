@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import './MealCard.css';
 import { showCreateMealModal } from '../../actions/modals';
 import { deleteMealRequest } from '../../actions/meal';
+import { MealDescriptionStyled } from './MenuCard.styled';
 
 const MealCard = ({ meal, showCreateMealModalAction, deleteMealRequestAction }) => {
   const confirmDelete = () => Modal.confirm({
@@ -21,7 +22,7 @@ const MealCard = ({ meal, showCreateMealModalAction, deleteMealRequestAction }) 
   });
 
   return (
-    <Card hoverable>
+    <Card hoverable style={{ height: '100%' }}>
       <Row type="flex" className="opfc-meal-title">
         <Col><h3>{meal.mealName}</h3></Col>
         <Col className="opfc-meal-actions">
@@ -33,9 +34,9 @@ const MealCard = ({ meal, showCreateMealModalAction, deleteMealRequestAction }) 
           </Button>
         </Col>
       </Row>
-      <p>
+      <MealDescriptionStyled className="opfc-3-line-truncation">
         {meal.description}
-      </p>
+      </MealDescriptionStyled>
     </Card>
   );
 };
