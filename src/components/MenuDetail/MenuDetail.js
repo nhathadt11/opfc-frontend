@@ -78,7 +78,7 @@ class MenuDetail extends Component {
             </div>
           </Col>
           <Col className="opfc-menu-detail-main">
-            <h1>{menuDetail.name}</h1>
+            <h1>{menuDetail.menuName}</h1>
             <section className="opfc-menu-price">{menuDetail.price}</section>
             <div style={{ margin: '10px 0' }}>
               <StatSpanStyled>
