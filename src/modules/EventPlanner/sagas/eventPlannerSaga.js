@@ -2,16 +2,21 @@ import {
   all, takeEvery, call, put, takeLatest, select,
 } from 'redux-saga/effects';
 import { message } from 'antd';
-import { isFunction } from 'lodash';
+import { isFunction, map } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure,
   FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess, createEventFailure,
 } from '../actions/event';
 import Api from '../../../api/Api';
-import { FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess } from '../actions/planningFlow';
+import {
+  FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess,
+  CREATE_ORDER_REQUEST, createOrderFailure, createOrderSuccess, deselectMenuAll, changeEventPlanCurrentStep,
+} from '../actions/planningFlow';
 import { parseErrorMessage } from '../../../utils/Utils';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
+const getEventId = state => state.eventPlannerReducer.event.event.id;
+const getSelectedMenuList = state => state.eventPlannerReducer.event.selectedMenuList;
 
 function* createEvent({ payload: { event, onSuccess } }) {
   try {
@@ -69,10 +74,35 @@ function* watchFetchSuggestedMenuMany() {
   yield takeLatest(FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuMany);
 }
 
+function* createOrder() {
+  try {
+    const userId = yield select(getUserId);
+    const eventId = yield select(getEventId);
+    const selectedMenuList = yield select(getSelectedMenuList);
+
+    const menuIds = map(selectedMenuList, m => m.id);
+    const { data } = yield call(Api.createOrder, userId, eventId, menuIds);
+
+    yield put(createOrderSuccess(data));
+    yield put(deselectMenuAll());
+    yield put(changeEventPlanCurrentStep(0));
+
+    message.success('Create Order successfully!');
+  } catch (error) {
+    message.error('Order could be made.');
+    yield put(createOrderFailure(error));
+  }
+}
+
+function* watchCreateOrder() {
+  yield takeLatest(CREATE_ORDER_REQUEST, createOrder);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
     watchFetchEventMany(),
     watchFetchSuggestedMenuMany(),
+    watchCreateOrder(),
   ]);
 }

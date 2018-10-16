@@ -7,6 +7,7 @@ import {
   PREV_EVENT_PLAN_STEP, SELECT_MENU, SELECT_EVENT, DESELECT_EVENT,
   SHOW_RATING_MODAL, HIDE_RATING_MODAL, FETCH_SUGGESTED_MENU_MANY_REQUEST,
   FETCH_SUGGESTED_MENU_MANY_SUCCESS, FETCH_SUGGESTED_MENU_MANY_FAILURE,
+  CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS, DESELECT_MENU_ALL,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
 const eventPlannerReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case CREATE_EVENT_REQUEST:
+    case CREATE_ORDER_REQUEST:
       return {
         ...state,
         submitting: true,
@@ -32,7 +34,13 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
         ...state,
         submitting: false,
       };
+    case CREATE_ORDER_SUCCESS:
+      return {
+        ...state,
+        submitting: false,
+      };
     case CREATE_EVENT_FAILURE:
+    case CREATE_ORDER_FAILURE:
       return {
         ...state,
         submitting: false,
@@ -59,6 +67,12 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedMenuList: [...state.selectedMenuList, payload.menu],
+      };
+    }
+    case DESELECT_MENU_ALL: {
+      return {
+        ...state,
+        selectedMenuList: [],
       };
     }
     case FETCH_EVENT_MANY_REQUEST: {

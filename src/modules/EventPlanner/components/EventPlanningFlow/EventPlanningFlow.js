@@ -8,7 +8,7 @@ import StepEvent from './EventPlanningSteps/StepEvent';
 import { EventStepContentStyled, ActionButtonGroupStyled } from './EventStepFlow.styled';
 import StepPickMenus from './EventPlanningSteps/StepPickMenus';
 import Cart from '../../../Cart/containers/Cart/Cart';
-import { nextEventPlanStep, prevEventPlanStep } from '../../actions/planningFlow';
+import { nextEventPlanStep, prevEventPlanStep, createOrderRequest } from '../../actions/planningFlow';
 
 const { Step } = Steps;
 
@@ -18,6 +18,7 @@ class EventPlanningFlow extends Component {
     currentStep: number.isRequired,
     nextEventPlanStepAction: func.isRequired,
     prevEventPlanStepAction: func.isRequired,
+    createOrderRequestAction: func.isRequired,
   }
 
   constructor(props) {
@@ -42,7 +43,7 @@ class EventPlanningFlow extends Component {
   }
 
   render() {
-    const { submitting, currentStep } = this.props;
+    const { submitting, currentStep, createOrderRequestAction } = this.props;
 
     return (
       <Fragment>
@@ -59,7 +60,7 @@ class EventPlanningFlow extends Component {
           }
           {
             (currentStep === this.steps.length - 1)
-            && <Button type="primary" size="large" loading={submitting}>Done</Button>
+            && <Button type="primary" size="large" loading={submitting} onClick={createOrderRequestAction}>Done</Button>
           }
           {
             currentStep > 0 && (currentStep !== this.steps.length - 1)
@@ -91,6 +92,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   nextEventPlanStepAction: nextEventPlanStep,
   prevEventPlanStepAction: prevEventPlanStep,
+  createOrderRequestAction: createOrderRequest,
 };
 
 export default compose(

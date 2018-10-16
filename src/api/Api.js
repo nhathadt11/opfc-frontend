@@ -137,6 +137,12 @@ const fetchMenuManyAndLimit = () => axios.get('/Menu/Limit');
 
 const fetchMenuDetail = id => axios.get(`/Menu/${id}`);
 
+const createOrder = (userId, eventId, menuIds) => axios.post('/Order', {
+  userId,
+  eventId,
+  menuIds,
+});
+
 export default {
   createBrand,
   uploadImage,
@@ -163,4 +169,5 @@ export default {
   fetchDistrictMany,
   fetchMenuManyAndLimit,
   fetchMenuDetail,
+  createOrder,
 };
