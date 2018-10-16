@@ -1,42 +1,37 @@
 import React from 'react';
 import { Cascader } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import {
+  arrayOf, shape, array, number, string,
+} from 'prop-types';
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
-
-const options = [{
-  value: 'Ho Chi Minh',
-  label: 'Ho Chi Minh',
-  children: [{
-    value: 'Go Vap',
-    label: 'Go Vap',
-    children: [{
-      value: 'Phuong 14',
-      label: 'Phuong 14',
-    }],
-  }],
-}, {
-  value: 'Da Nang',
-  label: 'Da Nang',
-  children: [{
-    value: 'Quan Hai Chau',
-    label: 'Quan Hai Chau',
-    children: [{
-      value: 'Phuong 10',
-      label: 'Phuong 10',
-    }],
-  }],
-}];
 
 const onChange = value => console.log(value);
 
-const Location = () => (
+const Location = ({ cityAndDistrictList }) => (
   <MenuFilterItemStyled>
     <MenuFilterItemTitleStyled htmlFor="">Location</MenuFilterItemTitleStyled>
     <Cascader
-      placeholder="City / District / Ward"
-      options={options}
+      placeholder="City / District"
+      options={cityAndDistrictList}
       onChange={onChange}
     />
   </MenuFilterItemStyled>
 );
 
-export default Location;
+Location.propTypes = {
+  cityAndDistrictList: arrayOf(shape({
+    value: number,
+    label: string,
+    children: array,
+  })).isRequired,
+};
+
+const mapStateToProps = state => ({
+  cityAndDistrictList: state.generalReducer.cityAndDistrictList,
+});
+
+export default compose(
+  connect(mapStateToProps),
+)(Location);

@@ -1,19 +1,16 @@
 import React from 'react';
 import { Checkbox, Row, Col } from 'antd';
 import { map } from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { arrayOf, shape, number, string } from 'prop-types';
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
 
 function onChange(checkedValues) {
   console.log('checked = ', checkedValues);
 }
 
-const options = [
-  { label: 'Wedding', value: 'Wedding' },
-  { label: 'Birthday', value: 'Birthday' },
-  { label: 'Family', value: 'Family' },
-];
-
-const EventType = () => (
+const EventType = ({ eventTypeList }) => (
   <MenuFilterItemStyled>
     <MenuFilterItemTitleStyled htmlFor="">Event Type</MenuFilterItemTitleStyled>
     <Checkbox.Group
@@ -23,9 +20,9 @@ const EventType = () => (
     >
       <Row>
         {
-          map(options, option => (
-            <Col span={24} key={option.value}>
-              <Checkbox value={option.value}>{option.label}</Checkbox>
+          map(eventTypeList, event => (
+            <Col span={24} key={event.id}>
+              <Checkbox value={event.id}>{event.eventTypeName}</Checkbox>
             </Col>
           ))
         }
@@ -34,4 +31,17 @@ const EventType = () => (
   </MenuFilterItemStyled>
 );
 
-export default EventType;
+EventType.propTypes = {
+  eventTypeList: arrayOf(shape({
+    id: number,
+    eventTypeName: string,
+  })).isRequired,
+};
+
+const mapStateToProps = state => ({
+  eventTypeList: state.generalReducer.eventTypeList,
+});
+
+export default compose(
+  connect(mapStateToProps),
+)(EventType);

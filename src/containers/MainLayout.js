@@ -3,7 +3,6 @@ import { Layout } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
-
 import './MainLayout.css';
 import BrandProfile from '../modules/BrandProfile/BrandProfile';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
