@@ -10,6 +10,10 @@ export const DESELECT_EVENT = 'DESELECT_EVENT';
 export const SHOW_RATING_MODAL = 'SHOW_RATING_MODAL';
 export const HIDE_RATING_MODAL = 'HIDE_RATING_MODAL';
 
+export const FETCH_SUGGESTED_MENU_MANY_REQUEST = 'FETCH_SUGGESTED_MENU_MANY_REQUEST';
+export const FETCH_SUGGESTED_MENU_MANY_SUCCESS = 'FETCH_SUGGESTED_MENU_MANY_SUCCESS';
+export const FETCH_SUGGESTED_MENU_MANY_FAILURE = 'FETCH_SUGGESTED_MENU_MANY_FAILURE';
+
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
   payload: {
@@ -49,4 +53,25 @@ export const showRatingModal = () => ({
 
 export const hideRatingModal = () => ({
   type: HIDE_RATING_MODAL,
+});
+
+export const fetchSuggestedMenuManyRequest = eventId => ({
+  type: FETCH_SUGGESTED_MENU_MANY_REQUEST,
+  payload: {
+    eventId,
+  },
+});
+
+export const fetchSuggestedMenuManySuccess = suggestedMenuList => ({
+  type: FETCH_SUGGESTED_MENU_MANY_SUCCESS,
+  payload: {
+    suggestedMenuList,
+  },
+});
+
+export const fetchSuggestedMenuManyFailure = error => ({
+  type: FETCH_SUGGESTED_MENU_MANY_FAILURE,
+  payload: {
+    error,
+  },
 });

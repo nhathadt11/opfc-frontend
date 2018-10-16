@@ -1,32 +1,51 @@
-import React from 'react';
-import { arrayOf, shape, number } from 'prop-types';
+import React, { Component } from 'react';
+import {
+  arrayOf, shape, number, func,
+} from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
 import MenuCardGrid from '../../../../../containers/MenuCardGrid/MenuCardGrid';
 import StepPickMenuSider from './StepPickMenuSider';
+import { fetchSuggestedMenuManyRequest } from '../../../actions/planningFlow';
 
-const StepPickMenus = ({ selectedMenus }) => (
-  <Layout>
-    <Layout.Sider theme="light" width={280}>
-      <StepPickMenuSider />
-    </Layout.Sider>
-    <Layout.Content>
-      <MenuCardGrid dataList={selectedMenus} />
-    </Layout.Content>
-  </Layout>
-);
+class StepPickMenus extends Component {
+  static propTypes = {
+    suggestedMenuList: arrayOf(shape({
+      id: number,
+    })).isRequired,
+    fetchSuggestedMenuManyRequestAction: func.isRequired,
+  }
 
-StepPickMenus.propTypes = {
-  selectedMenus: arrayOf(shape({
-    id: number,
-  })).isRequired,
-};
+  componentDidMount() {
+    const { fetchSuggestedMenuManyRequestAction } = this.props;
+    fetchSuggestedMenuManyRequestAction();
+  }
+
+  render() {
+    const { suggestedMenuList } = this.props;
+
+    return (
+      <Layout>
+        <Layout.Sider theme="light" width={280}>
+          <StepPickMenuSider />
+        </Layout.Sider>
+        <Layout.Content>
+          <MenuCardGrid dataList={suggestedMenuList} />
+        </Layout.Content>
+      </Layout>
+    );
+  }
+}
 
 const mapStateToProps = state => ({
-  selectedMenus: state.eventPlannerReducer.event.selectedMenus,
+  suggestedMenuList: state.eventPlannerReducer.event.suggestedMenuList,
 });
 
+const mapDispatchToProps = {
+  fetchSuggestedMenuManyRequestAction: fetchSuggestedMenuManyRequest,
+};
+
 export default compose(
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(StepPickMenus);

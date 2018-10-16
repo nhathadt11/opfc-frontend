@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import {
-  Row, Col, Button, Icon, DatePicker, Input, Modal, Tooltip,
+  Row, Col, Button, Icon, Input, Modal, Tooltip,
 } from 'antd';
+import { shape, arrayOf } from 'prop-types';
+import { map } from 'lodash';
 import './CartItem.css';
 import LocalIcon from '../../../../fonts/LocalFont';
 import {
-  MenuNameStyled, ByBrandNameStyled, ViewMealsInThisMenu, ServiceTimeStyled,
+  MenuNameStyled, ByBrandNameStyled, ViewMealsInThisMenu,
   MenuPriceStyled, ShippingFeeStyled, SubTotalStyled, NoteWrapperStyled,
   EditingActionsStyled,
   MealListStyled,
 } from './CartItem.styled';
 
-const { RangePicker } = DatePicker;
+// const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
 const confirmDelete = () => {
@@ -25,18 +27,21 @@ const confirmDelete = () => {
   });
 };
 
-const mealList = (
+const MealList = ({ meals }) => (
   <MealListStyled>
-    <li>Chicken Quesadilla</li>
-    <li>Southwestern Shrimp</li>
-    <li>Fresh Cookie Tray</li>
-    <li>Assorted Individual Sodas</li>
-    <li>Meat Lasagna</li>
-    <li>Moussaka</li>
+    { map(meals, m => <li>{m.mealName}</li>) }
   </MealListStyled>
 );
 
+MealList.propTypes = {
+  meals: arrayOf(shape({})).isRequired,
+};
+
 class CartItem extends Component {
+  static propTypes = {
+    menu: shape({}).isRequired,
+  }
+
   state = {
     editing: false,
   }
@@ -46,6 +51,7 @@ class CartItem extends Component {
   disableEditing = () => this.setState({ editing: false })
 
   render() {
+    const { menu } = this.props;
     const { editing } = this.state;
 
     return (
@@ -55,21 +61,21 @@ class CartItem extends Component {
         </Col>
         <Col span={4}>
           <div>
-            <MenuNameStyled>Menu Name</MenuNameStyled>
-            <ByBrandNameStyled>by Brand Name</ByBrandNameStyled>
+            <MenuNameStyled>{menu.menuName}</MenuNameStyled>
+            <ByBrandNameStyled>by {menu.brandName || 'N/A'}</ByBrandNameStyled>
             <section>
-              <span><LocalIcon type="icon-dish" /> x 4</span>
+              <span><LocalIcon type="icon-dish" /> x {menu.mealIds ? menu.mealIds.length : 0}</span>
             </section>
             <section>
-              <span><Icon type="team" /> x 7</span>
+              <span><Icon type="team" /> x {menu.participantNumber || 0}</span>
             </section>
-            <Tooltip title={mealList} placement="right" overlayClassName="opfc-meal-list-view">
+            <Tooltip title={<MealList meals={menu.mealNames} />} placement="right" overlayClassName="opfc-meal-list-view">
               <ViewMealsInThisMenu>View meals</ViewMealsInThisMenu>
             </Tooltip>
           </div>
         </Col>
         <Col span={10} className="opfc-cart-item-service-info">
-          <ServiceTimeStyled>Service time</ServiceTimeStyled>
+          {/* <ServiceTimeStyled>Service time</ServiceTimeStyled>
           {
             editing ? (
               <RangePicker
@@ -79,7 +85,7 @@ class CartItem extends Component {
                 placeholder={['Start Time', 'End Time']}
               />
             ) : (<div>Sep 12, 12:00 PM - 13:00 PM</div>)
-          }
+          } */}
           <NoteWrapperStyled>
             {
               editing ? (
@@ -100,15 +106,15 @@ class CartItem extends Component {
         <Col span={4} className="opfc-cart-item-price-group">
           <Row>
             <Col span={12} className="opfc-menu-price">Price:</Col>
-            <Col className="opfc-cart-item-align-right"><MenuPriceStyled>$47.50</MenuPriceStyled></Col>
+            <Col className="opfc-cart-item-align-right"><MenuPriceStyled>$ {menu.price}</MenuPriceStyled></Col>
           </Row>
           <Row>
             <Col span={12} className="opfc-menu-shipping-fee">Shipping fee:</Col>
-            <Col className="opfc-cart-item-align-right"><ShippingFeeStyled>$47.50</ShippingFeeStyled></Col>
+            <Col className="opfc-cart-item-align-right"><ShippingFeeStyled>$ {menu.shippingFee || 0}</ShippingFeeStyled></Col>
           </Row>
           <Row>
             <Col span={12} className="opfc-menu-sub-total">Sub Total:</Col>
-            <Col className="opfc-cart-item-align-right"><SubTotalStyled>$47.50</SubTotalStyled></Col>
+            <Col className="opfc-cart-item-align-right"><SubTotalStyled>$ {(menu.price || 0) + (menu.shippingFee || 0) }</SubTotalStyled></Col>
           </Row>
         </Col>
         <Col span={4} className="opfc-cart-item-actions">

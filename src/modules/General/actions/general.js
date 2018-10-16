@@ -14,6 +14,10 @@ export const FETCH_CITY_AND_DISTRICT_REQUEST = 'FETCH_CITY_AND_DISTRICT_REQUEST'
 export const FETCH_CITY_AND_DISTRICT_SUCCESS = 'FETCH_CITY_AND_DISTRICT_SUCCESS';
 export const FETCH_CITY_AND_DISTRICT_FAILURE = 'FETCH_CITY_AND_DISTRICT_FAILURE';
 
+export const FETCH_MENU_DETAIL_REQUEST = 'FETCH_MENU_DETAIL_REQUEST';
+export const FETCH_MENU_DETAIL_SUCCESS = 'FETCH_MENU_DETAIL_SUCCESS';
+export const FETCH_MENU_DETAIL_FAILURE = 'FETCH_MENU_DETAIL_FAILURE';
+
 export const fetchEventTypeManyRequest = () => ({
   type: FETCH_EVENT_TYPE_MANY_REQUEST,
 });
@@ -81,6 +85,27 @@ export const fetchCityAndDistrictSuccess = cityAndDistrictList => ({
 
 export const fetchCityAndDistrictFailure = error => ({
   type: FETCH_CITY_AND_DISTRICT_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const fetchMenuDetailRequest = id => ({
+  type: FETCH_MENU_DETAIL_REQUEST,
+  payload: {
+    id,
+  },
+});
+
+export const fetchMenuDetailSuccess = menuDetail => ({
+  type: FETCH_MENU_DETAIL_SUCCESS,
+  payload: {
+    menuDetail,
+  },
+});
+
+export const fetchMenuDetailFailure = error => ({
+  type: FETCH_MENU_DETAIL_FAILURE,
   payload: {
     error,
   },

@@ -8,6 +8,8 @@ import {
   FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess, createEventFailure,
 } from '../actions/event';
 import Api from '../../../api/Api';
+import { FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess } from '../actions/planningFlow';
+import { parseErrorMessage } from '../../../utils/Utils';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 
@@ -52,9 +54,25 @@ function* watchFetchEventMany() {
   yield takeLatest(FETCH_EVENT_MANY_REQUEST, fetchEventMany);
 }
 
+function* fetchSuggestedMenuMany({ payload: { eventId } }) {
+  try {
+    const { data } = yield call(Api.fetchMenuManyAndLimit);
+    yield put(fetchSuggestedMenuManySuccess(data));
+  } catch (error) {
+    yield put(fetchSuggestedMenuManyFailure(error));
+    const errorMessage = parseErrorMessage(error);
+    message.error(errorMessage);
+  }
+}
+
+function* watchFetchSuggestedMenuMany() {
+  yield takeLatest(FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuMany);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
     watchFetchEventMany(),
+    watchFetchSuggestedMenuMany(),
   ]);
 }
