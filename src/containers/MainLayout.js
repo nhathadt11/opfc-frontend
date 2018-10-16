@@ -3,8 +3,7 @@ import { Layout } from 'antd';
 import { Route, Switch } from 'react-router-dom';
 import Header from '../components/Header/Header';
 import BreadCrumb from '../components/BreadCrumb/BreadCrumb';
-import MenuFilterSider from '../components/MenuFilterSider/MenuFilterSider';
-import MenuCardGrid from './MenuCardGrid/MenuCardGrid';
+
 import './MainLayout.css';
 import BrandProfile from '../modules/BrandProfile/BrandProfile';
 import MenuDetail from '../components/MenuDetail/MenuDetail';
@@ -17,19 +16,9 @@ import CreateEventPlannerModal from '../modules/Account/components/CreateEventPl
 import LoginModal from '../modules/Account/components/LoginModal/LoginModal';
 import RatingModal from '../modules/EventPlanner/components/RatingModal/RatingModal';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
+import Home from './Home/Home';
 
-const { Footer, Content, Sider } = Layout;
-
-const Home = props => (
-  <Layout {...props}>
-    <Sider theme="light" width={280}>
-      <MenuFilterSider />
-    </Sider>
-    <Content className="opfc-main-content">
-      <MenuCardGrid dataList={Array.from(Array(12))} />
-    </Content>
-  </Layout>
-);
+const { Footer } = Layout;
 
 const MainLayout = () => (
   <Layout className="container">

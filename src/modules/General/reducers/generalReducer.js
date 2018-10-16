@@ -4,6 +4,7 @@ import {
   FETCH_DISTRICT_MANY_FAILURE, FETCH_CITY_AND_DISTRICT_REQUEST, FETCH_CITY_AND_DISTRICT_FAILURE,
   FETCH_CITY_MANY_SUCCESS, FETCH_DISTRICT_MANY_SUCCESS, FETCH_CITY_AND_DISTRICT_SUCCESS,
   FETCH_MENU_DETAIL_REQUEST, FETCH_MENU_DETAIL_FAILURE, FETCH_MENU_DETAIL_SUCCESS,
+  FETCH_MENU_MANY_REQUEST, FETCH_MENU_MANY_FAILURE, FETCH_MENU_MANY_SUCCESS,
 } from '../actions/general';
 
 
@@ -23,6 +24,7 @@ const generalReducer = (state = initialState, { type, payload }) => {
     case FETCH_DISTRICT_MANY_REQUEST:
     case FETCH_CITY_AND_DISTRICT_REQUEST:
     case FETCH_MENU_DETAIL_REQUEST:
+    case FETCH_MENU_MANY_REQUEST:
       return {
         ...state,
         fetching: true,
@@ -57,11 +59,18 @@ const generalReducer = (state = initialState, { type, payload }) => {
         fetching: false,
         menuDetail: payload.menuDetail,
       };
+    case FETCH_MENU_MANY_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        menuList: payload.menuList,
+      };
     case FETCH_EVENT_TYPE_MANY_FAILURE:
     case FETCH_CITY_MANY_FAILURE:
     case FETCH_DISTRICT_MANY_FAILURE:
     case FETCH_CITY_AND_DISTRICT_FAILURE:
     case FETCH_MENU_DETAIL_FAILURE:
+    case FETCH_MENU_MANY_FAILURE:
       return {
         ...state,
         fetching: false,

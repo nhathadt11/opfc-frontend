@@ -10,9 +10,8 @@ import {
   FETCH_MEAL_MANY_REQUEST, fetchMealManyFailure, fetchMealManySuccess,
 } from '../actions/meal';
 import {
-  FETCH_MENU_MANY_REQUEST, fetchMenuManySuccess,
-  fetchMenuManyFailure, createMenuFailure,
-  CREATE_MENU_REQUEST, createMenuSuccess, deleteMenuSuccess, deleteMenuFailure, DELETE_MENU_REQUEST,
+  createMenuFailure, CREATE_MENU_REQUEST, createMenuSuccess,
+  deleteMenuSuccess, deleteMenuFailure, DELETE_MENU_REQUEST,
 } from '../actions/menu';
 import {
   FETCH_BRAND_DETAIL_REQUEST, fetchBrandDetailSuccess, fetchBrandDetailFailure,
@@ -61,20 +60,6 @@ function* fetchMealMany() {
 
 function* watchFetchMealMany() {
   yield takeLatest(FETCH_MEAL_MANY_REQUEST, fetchMealMany);
-}
-
-function* fetchMenuMany() {
-  try {
-    const { data } = yield call(Api.fetchMenuMany);
-    yield put(fetchMenuManySuccess(data.menus));
-  } catch (error) {
-    yield put(fetchMenuManyFailure(error));
-    message.error('Could not fetch menus');
-  }
-}
-
-function* watchFetchMenuMany() {
-  yield takeLatest(FETCH_MENU_MANY_REQUEST, fetchMenuMany);
 }
 
 function* deleteMenu({ payload: { id } }) {
@@ -179,7 +164,6 @@ export default function* brandProfielFlow() {
     watchCreateMeal(),
     watchDeleteMeal(),
     watchFetchMealMany(),
-    watchFetchMenuMany(),
     watchCreateMenu(),
     watchDeleteMenu(),
     watchFetchBrandDetail(),

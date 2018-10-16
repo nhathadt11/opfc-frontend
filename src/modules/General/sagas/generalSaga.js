@@ -10,6 +10,7 @@ import {
   fetchDistrictManyFailure, fetchDistrictManySuccess, FETCH_DISTRICT_MANY_REQUEST,
   FETCH_CITY_MANY_REQUEST, fetchCityManySuccess, fetchCityManyFailure, fetchCityAndDistrictSuccess,
   FETCH_MENU_DETAIL_REQUEST, fetchMenuDetailFailure, fetchMenuDetailSuccess,
+  fetchMenuManySuccess, fetchMenuManyFailure, FETCH_MENU_MANY_REQUEST,
 } from '../actions/general';
 
 function* fetchEventTypeMany() {
@@ -92,12 +93,27 @@ function* watchFetchMenuDetail() {
   yield takeLatest(FETCH_MENU_DETAIL_REQUEST, fetchMenuDetail);
 }
 
+function* fetchMenuMany() {
+  try {
+    const { data } = yield call(Api.fetchMenuManyAndLimit);
+    yield put(fetchMenuManySuccess(data));
+  } catch (error) {
+    yield put(fetchMenuManyFailure(error));
+    message.error('Could not fetch menus');
+  }
+}
+
+function* watchFetchMenuMany() {
+  yield takeLatest(FETCH_MENU_MANY_REQUEST, fetchMenuMany);
+}
+
 export default function* generalFlow() {
   yield all([
     watchFetchEventTypeMany(),
     watchFetchDistrictMany(),
     watchFetchCityMany(),
     watchFetchMenuDetail(),
+    watchFetchMenuMany(),
 
     // fetch general data at initial load time
     fork(fetchEventTypeMany),
