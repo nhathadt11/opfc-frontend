@@ -20,11 +20,12 @@ class MenuTab extends Component {
       servingNumber: number,
     })),
     showCreateMenuModalAction: func.isRequired,
-    profiling: bool.isRequired,
+    profiling: bool,
   }
 
   static defaultProps = {
     menuList: [],
+    profiling: false,
   }
 
   openEditModal = (selectedMenu) => {

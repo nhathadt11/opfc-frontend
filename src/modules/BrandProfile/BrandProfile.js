@@ -16,8 +16,12 @@ class BrandProfile extends Component {
     fetchBrandMealManyRequestAction: func.isRequired,
     brand: shape({}).isRequired,
     match: shape({}).isRequired,
-    profiling: bool.isRequired,
+    profiling: bool,
     loggedInBrand: shape({}).isRequired,
+  }
+
+  static defaultProps = {
+    profiling: false,
   }
 
   componentDidMount() {

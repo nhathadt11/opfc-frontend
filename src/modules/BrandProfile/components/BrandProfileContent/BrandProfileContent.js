@@ -17,7 +17,11 @@ class BrandProfileContent extends Component {
   static propTypes = {
     showCreateMenuModalAction: func.isRequired,
     showCreateMealModalAction: func.isRequired,
-    profiling: bool.isRequired,
+    profiling: bool,
+  }
+
+  static defaultProps = {
+    profiling: false,
   }
 
   state = {
