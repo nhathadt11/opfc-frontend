@@ -4,13 +4,13 @@ import {
 } from 'antd';
 import { bool, shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { MenuCardTitleStyled, CatergoryLabelStyled } from './MenuCard.styled';
+import { MenuCardTitleStyled, CatergoryLabelStyled, MenuCardContentStyled } from './MenuCard.styled';
 import LocalIcon from '../../fonts/LocalFont';
 
 const MenuCard = ({ loading, history, menu }) => (
   <Card
     loading={loading}
-    style={{ width: 200 }}
+    style={{ width: 200, height: '100%' }}
     hoverable
     bordered={false}
     cover={<img alt="example" src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" />}
@@ -35,7 +35,7 @@ const MenuCard = ({ loading, history, menu }) => (
     <Row>
       <Card.Meta
         title={<MenuCardTitleStyled>{menu.menuName}</MenuCardTitleStyled>}
-        description={menu.description}
+        description={<MenuCardContentStyled>{menu.description}</MenuCardContentStyled>}
       />
     </Row>
   </Card>

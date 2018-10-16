@@ -142,7 +142,7 @@ class MenuDetail extends Component {
             </div>
 
             <div className="opfc-brand-info-item opfc-brand-info-view">
-              <Button size="small" onClick={() => push('/brand/1')}>View profile</Button>
+              <Button size="small" onClick={() => push(`/brand/${menuDetail.brandId}`)}>View profile</Button>
             </div>
           </Col>
         </Row>

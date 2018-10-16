@@ -14,6 +14,7 @@
 
 .opfc-menu-detail-main {
   padding: 20px;
+  flex: 1;
 }
 
 .opfc-menu-detail-main .opfc-menu-price {

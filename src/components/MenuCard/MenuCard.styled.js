@@ -11,6 +11,14 @@ export const MenuCardTitleStyled = styled.a`
   cursor: pointer;
 `;
 
+export const MenuCardContentStyled = styled.div`
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 13px;
+`;
+
 export const CatergoryLabelStyled = styled.div`
   min-width: 30px;
   max-width: 200px;
