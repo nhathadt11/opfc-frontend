@@ -6,6 +6,8 @@ import { shape, func, bool } from 'prop-types';
 import {
   find, map, join, isEmpty,
 } from 'lodash';
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
 import './BrandMenuCard.css';
 import { MenuInfoTitleStyled, MenuInfoValueStyled } from './BrandMenuCard.styled';
 
@@ -21,16 +23,19 @@ const tagById = (id) => {
   return found ? found.name : undefined;
 };
 
-const BrandMenuCard = ({ menu, openEditModal, profiling }) => {
+const BrandMenuCard = ({
+  menu, openEditModal, profiling, history,
+}) => {
   const confirmDelete = () => Modal.confirm({
     title: 'Delete Menu',
     content: 'Are you sure to delete this menu?',
     okText: 'Delete',
     cancelText: 'Cancel',
   });
+  const { push } = history;
 
   return (
-    <Card hoverable>
+    <Card hoverable onClick={() => push(`/menus/${menu.id}`)}>
       <Row type="flex" className="opfc-meal-title">
         <Col><h3>{menu.menuName}</h3></Col>
         {
@@ -89,6 +94,9 @@ BrandMenuCard.propTypes = {
   menu: shape({}),
   openEditModal: func.isRequired,
   profiling: bool,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 BrandMenuCard.defaultProps = {
@@ -96,4 +104,6 @@ BrandMenuCard.defaultProps = {
   profiling: false,
 };
 
-export default BrandMenuCard;
+export default compose(
+  withRouter,
+)(BrandMenuCard);
