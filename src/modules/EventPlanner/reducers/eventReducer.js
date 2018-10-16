@@ -1,3 +1,4 @@
+import { filter } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_FAILURE,
   FETCH_EVENT_MANY_REQUEST, FETCH_EVENT_MANY_SUCCESS, FETCH_EVENT_MANY_FAILURE,
@@ -7,7 +8,8 @@ import {
   PREV_EVENT_PLAN_STEP, SELECT_MENU, SELECT_EVENT, DESELECT_EVENT,
   SHOW_RATING_MODAL, HIDE_RATING_MODAL, FETCH_SUGGESTED_MENU_MANY_REQUEST,
   FETCH_SUGGESTED_MENU_MANY_SUCCESS, FETCH_SUGGESTED_MENU_MANY_FAILURE,
-  CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS, DESELECT_MENU_ALL,
+  CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS,
+  DESELECT_MENU_ALL, DESELECT_MENU,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -67,6 +69,14 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedMenuList: [...state.selectedMenuList, payload.menu],
+      };
+    }
+    case DESELECT_MENU: {
+      const { menuId } = payload;
+
+      return {
+        ...state,
+        selectedMenuList: filter(state.selectedMenuList, m => m.id !== menuId),
       };
     }
     case DESELECT_MENU_ALL: {

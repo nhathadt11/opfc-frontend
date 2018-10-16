@@ -3,6 +3,7 @@ export const NEXT_EVENT_PLAN_STEP = 'NEXT_EVENT_PLAN_STEP';
 export const PREV_EVENT_PLAN_STEP = 'PREV_EVENT_PLAN_STEP';
 
 export const SELECT_MENU = 'SELECT_MENU';
+export const DESELECT_MENU = 'DESELECT_MENU';
 export const DESELECT_MENU_ALL = 'DESELECT_MENU_ALL';
 
 export const SELECT_EVENT = 'SELECT_EVENT';
@@ -39,6 +40,13 @@ export const selectMenu = menu => ({
   type: SELECT_MENU,
   payload: {
     menu,
+  },
+});
+
+export const deselectMenu = menuId => ({
+  type: DESELECT_MENU,
+  payload: {
+    menuId,
   },
 });
 

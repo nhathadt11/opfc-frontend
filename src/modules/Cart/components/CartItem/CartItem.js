@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import {
   Row, Col, Button, Icon, Input, Modal, Tooltip,
 } from 'antd';
-import { shape, arrayOf } from 'prop-types';
+import { shape, arrayOf, func } from 'prop-types';
 import { map } from 'lodash';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './CartItem.css';
 import LocalIcon from '../../../../fonts/LocalFont';
 import {
@@ -12,18 +14,20 @@ import {
   EditingActionsStyled,
   MealListStyled,
 } from './CartItem.styled';
+import { deselectMenu } from '../../../EventPlanner/actions/planningFlow';
 
 // const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 
-const confirmDelete = () => {
-  Modal.confirm({
-    title: 'Delete Menu',
-    content: 'Are you sure to delete this Menu?',
-    okText: 'Delete',
+const confirmRemove = (onOk) => {
+  const modal = Modal.confirm({
+    title: 'Remove Menu',
+    content: 'Are you sure to remove this Menu?',
+    okText: 'Remove',
     cancelText: 'Cancel',
     okType: 'danger',
     maskClosable: true,
+    onOk: () => { onOk(); modal.destroy(); },
   });
 };
 
@@ -40,6 +44,7 @@ MealList.propTypes = {
 class CartItem extends Component {
   static propTypes = {
     menu: shape({}).isRequired,
+    deselectMenuAction: func.isRequired,
   }
 
   state = {
@@ -51,7 +56,7 @@ class CartItem extends Component {
   disableEditing = () => this.setState({ editing: false })
 
   render() {
-    const { menu } = this.props;
+    const { menu, deselectMenuAction } = this.props;
     const { editing } = this.state;
 
     return (
@@ -134,7 +139,7 @@ class CartItem extends Component {
               </Button>
             )
           }
-          <Button shape="circle" type="danger" onClick={confirmDelete}>
+          <Button shape="circle" type="danger" onClick={() => confirmRemove(() => deselectMenuAction(menu.id))}>
             <Icon type="delete" theme="outlined" />
           </Button>
         </Col>
@@ -143,4 +148,10 @@ class CartItem extends Component {
   }
 }
 
-export default CartItem;
+const mapDispatchToProps = {
+  deselectMenuAction: deselectMenu,
+};
+
+export default compose(
+  connect(undefined, mapDispatchToProps),
+)(CartItem);
