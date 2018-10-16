@@ -20,15 +20,15 @@ const MenuCard = ({ loading, history, menu }) => (
     <Row style={{ marginBottom: 20 }}>
       <Col span={8}>
         <Icon type="team" theme="outlined" style={{ color: '#f68b40' }} />
-        <span style={{ marginLeft: 5 }}>{menu.servingNumber}</span>
+        <span style={{ marginLeft: 5 }}>{menu.servingNumber || 0}</span>
       </Col>
       <Col span={8}>
         <LocalIcon type="icon-bookmark" theme="outlined" style={{ color: '#f68b40' }} />
-        <span style={{ marginLeft: 5 }}>{menu.totalBookmark}</span>
+        <span style={{ marginLeft: 5 }}>{menu.totalBookmark || 0}</span>
       </Col>
       <Col span={8}>
         <Icon type="star" theme="outlined" style={{ color: '#f68b40' }} />
-        <span style={{ marginLeft: 5 }}>{menu.totalRating}</span>
+        <span style={{ marginLeft: 5 }}>{menu.totalRating || 0}</span>
       </Col>
     </Row>
 
