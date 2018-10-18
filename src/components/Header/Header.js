@@ -10,6 +10,7 @@ import MenuBrowse from './MenuBrowse/MenuBrowse';
 import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButton';
 import { showLoginModal } from '../../modules/Account/actions/modal';
 import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
+import NotificationDropdown from './NotificationDropdown/NotificationDropdown';
 
 const Header = ({
   history: { push }, account, loggedIn, showLoginModalAction, showRatingModalAction,
@@ -29,7 +30,9 @@ const Header = ({
     </div>
 
     <UserIconGroupStyled>
-      <Button icon="notification" size="large" shape="circle" className="header-icon" />
+      <NotificationDropdown>
+        <Button icon="notification" size="large" shape="circle" className="header-icon header-icon-notification" />
+      </NotificationDropdown>
       <Button icon="heart" size="large" shape="circle" className="header-icon" onClick={showRatingModalAction} />
       {
         loggedIn ? (
