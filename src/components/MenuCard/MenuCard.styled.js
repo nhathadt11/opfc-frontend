@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MenuCardTitleStyled = styled.a`
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
   margin-top: 5px;
   overflow: hidden;
