@@ -41,7 +41,7 @@ const BrandMenuCard = ({
         {
           profiling && (
             <Col className="opfc-meal-actions">
-              <Button shape="circle" onClick={openEditModal}>
+              <Button shape="circle" onClick={(e) => { e.stopPropagation(); openEditModal(); }}>
                 <Icon type="edit" theme="outlined" />
               </Button>
               <Button type="danger" shape="circle" onClick={confirmDelete}>
