@@ -1,5 +1,5 @@
 import {
-  takeEvery, all, put, call, fork,
+  takeEvery, all, put, call, fork, takeLatest,
 } from 'redux-saga/effects';
 import { isFunction } from 'lodash';
 import { message } from 'antd';
@@ -7,9 +7,9 @@ import { CREATE_BRAND_REQUEST, createBrandFailure, createBrandSuccess } from '..
 import Api from '../../../api/Api';
 import {
   CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess,
-  LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess,
+  LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess, LOGIN_ACCOUNT_SUCCESS,
 } from '../actions/account';
-import { parseErrorMessage, persistAuthentication, configAxiosAuthHeader } from '../../../utils/Utils';
+import { parseErrorMessage, persistAuthentication, configAxiosAuthHeader, registerUserFirebaseNotification } from '../../../utils/Utils';
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -70,10 +70,25 @@ function* watchLoginAccount() {
   yield takeEvery(LOGIN_ACCOUNT_REQUEST, loginAccount);
 }
 
+function* registerUserToFirebaseNoti({ payload: { account } }) {
+  try {
+    const { user: { id } } = account;
+    yield fork(registerUserFirebaseNotification, id);
+  } catch (error) {
+    message.error('Cannot register user to recieve notifications');
+    throw error;
+  }
+}
+
+function* watchLoginSuccess() {
+  yield takeLatest(LOGIN_ACCOUNT_SUCCESS, registerUserToFirebaseNoti);
+}
+
 export default function* accountFlow() {
   yield all([
     watchCreateBrand(),
     watchCreateAccount(),
     watchLoginAccount(),
+    watchLoginSuccess(),
   ]);
 }
