@@ -2,6 +2,7 @@ import {
   find, isArray, isObject, map, uniq,
 } from 'lodash';
 import axios from 'axios';
+import fire from './Firebase';
 
 const tags = [
   { id: 1, name: 'Wedding' },
@@ -45,4 +46,13 @@ export const getAuthentication = () => localStorage.getItem('authentication');
 
 export const configAxiosAuthHeader = (authToken) => {
   axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+};
+
+export const registerUserFirebaseNotification = (userId) => {
+  /* Create reference to messages in Firebase Database */
+  const messagesRef = fire.database().ref().child('users').child(userId);
+  console.log(messagesRef);
+  messagesRef.on('value', (snapshot) => {
+    console.log(snapshot.val());
+  });
 };
