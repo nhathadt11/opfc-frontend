@@ -4,9 +4,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import reducers from './reducers';
 import middlewares from './middlewares';
 
-export default createStore(
+const store = createStore(
   combineReducers({
     ...reducers,
   }),
   composeWithDevTools(applyMiddleware(...middlewares)),
 );
+
+export default store;

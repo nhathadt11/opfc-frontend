@@ -48,11 +48,12 @@ export const configAxiosAuthHeader = (authToken) => {
   axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
 };
 
-export const registerUserFirebaseNotification = (userId) => {
+export const registerUserFirebaseNotification = userId => ({ onChildAdded }) => {
   /* Create reference to messages in Firebase Database */
   const messagesRef = fire.database().ref().child('users').child(userId);
-  console.log(messagesRef);
-  messagesRef.on('value', (snapshot) => {
-    console.log(snapshot.val());
+
+  messagesRef.on('child_added', (snapshot) => {
+    onChildAdded(snapshot.val());
   });
+  messagesRef.on('value', spanshot => console.log(spanshot.val()));
 };

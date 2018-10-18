@@ -20,6 +20,10 @@
   font-size: 28px;
 }
 
+.header-icon-notification > i {
+  font-size: 33px !important;
+}
+
 .header-search {
   width: 350px;
 }

@@ -9,7 +9,12 @@ import {
   CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess,
   LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess, LOGIN_ACCOUNT_SUCCESS,
 } from '../actions/account';
-import { parseErrorMessage, persistAuthentication, configAxiosAuthHeader, registerUserFirebaseNotification } from '../../../utils/Utils';
+import {
+  parseErrorMessage, persistAuthentication, configAxiosAuthHeader,
+  registerUserFirebaseNotification,
+} from '../../../utils/Utils';
+import { increaseNotificationCount } from '../actions/notification';
+import store from '../../../store';
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -73,7 +78,9 @@ function* watchLoginAccount() {
 function* registerUserToFirebaseNoti({ payload: { account } }) {
   try {
     const { user: { id } } = account;
-    yield fork(registerUserFirebaseNotification, id);
+    yield fork(registerUserFirebaseNotification(id), {
+      onChildAdded: notification => store.dispatch(increaseNotificationCount(notification)),
+    });
   } catch (error) {
     message.error('Cannot register user to recieve notifications');
     throw error;
