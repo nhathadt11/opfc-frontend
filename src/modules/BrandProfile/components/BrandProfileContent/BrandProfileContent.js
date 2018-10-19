@@ -5,10 +5,11 @@ import { compose } from 'redux';
 import { func, bool } from 'prop-types';
 import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
+import MealTab from '../BrandProfileContentTabs/MealTab/MealTab';
+import OrderTab from '../BrandProfileContentTabs/OrderTab/OrderTab';
 import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 import './BrandProfileContent.css';
 import { showCreateMenuModal, showCreateMealModal } from '../../actions/modals';
-import MealTab from '../BrandProfileContentTabs/MealTab/MealTab';
 
 
 const { TabPane } = Tabs;
@@ -53,7 +54,7 @@ class BrandProfileContent extends Component {
           <MenuTab profiling={profiling} />
         </TabPane>
         <TabPane
-          tab={<span><LocalIcon type="icon-dish" />Meals</span>}
+          tab={<span><LocalIcon type="icon-dish" />Meal</span>}
           key="2"
         >
           <MealTab profiling={profiling} />
@@ -63,6 +64,12 @@ class BrandProfileContent extends Component {
           key="3"
         >
           <GalleryTab />
+        </TabPane>
+        <TabPane
+          tab={<span><Icon type="form" />Order</span>}
+          key="4"
+        >
+          <OrderTab />
         </TabPane>
       </Tabs>
     );
