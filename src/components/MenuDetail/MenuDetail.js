@@ -17,6 +17,7 @@ import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest } from '../../modules/General/actions/general';
+import { fetchMenuRatingManyRequest } from '../../modules/Rating/actions/rating';
 
 const tags = [
   { id: 0, name: 'wedding' },
@@ -58,15 +59,26 @@ class MenuDetail extends Component {
       }),
     }).isRequired,
     menuDetail: shape({}).isRequired,
+    fetchMenuRatingManyRequestAction: func.isRequired,
+    ratingList: arrayOf(shape({})).isRequired,
   }
 
   componentWillMount() {
-    const { fetchMenuDetailRequestAction, match: { params: { id } } } = this.props;
+    const {
+      fetchMenuDetailRequestAction,
+      fetchMenuRatingManyRequestAction,
+      match: { params: { id } },
+    } = this.props;
+
     fetchMenuDetailRequestAction(id);
+    fetchMenuRatingManyRequestAction(id);
   }
 
   render() {
-    const { history: { push }, selectMenuAction, menuDetail } = this.props;
+    const {
+      history: { push }, selectMenuAction, menuDetail,
+      ratingList,
+    } = this.props;
 
     return (
       <div>
@@ -148,7 +160,7 @@ class MenuDetail extends Component {
             </Affix>
           </Col>
         </Row>
-        <ReviewList />
+        <ReviewList menuName={menuDetail.menuName} dataList={ratingList} />
       </div>
     );
   }
@@ -156,11 +168,13 @@ class MenuDetail extends Component {
 
 const mapStateToProps = state => ({
   menuDetail: state.generalReducer.menuDetail,
+  ratingList: state.ratingReducer.ratingList,
 });
 
 const mapDispatchToProps = {
   selectMenuAction: selectMenu,
   fetchMenuDetailRequestAction: fetchMenuDetailRequest,
+  fetchMenuRatingManyRequestAction: fetchMenuRatingManyRequest,
 };
 
 export default compose(

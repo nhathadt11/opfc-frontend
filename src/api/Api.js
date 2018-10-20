@@ -143,6 +143,10 @@ const createOrder = (userId, eventId, menuIds) => axios.post('/Order', {
   menuIds,
 });
 
+const fetchMenuRatingMany = menuId => axios.get(`/Rating/Menu/${menuId}`);
+
+const createMenuRating = (menuId, userId, rating) => axios.post(`/Rating/Menu/${menuId}/User/${userId}`, rating);
+
 export default {
   createBrand,
   uploadImage,
@@ -170,4 +174,6 @@ export default {
   fetchMenuManyAndLimit,
   fetchMenuDetail,
   createOrder,
+  fetchMenuRatingMany,
+  createMenuRating,
 };

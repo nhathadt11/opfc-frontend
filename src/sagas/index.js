@@ -3,6 +3,7 @@ import { accountFlow } from '../modules/Account';
 import { eventPlannerFlow } from '../modules/EventPlanner';
 import { brandProfileFlow } from '../modules/BrandProfile';
 import { generalFlow } from '../modules/General';
+import { ratingFlow } from '../modules/Rating';
 
 export default function* () {
   yield all([
@@ -10,5 +11,6 @@ export default function* () {
     eventPlannerFlow(),
     brandProfileFlow(),
     generalFlow(),
+    ratingFlow(),
   ]);
 }
