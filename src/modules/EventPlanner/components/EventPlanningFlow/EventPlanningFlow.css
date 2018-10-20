@@ -1,0 +1,11 @@
+.opfc-event-planning-steps-affix .ant-affix {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+
+.opfc-event-planning-steps-affix > div {
+  display: flex;
+  justify-content: center;
+}

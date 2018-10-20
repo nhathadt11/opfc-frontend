@@ -4,7 +4,7 @@ import {
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Layout } from 'antd';
+import { Layout, Affix } from 'antd';
 import MenuCardGrid from '../../../../../containers/MenuCardGrid/MenuCardGrid';
 import StepPickMenuSider from './StepPickMenuSider';
 import { fetchSuggestedMenuManyRequest } from '../../../actions/planningFlow';
@@ -28,7 +28,9 @@ class StepPickMenus extends Component {
     return (
       <Layout>
         <Layout.Sider theme="light" width={280}>
-          <StepPickMenuSider />
+          <Affix offsetTop={30}>
+            <StepPickMenuSider />
+          </Affix>
         </Layout.Sider>
         <Layout.Content>
           <MenuCardGrid dataList={suggestedMenuList} />

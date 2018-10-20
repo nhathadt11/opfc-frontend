@@ -9,6 +9,8 @@ export const EventStepContentStyled = styled.div`
 export const ActionButtonGroupStyled = styled.div`
   display: flex;
   justify-content: center;
+  padding: 10px 0;
+  background-color: #fff;
   > button:not(:first-child) {
     margin-left: 15px;
   }

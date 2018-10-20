@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, Col, Tag, Button, Icon,
+  Row, Col, Tag, Button, Icon, Affix,
 } from 'antd';
 import { map } from 'lodash';
 import { withRouter } from 'react-router-dom';
@@ -113,37 +113,39 @@ class MenuDetail extends Component {
             </Row>
           </Col>
           <Col className="opfc-brand-info-list">
-            <div className="opfc-brand-info-item">
-              <h3>Brand Name</h3>
-              <Row>
-                <Col span={4} className="opfc-brand-info-label"><Icon type="phone" style={{ fontSize: 18 }} /></Col>
-                <Col><section className="opfc-brand-info-label">Hotline</section><section>123456789</section></Col>
-              </Row>
-              <Row>
-                <Col span={4} className="opfc-brand-info-label"><Icon type="mail" style={{ fontSize: 18 }} /></Col>
-                <Col><section className="opfc-brand-info-label">Email</section><section>johndoe@gmail.com</section></Col>
-              </Row>
-              <Row>
-                <Col span={4} className="opfc-brand-info-label"><Icon type="team" style={{ fontSize: 18 }} /></Col>
-                <Col><section className="opfc-brand-info-label">Members</section><section>12</section></Col>
-              </Row>
-            </div>
+            <Affix offsetTop={20}>
+              <div className="opfc-brand-info-item">
+                <h3>Brand Name</h3>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="phone" style={{ fontSize: 18 }} /></Col>
+                  <Col><section className="opfc-brand-info-label">Hotline</section><section>123456789</section></Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="mail" style={{ fontSize: 18 }} /></Col>
+                  <Col><section className="opfc-brand-info-label">Email</section><section>johndoe@gmail.com</section></Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="team" style={{ fontSize: 18 }} /></Col>
+                  <Col><section className="opfc-brand-info-label">Members</section><section>12</section></Col>
+                </Row>
+              </div>
 
-            <div className="opfc-brand-info-item">
-              <h3>Summary on 100 orders</h3>
-              <Row>
-                <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
-                <Col><section className="opfc-brand-info-label">On time delivery</section><section>97%</section></Col>
-              </Row>
-              <Row>
-                <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
-                <Col><section className="opfc-brand-info-label">Total service time</section><section>257 hours</section></Col>
-              </Row>
-            </div>
+              <div className="opfc-brand-info-item">
+                <h3>Summary on 100 orders</h3>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col><section className="opfc-brand-info-label">On time delivery</section><section>97%</section></Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col><section className="opfc-brand-info-label">Total service time</section><section>257 hours</section></Col>
+                </Row>
+              </div>
 
-            <div className="opfc-brand-info-item opfc-brand-info-view">
-              <Button size="small" onClick={() => push(`/brand/${menuDetail.brandId}`)}>View profile</Button>
-            </div>
+              <div className="opfc-brand-info-item opfc-brand-info-view">
+                <Button size="small" onClick={() => push(`/brand/${menuDetail.brandId}`)}>View profile</Button>
+              </div>
+            </Affix>
           </Col>
         </Row>
         <ReviewList />

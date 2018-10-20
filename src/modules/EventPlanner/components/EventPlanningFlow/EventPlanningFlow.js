@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
-import { Steps, Button, Icon } from 'antd';
+import {
+  Steps, Button, Icon, Affix,
+} from 'antd';
 import { map } from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -9,6 +11,7 @@ import { EventStepContentStyled, ActionButtonGroupStyled } from './EventStepFlow
 import StepPickMenus from './EventPlanningSteps/StepPickMenus';
 import Cart from '../../../Cart/containers/Cart/Cart';
 import { nextEventPlanStep, prevEventPlanStep, createOrderRequest } from '../../actions/planningFlow';
+import './EventPlanningFlow.css';
 
 const { Step } = Steps;
 
@@ -47,34 +50,38 @@ class EventPlanningFlow extends Component {
 
     return (
       <Fragment>
-        <Steps current={currentStep} style={{ width: 800, alignSelf: 'center', marginTop: 30 }}>
-          {
-            map(this.steps, (step, index) => <Step title={step.title} key={index} />)
-          }
-        </Steps>
+        <Affix offsetTop={0} className="opfc-event-planning-steps-affix">
+          <Steps current={currentStep} style={{ width: 800, alignSelf: 'center', padding: '15px 0' }}>
+            {
+              map(this.steps, (step, index) => <Step title={step.title} key={index} />)
+            }
+          </Steps>
+        </Affix>
         <EventStepContentStyled>{this.steps[currentStep].content}</EventStepContentStyled>
-        <ActionButtonGroupStyled>
-          {
-            (currentStep <= this.steps.length - 1) && (currentStep !== 0)
-            && <Button size="large" onClick={this.prev} disabled={submitting}><Icon type="left" theme="outlined" />Prev</Button>
-          }
-          {
-            (currentStep === this.steps.length - 1)
-            && <Button type="primary" size="large" loading={submitting} onClick={createOrderRequestAction}>Done</Button>
-          }
-          {
-            currentStep > 0 && (currentStep !== this.steps.length - 1)
-            && <Button size="large" type="primary" onClick={this.next} loading={submitting}>Next<Icon type="right" theme="outlined" /></Button>
-          }
-          {
-            currentStep === 0 && (
-              <Button size="large" type="primary" loading={submitting}>
-                <label htmlFor="form-event" className="opfc-pointer-cursor">Next</label>
-                <Icon type="right" theme="outlined" />
-              </Button>
-            )
-          }
-        </ActionButtonGroupStyled>
+        <Affix offsetBottom={0}>
+          <ActionButtonGroupStyled>
+            {
+              (currentStep <= this.steps.length - 1) && (currentStep !== 0)
+              && <Button size="large" onClick={this.prev} disabled={submitting}><Icon type="left" theme="outlined" />Prev</Button>
+            }
+            {
+              (currentStep === this.steps.length - 1)
+              && <Button type="primary" size="large" loading={submitting} onClick={createOrderRequestAction}>Done</Button>
+            }
+            {
+              currentStep > 0 && (currentStep !== this.steps.length - 1)
+              && <Button size="large" type="primary" onClick={this.next} loading={submitting}>Next<Icon type="right" theme="outlined" /></Button>
+            }
+            {
+              currentStep === 0 && (
+                <Button size="large" type="primary" loading={submitting}>
+                  <label htmlFor="form-event" className="opfc-pointer-cursor">Next</label>
+                  <Icon type="right" theme="outlined" />
+                </Button>
+              )
+            }
+          </ActionButtonGroupStyled>
+        </Affix>
       </Fragment>
     );
   }
