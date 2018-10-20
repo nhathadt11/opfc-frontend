@@ -17,7 +17,7 @@ import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest } from '../../modules/General/actions/general';
-import { fetchMenuRatingManyRequest } from '../../modules/Rating/actions/rating';
+import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 
 const tags = [
   { id: 0, name: 'wedding' },
@@ -72,6 +72,11 @@ class MenuDetail extends Component {
 
     fetchMenuDetailRequestAction(id);
     fetchMenuRatingManyRequestAction(id);
+  }
+
+  componentWillUnmount() {
+    const { clearRatingListAction } = this.props;
+    clearRatingListAction();
   }
 
   render() {
@@ -175,6 +180,7 @@ const mapDispatchToProps = {
   selectMenuAction: selectMenu,
   fetchMenuDetailRequestAction: fetchMenuDetailRequest,
   fetchMenuRatingManyRequestAction: fetchMenuRatingManyRequest,
+  clearRatingListAction: clearRatingList,
 };
 
 export default compose(

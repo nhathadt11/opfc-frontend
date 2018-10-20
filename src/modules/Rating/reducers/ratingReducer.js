@@ -1,4 +1,7 @@
-import { FETCH_MENU_RATING_MANY_REQUEST, FETCH_MENU_RATING_MANY_SUCCESS, FETCH_MENU_RATING_MANY_FAILURE } from '../actions/rating';
+import {
+  FETCH_MENU_RATING_MANY_REQUEST, FETCH_MENU_RATING_MANY_SUCCESS,
+  FETCH_MENU_RATING_MANY_FAILURE, CLEAR_RATING_LIST,
+} from '../actions/rating';
 
 const initialState = {
   fetching: false,
@@ -23,6 +26,11 @@ const ratingReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetching: false,
+      };
+    case CLEAR_RATING_LIST:
+      return {
+        ...state,
+        ratingList: [],
       };
     default:
       return state;

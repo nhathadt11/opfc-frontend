@@ -6,6 +6,8 @@ export const FETCH_MENU_RATING_MANY_REQUEST = 'FETCH_MENU_RATING_MANY_REQUEST';
 export const FETCH_MENU_RATING_MANY_SUCCESS = 'FETCH_MENU_RATING_MANY_SUCCESS';
 export const FETCH_MENU_RATING_MANY_FAILURE = 'FETCH_MENU_RATING_MANY_FAILURE';
 
+export const CLEAR_RATING_LIST = 'CLEAR_RATING_LIST';
+
 export const createMenuRatingRequest = (rating, menuId, onSuccess) => ({
   type: CREATE_MENU_RATING_REQUEST,
   payload: {
@@ -48,4 +50,8 @@ export const fetchMenuRatingManyFailure = error => ({
   payload: {
     error,
   },
+});
+
+export const clearRatingList = () => ({
+  type: CLEAR_RATING_LIST,
 });
