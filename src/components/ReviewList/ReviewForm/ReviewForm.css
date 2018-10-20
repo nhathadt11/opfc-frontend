@@ -1,0 +1,26 @@
+.opfc-review-form {
+  background-color: #f6f6f6;
+  padding: 20px 0 15px;
+}
+
+.opfc-review-form > .ant-form-item {
+  margin-bottom: 12px;
+}
+
+.opfc-post-comment .ant-form-item-label label::after {
+  content: '';
+}
+
+.opfc-rating-overall {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: 50px;
+}
+
+.opfc-rating-overall .opfc-rating-overall-point {
+  font-size: 46px;
+}
+
+.opfc-rating-overall .opfc-rating-overall-count {
+  color: #999;
+}
