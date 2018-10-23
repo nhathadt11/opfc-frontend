@@ -72,6 +72,8 @@ function* fetchCityAndDistrictParallel() {
         .map(d => ({ value: d.id, label: d.name })),
     }));
 
+    yield put(fetchCityManySuccess(city.data));
+    yield put(fetchDistrictManySuccess(district.data));
     yield put(fetchCityAndDistrictSuccess(cityAndDistrictList));
   } catch (error) {
     message.error('City and District could not be fetched.');

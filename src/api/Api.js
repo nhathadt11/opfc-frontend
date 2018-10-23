@@ -23,6 +23,7 @@ const createBrand = (userAndBrand) => {
     brandName: userAndBrand.brandName,
     phone: userAndBrand.publicPhone,
     email: userAndBrand.publicEmail,
+    serviceLocationIds: userAndBrand.serviceLocationIds,
   };
 
   return axios.post('/Brand/CreateCaterer', {

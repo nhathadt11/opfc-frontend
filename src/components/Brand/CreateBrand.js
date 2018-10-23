@@ -10,6 +10,7 @@ import StepBrandName from './StepBrandName/StepBrandName';
 import StepBrandInformation from './StepBrandInformation/StepBrandInformation';
 import StepBrandAccount from './StepBrandAccount/StepBrandAccount';
 import { createBrandRequest } from '../../modules/Account/actions/createBrand';
+import StepServiceLocation from './StepServiceLocation/StepServiceLocation';
 
 const { Step } = Steps;
 
@@ -34,6 +35,9 @@ class CreateBrand extends Component {
   }, {
     title: 'Information',
     content: props => <StepBrandInformation next={() => this.next()} {...props} />,
+  }, {
+    title: 'Service Locations',
+    content: props => <StepServiceLocation next={() => this.next()} {...props} />,
   }, {
     title: 'Account',
     content: props => <StepBrandAccount done={this.handleSubmit} {...props} />,
@@ -69,7 +73,7 @@ class CreateBrand extends Component {
 
     return (
       <Row type="flex" className="opfc-create-brand-container">
-        <Col style={{ padding: 100 }}>
+        <Col style={{ padding: '100px 70px' }}>
           <Steps current={current} direction="vertical">
             {this.steps.map(item => <Step key={item.title} title={item.title} />)}
           </Steps>
