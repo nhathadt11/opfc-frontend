@@ -11,9 +11,11 @@ import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButto
 import { showLoginModal } from '../../modules/Account/actions/modal';
 import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
 import NotificationDropdown from './NotificationDropdown/NotificationDropdown';
+import { fetchMenuManyRequest } from '../../modules/General/actions/general';
 
 const Header = ({
-  history: { push }, account, loggedIn, showLoginModalAction, showRatingModalAction,
+  history: { push }, account, loggedIn,
+  showLoginModalAction, showRatingModalAction, fetchMenuManyRequestAction,
 }) => (
   <Layout.Header className="header">
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
@@ -26,6 +28,7 @@ const Header = ({
         size="large"
         className="header-search"
         enterButton
+        onSearch={value => fetchMenuManyRequestAction(value)}
       />
     </div>
 
@@ -63,6 +66,7 @@ Header.propTypes = {
   loggedIn: bool.isRequired,
   showLoginModalAction: func.isRequired,
   showRatingModalAction: func.isRequired,
+  fetchMenuManyRequestAction: func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -73,6 +77,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   showLoginModalAction: showLoginModal,
   showRatingModalAction: showRatingModal,
+  fetchMenuManyRequestAction: fetchMenuManyRequest,
 };
 
 export default compose(

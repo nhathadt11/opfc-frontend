@@ -116,8 +116,11 @@ export const fetchMenuDetailFailure = error => ({
   },
 });
 
-export const fetchMenuManyRequest = () => ({
+export const fetchMenuManyRequest = (text = '') => ({
   type: FETCH_MENU_MANY_REQUEST,
+  payload: {
+    text,
+  },
 });
 
 export const fetchMenuManySuccess = menuList => ({

@@ -1,7 +1,7 @@
 import {
   all, call, takeLatest, put, fork,
 } from 'redux-saga/effects';
-
+import { map } from 'lodash';
 import { message } from 'antd';
 import { parseErrorMessage } from '../../../utils/Utils';
 import Api from '../../../api/Api';
@@ -95,10 +95,12 @@ function* watchFetchMenuDetail() {
   yield takeLatest(FETCH_MENU_DETAIL_REQUEST, fetchMenuDetail);
 }
 
-function* fetchMenuMany() {
+function* fetchMenuMany({ payload: { text } }) {
   try {
-    const { data } = yield call(Api.fetchMenuManyAndLimit);
-    yield put(fetchMenuManySuccess(data));
+    const { data } = yield call(Api.fetchMenuManyEs, text);
+
+    const menus = map(data.hits.hits, h => h._source); //eslint-disable-line
+    yield put(fetchMenuManySuccess(menus));
   } catch (error) {
     yield put(fetchMenuManyFailure(error));
     message.error('Could not fetch menus');

@@ -1,6 +1,46 @@
 import axios from 'axios';
 import { CLOUDINARY_API_KEY, CLOUDINARY_UPLOAD_PRESET } from '../constants/AppConstants';
 
+// Elastic search
+const esAxios = axios.create({
+  baseURL: process.env.REACT_APP_ES_BASE_URL,
+});
+
+const fetchMenuManyEs = (text) => {
+  if (!text) {
+    return esAxios.get('menus/_search', {
+      params: {
+        source: JSON.stringify({
+          from: 0,
+          size: 20,
+          query: {
+            match_all: { },
+          },
+        }),
+        source_content_type: 'application/json',
+      },
+    });
+  }
+
+  return esAxios.get('menus/_search', {
+    params: {
+      source: JSON.stringify({
+        from: 0,
+        size: 20,
+        query: {
+          multi_match: {
+            query: text,
+            type: 'cross_fields',
+            fields: ['menuName', 'description', 'eventTypeNames', 'mealNames', 'mealDescriptions', 'categoryNames'],
+            operator: 'and',
+          },
+        },
+      }),
+      source_content_type: 'application/json',
+    },
+  });
+};
+
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 const createBrand = (userAndBrand) => {
@@ -177,4 +217,6 @@ export default {
   createOrder,
   fetchMenuRatingMany,
   createMenuRating,
+  // Elastic search
+  fetchMenuManyEs,
 };
