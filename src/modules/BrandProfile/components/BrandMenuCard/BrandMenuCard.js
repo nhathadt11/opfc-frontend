@@ -44,7 +44,7 @@ const BrandMenuCard = ({
               <Button shape="circle" onClick={(e) => { e.stopPropagation(); openEditModal(); }}>
                 <Icon type="edit" theme="outlined" />
               </Button>
-              <Button type="danger" shape="circle" onClick={confirmDelete}>
+              <Button type="danger" shape="circle" onClick={(e) => { e.stopPropagation(); confirmDelete(); }}>
                 <Icon type="delete" theme="outlined" />
               </Button>
             </Col>
