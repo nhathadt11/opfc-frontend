@@ -41,6 +41,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   menuList: state.generalReducer.menuList,
+  fullTextSearchValue: state.generalReducer.fullTextSearchValue,
 });
 
 const mapDispatchToProps = {
