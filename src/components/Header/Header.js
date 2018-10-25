@@ -28,7 +28,10 @@ const Header = ({
         size="large"
         className="header-search"
         enterButton
-        onSearch={value => fetchMenuManyRequestAction(value)}
+        onSearch={(value) => {
+          push('/');
+          fetchMenuManyRequestAction(value);
+        }}
       />
     </div>
 

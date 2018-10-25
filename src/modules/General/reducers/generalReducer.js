@@ -15,6 +15,7 @@ const initialState = {
   districtList: [],
   cityAndDistrictList: [],
   menuDetail: {},
+  fullTextSearchValue: '',
 };
 
 const generalReducer = (state = initialState, { type, payload }) => {
@@ -24,9 +25,14 @@ const generalReducer = (state = initialState, { type, payload }) => {
     case FETCH_DISTRICT_MANY_REQUEST:
     case FETCH_CITY_AND_DISTRICT_REQUEST:
     case FETCH_MENU_DETAIL_REQUEST:
+      return {
+        ...state,
+        fetching: true,
+      };
     case FETCH_MENU_MANY_REQUEST:
       return {
         ...state,
+        fullTextSearchValue: payload.text,
         fetching: true,
       };
     case FETCH_EVENT_TYPE_MANY_SUCCESS:

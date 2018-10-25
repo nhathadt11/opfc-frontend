@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Layout } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { shape, arrayOf, func } from 'prop-types';
+import {
+  shape, arrayOf, func, string,
+} from 'prop-types';
 import MenuCardGrid from '../MenuCardGrid/MenuCardGrid';
 import MenuFilterSider from '../../components/MenuFilterSider/MenuFilterSider';
 import { fetchMenuManyRequest } from '../../modules/General/actions/general';
@@ -12,12 +14,13 @@ const { Sider, Content } = Layout;
 class Home extends Component {
   static propTypes = {
     menuList: arrayOf(shape({})).isRequired,
+    fullTextSearchValue: string.isRequired,
     fetchMenuManyRequestAction: func.isRequired,
   }
 
   componentDidMount() {
-    const { fetchMenuManyRequestAction } = this.props;
-    fetchMenuManyRequestAction();
+    const { fetchMenuManyRequestAction, fullTextSearchValue } = this.props;
+    fetchMenuManyRequestAction(fullTextSearchValue);
   }
 
   render() {
