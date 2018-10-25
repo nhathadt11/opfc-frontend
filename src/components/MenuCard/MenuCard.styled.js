@@ -17,6 +17,7 @@ export const MenuCardContentStyled = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   font-size: 13px;
+  min-height: 57px;
 `;
 
 export const CatergoryLabelStyled = styled.div`
@@ -51,4 +52,14 @@ export const CatergoryLabelStyled = styled.div`
     border-width: 15px 0 15px 10px;
     border-color: transparent transparent transparent #f68b40;
   }
+`;
+
+export const ByStyled = styled.span`
+  font-size: 13px;
+  color: #9d9d9d;
+`;
+
+export const BrandNameStyled = styled.span`
+  font-size: 13px;
+  text-decoration: underline;
 `;

@@ -1,12 +1,18 @@
 import React from 'react';
 import {
-  Card, Icon, Row, Col,
+  Card, Icon, Row, Col, Avatar,
 } from 'antd';
 import { bool, shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { MenuCardTitleStyled, CatergoryLabelStyled, MenuCardContentStyled } from './MenuCard.styled';
+import {
+  MenuCardTitleStyled, CatergoryLabelStyled, MenuCardContentStyled,
+  ByStyled, BrandNameStyled,
+} from './MenuCard.styled';
 import LocalIcon from '../../fonts/LocalFont';
 import './MenuCard.css';
+
+const colorList = ['#78aea4', '#c9b6c7', '#ffd6d6', '#86dbc7', '#ae5d75'];
+const randomRage = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 const MenuCard = ({ loading, history, menu }) => (
   <Card
@@ -39,6 +45,20 @@ const MenuCard = ({ loading, history, menu }) => (
         title={<MenuCardTitleStyled>{menu.menuName}</MenuCardTitleStyled>}
         description={<MenuCardContentStyled>{menu.description}</MenuCardContentStyled>}
       />
+    </Row>
+
+    <Row>
+      <Col className="opfc-brand-name">
+        <ByStyled>By</ByStyled>
+        <Avatar size={18} style={{ backgroundColor: colorList[randomRage(1, 5)] }}>
+          {String(menu.brandName).charAt(0)}
+        </Avatar>
+        <BrandNameStyled
+          onClick={(e) => { e.stopPropagation(); history.push(`/brand/${menu.brandId}`); }}
+        >
+          {menu.brandName}
+        </BrandNameStyled>
+      </Col>
     </Row>
   </Card>
 );

@@ -1,3 +1,18 @@
 .opfc-menu-card .ant-card-body {
   padding: 15px;
 }
+
+.opfc-menu-card .opfc-brand-name {
+  margin-top: 8px;
+  /* display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden; */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.opfc-menu-card .opfc-brand-name > *:not(:first-child) {
+  margin-left: 3px;
+}
