@@ -31,7 +31,7 @@ const fetchMenuManyEs = (text) => {
           multi_match: {
             query: text,
             type: 'cross_fields',
-            fields: ['menuName', 'description', 'eventTypeNames', 'mealNames', 'mealDescriptions', 'categoryNames'],
+            fields: ['menuName', 'description', 'eventTypeNames', 'mealNames', 'mealDescriptions', 'categoryNames', 'brandName'],
             operator: 'and',
           },
         },
