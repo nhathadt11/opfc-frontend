@@ -16,3 +16,9 @@
 .opfc-menu-card .opfc-brand-name > *:not(:first-child) {
   margin-left: 3px;
 }
+
+.opfc-menu-card .ofpc-menu-image-cover {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
