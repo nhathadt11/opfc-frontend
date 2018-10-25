@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, Col, Tag, Button, Icon, Affix,
+  Row, Col, Tag, Button, Icon, Affix, Rate,
 } from 'antd';
 import { map } from 'lodash';
 import { withRouter } from 'react-router-dom';
@@ -11,7 +11,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import Gallery from '../Gallery/Gallery';
 import './MenuDetail.css';
-import Rate from '../Rate/Rate';
 import { StatSpanStyled } from '../../modules/BrandProfile/components/BrandProfileHeader/BrandProfileHeader.styled';
 import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
@@ -19,11 +18,11 @@ import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 
-const tags = [
-  { id: 0, name: 'wedding' },
-  { id: 1, name: 'birthday' },
-  { id: 2, name: 'family' },
-];
+// const tags = [
+//   { id: 0, name: 'wedding' },
+//   { id: 1, name: 'birthday' },
+//   { id: 2, name: 'family' },
+// ];
 
 const MealList = ({ data }) => (
   <ul>
@@ -61,6 +60,7 @@ class MenuDetail extends Component {
     menuDetail: shape({}).isRequired,
     fetchMenuRatingManyRequestAction: func.isRequired,
     ratingList: arrayOf(shape({})).isRequired,
+    clearRatingListAction: func.isRequired,
   }
 
   componentWillMount() {
@@ -107,7 +107,7 @@ class MenuDetail extends Component {
                 {menuDetail.totalBookmark || 0} Saved
               </StatSpanStyled>
             </div>
-            <Rate allowHalf defaultValue={2.5} /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
+            <Rate allowHalf value={2.5} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
             <p className="opfc-menu-desc">
               {menuDetail.description}
             </p>
@@ -116,7 +116,7 @@ class MenuDetail extends Component {
             </Row>
             <Row className="opfc-menu-tag-list">
               {
-                map(tags, ({ id, name }) => (
+                map(menuDetail.eventTypeLists, ({ id, name }) => (
                   <Tag key={id}>
                     {name.length > 20 ? `${name.slice(0, 20)}...` : name}
                   </Tag>

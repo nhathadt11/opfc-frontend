@@ -69,12 +69,12 @@ class CartItem extends Component {
             <MenuNameStyled>{menu.menuName}</MenuNameStyled>
             <ByBrandNameStyled>by {menu.brandName || 'N/A'}</ByBrandNameStyled>
             <section>
-              <span><LocalIcon type="icon-dish" /> x {menu.mealIds ? menu.mealIds.length : 0}</span>
+              <span><LocalIcon type="icon-dish" /> x {menu.mealList ? menu.mealList.length : 0}</span>
             </section>
             <section>
-              <span><Icon type="team" /> x {menu.participantNumber || 0}</span>
+              <span><Icon type="team" /> x {menu.servingNumber || 0}</span>
             </section>
-            <Tooltip title={<MealList meals={menu.mealNames} />} placement="right" overlayClassName="opfc-meal-list-view">
+            <Tooltip title={<MealList meals={menu.mealList} />} placement="right" overlayClassName="opfc-meal-list-view">
               <ViewMealsInThisMenu>View meals</ViewMealsInThisMenu>
             </Tooltip>
           </div>
