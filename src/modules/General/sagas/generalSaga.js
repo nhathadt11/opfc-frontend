@@ -1,5 +1,5 @@
 import {
-  all, call, takeLatest, put, fork,
+  all, call, takeLatest, put, fork, select, take, cancel,
 } from 'redux-saga/effects';
 import { map } from 'lodash';
 import { message } from 'antd';
@@ -11,7 +11,11 @@ import {
   FETCH_CITY_MANY_REQUEST, fetchCityManySuccess, fetchCityManyFailure, fetchCityAndDistrictSuccess,
   FETCH_MENU_DETAIL_REQUEST, fetchMenuDetailFailure, fetchMenuDetailSuccess,
   fetchMenuManySuccess, fetchMenuManyFailure, FETCH_MENU_MANY_REQUEST,
+  CHANGE_FULL_TEXT_SEARCH_CRITERIA,
 } from '../actions/general';
+
+const getFullTextSearchCriteria = state => state.generalReducer.fullTextSearch;
+const getFullTextSearchValue = state => state.generalReducer.fullTextSearchValue;
 
 function* fetchEventTypeMany() {
   try {
@@ -97,7 +101,8 @@ function* watchFetchMenuDetail() {
 
 function* fetchMenuMany({ payload: { text } }) {
   try {
-    const { data } = yield call(Api.fetchMenuManyEs, text);
+    const criteria = yield select(getFullTextSearchCriteria);
+    const { data } = yield call(Api.fetchMenuManyEs, text || criteria.value, criteria);
 
     const menus = map(data.hits.hits, h => h._source); //eslint-disable-line
     yield put(fetchMenuManySuccess(menus));
@@ -111,6 +116,26 @@ function* watchFetchMenuMany() {
   yield takeLatest(FETCH_MENU_MANY_REQUEST, fetchMenuMany);
 }
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+function* changeFullTextSearchCriteria() {
+  yield call(delay, 400);
+
+  const searchText = yield select(getFullTextSearchValue);
+  yield fork(fetchMenuMany, { payload: { text: searchText } });
+}
+
+function* watchChangeFullTextSearchCriteria() {
+  let task;
+  while (true) {
+    yield take(CHANGE_FULL_TEXT_SEARCH_CRITERIA);
+    if (task) {
+      yield cancel(task);
+    }
+    task = yield fork(changeFullTextSearchCriteria);
+  }
+}
+
 export default function* generalFlow() {
   yield all([
     watchFetchEventTypeMany(),
@@ -118,6 +143,7 @@ export default function* generalFlow() {
     watchFetchCityMany(),
     watchFetchMenuDetail(),
     watchFetchMenuMany(),
+    watchChangeFullTextSearchCriteria(),
 
     // fetch general data at initial load time
     fork(fetchEventTypeMany),

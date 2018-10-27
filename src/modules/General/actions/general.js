@@ -23,6 +23,8 @@ export const FETCH_MENU_MANY_REQUEST = 'FETCH_MENU_MANY_REQUEST';
 export const FETCH_MENU_MANY_SUCCESS = 'FETCH_MENU_MANY_SUCCESS';
 export const FETCH_MENU_MANY_FAILURE = 'FETCH_MENU_MANY_FAILURE';
 
+export const CHANGE_FULL_TEXT_SEARCH_CRITERIA = 'CHANGE_FULL_TEXT_SEARCH_CRITERIA';
+
 export const fetchEventTypeManyRequest = () => ({
   type: FETCH_EVENT_TYPE_MANY_REQUEST,
 });
@@ -134,5 +136,13 @@ export const fetchMenuManyFailure = error => ({
   type: FETCH_MENU_MANY_FAILURE,
   payload: {
     error,
+  },
+});
+
+export const changeFullTextSearchCriteria = (criteria, value) => ({
+  type: CHANGE_FULL_TEXT_SEARCH_CRITERIA,
+  payload: {
+    criteria,
+    value,
   },
 });

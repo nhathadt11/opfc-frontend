@@ -5,6 +5,7 @@ import {
   FETCH_CITY_MANY_SUCCESS, FETCH_DISTRICT_MANY_SUCCESS, FETCH_CITY_AND_DISTRICT_SUCCESS,
   FETCH_MENU_DETAIL_REQUEST, FETCH_MENU_DETAIL_FAILURE, FETCH_MENU_DETAIL_SUCCESS,
   FETCH_MENU_MANY_REQUEST, FETCH_MENU_MANY_FAILURE, FETCH_MENU_MANY_SUCCESS,
+  CHANGE_FULL_TEXT_SEARCH_CRITERIA,
 } from '../actions/general';
 
 
@@ -15,11 +16,27 @@ const initialState = {
   districtList: [],
   cityAndDistrictList: [],
   menuDetail: {},
-  fullTextSearchValue: '',
+  fullTextSearch: {
+    value: '',
+    categoryNames: [],
+    eventTypeNames: [],
+    priceFrom: 100,
+    priceTo: 500,
+    servingNumberFrom: 5,
+    servingNumberTo: 50,
+  },
 };
 
 const generalReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case CHANGE_FULL_TEXT_SEARCH_CRITERIA:
+      return {
+        ...state,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          [payload.criteria]: payload.value,
+        },
+      };
     case FETCH_EVENT_TYPE_MANY_REQUEST:
     case FETCH_CITY_MANY_REQUEST:
     case FETCH_DISTRICT_MANY_REQUEST:

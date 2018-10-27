@@ -1,49 +1,58 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { func, number } from 'prop-types';
 import { Slider, InputNumber } from 'antd';
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled, NumberRangeStyled } from '../MenuFilterSider.styled';
+import { changeFullTextSearchCriteria } from '../../../modules/General/actions/general';
 
-class BudgetRange extends Component {
-  state = {
-    lowerLimit: 150,
-    upperLimit: 500,
-  }
+const BudgetRange = ({ priceFrom, priceTo, changeFullTextSearchCriteriaAction }) => (
+  <MenuFilterItemStyled>
+    <MenuFilterItemTitleStyled htmlFor="">Budget</MenuFilterItemTitleStyled>
+    <Slider
+      range
+      defaultValue={[priceFrom, priceTo]}
+      min={100}
+      max={10000000}
+      step={10}
+      value={[priceFrom, priceTo]}
+      onChange={([from, to]) => {
+        changeFullTextSearchCriteriaAction('priceFrom', from);
+        changeFullTextSearchCriteriaAction('priceTo', to);
+      }}
+    />
+    <NumberRangeStyled>
+      <InputNumber
+        formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+        onChange={value => changeFullTextSearchCriteriaAction('priceFrom', value)}
+        value={priceFrom}
+      />
+      <InputNumber
+        formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+        onChange={value => changeFullTextSearchCriteriaAction('priceTo', value)}
+        value={priceTo}
+      />
+    </NumberRangeStyled>
+  </MenuFilterItemStyled>
+);
 
-  handleLimitChange = (limit, value) => this.setState({ [limit]: value })
+BudgetRange.propTypes = {
+  priceFrom: number.isRequired,
+  priceTo: number.isRequired,
+  changeFullTextSearchCriteriaAction: func.isRequired,
+};
 
-  handleRangeChange = ([lowerLimit, upperLimit]) => this.setState({ lowerLimit, upperLimit })
+const mapStateToProps = state => ({
+  priceFrom: state.generalReducer.fullTextSearch.priceFrom,
+  priceTo: state.generalReducer.fullTextSearch.priceTo,
+});
 
-  render() {
-    const { lowerLimit, upperLimit } = this.state;
+const mapDispatchToProps = {
+  changeFullTextSearchCriteriaAction: changeFullTextSearchCriteria,
+};
 
-    return (
-      <MenuFilterItemStyled>
-        <MenuFilterItemTitleStyled htmlFor="">Budget</MenuFilterItemTitleStyled>
-        <Slider
-          range
-          defaultValue={[lowerLimit, upperLimit]}
-          min={100}
-          max={10000000}
-          step={10}
-          value={[lowerLimit, upperLimit]}
-          onChange={this.handleRangeChange}
-        />
-        <NumberRangeStyled>
-          <InputNumber
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-            onChange={value => this.handleLimitChange('lowerLimit', value)}
-            value={lowerLimit}
-          />
-          <InputNumber
-            formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-            onChange={value => this.handleLimitChange('upperLimit', value)}
-            value={upperLimit}
-          />
-        </NumberRangeStyled>
-      </MenuFilterItemStyled>
-    );
-  }
-}
-
-export default BudgetRange;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(BudgetRange);

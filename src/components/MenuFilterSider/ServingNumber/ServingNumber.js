@@ -1,38 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { InputNumber } from 'antd';
+import { number, func } from 'prop-types';
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled, NumberRangeStyled } from '../MenuFilterSider.styled';
+import { changeFullTextSearchCriteria } from '../../../modules/General/actions/general';
 
-class ServingNumber extends Component {
-  state = {
-    lowerLimit: 1,
-    upperLimit: 100,
-  }
+const ServingNumber = ({
+  servingNumberFrom, servingNumberTo, changeFullTextSearchCriteriaAction,
+}) => (
+  <MenuFilterItemStyled>
+    <MenuFilterItemTitleStyled htmlFor="">Serving Number</MenuFilterItemTitleStyled>
+    <NumberRangeStyled servingNumber>
+      <InputNumber
+        formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+        onChange={value => changeFullTextSearchCriteriaAction('servingNumberFrom', value)}
+        value={servingNumberFrom}
+      />
+      <InputNumber
+        formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+        parser={value => value.replace(/\$\s?|(,*)/g, '')}
+        onChange={value => changeFullTextSearchCriteriaAction('servingNumberTo', value)}
+        value={servingNumberTo}
+      />
+    </NumberRangeStyled>
+  </MenuFilterItemStyled>
+);
 
-  handleLimitChange = (limit, value) => this.setState({ [limit]: value })
+ServingNumber.propTypes = {
+  servingNumberFrom: number.isRequired,
+  servingNumberTo: number.isRequired,
+  changeFullTextSearchCriteriaAction: func.isRequired,
+};
 
-  render() {
-    const { lowerLimit, upperLimit } = this.state;
+const mapStateToProps = state => ({
+  servingNumberFrom: state.generalReducer.fullTextSearch.servingNumberFrom,
+  servingNumberTo: state.generalReducer.fullTextSearch.servingNumberTo,
+});
 
-    return (
-      <MenuFilterItemStyled>
-        <MenuFilterItemTitleStyled htmlFor="">Serving Number</MenuFilterItemTitleStyled>
-        <NumberRangeStyled servingNumber>
-          <InputNumber
-            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-            onChange={value => this.handleLimitChange('lowerLimit', value)}
-            value={lowerLimit}
-          />
-          <InputNumber
-            formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-            parser={value => value.replace(/\$\s?|(,*)/g, '')}
-            onChange={value => this.handleLimitChange('upperLimit', value)}
-            value={upperLimit}
-          />
-        </NumberRangeStyled>
-      </MenuFilterItemStyled>
-    );
-  }
-}
+const mapDispatchToProps = {
+  changeFullTextSearchCriteriaAction: changeFullTextSearchCriteria,
+};
 
-export default ServingNumber;
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(ServingNumber);

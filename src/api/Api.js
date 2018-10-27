@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { map } from 'lodash';
 import { CLOUDINARY_API_KEY, CLOUDINARY_UPLOAD_PRESET } from '../constants/AppConstants';
 
 // Elastic search
@@ -6,7 +7,9 @@ const esAxios = axios.create({
   baseURL: process.env.REACT_APP_ES_BASE_URL,
 });
 
-const fetchMenuManyEs = (text) => {
+const fetchMenuManyEs = (text, criteria) => {
+  const matchEventTypeNames = map(criteria.eventTypeNames, c => ({ match: { eventTypeNames: c } }));
+
   if (!text) {
     return esAxios.get('menus/_search', {
       params: {
@@ -14,7 +17,13 @@ const fetchMenuManyEs = (text) => {
           from: 0,
           size: 20,
           query: {
-            match_all: { },
+            bool: {
+              must: [
+                ...matchEventTypeNames, // { match: { categoryNames: 'Smoothie' } },
+                { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
+                { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
+              ],
+            },
           },
         }),
         source_content_type: 'application/json',
@@ -28,11 +37,20 @@ const fetchMenuManyEs = (text) => {
         from: 0,
         size: 20,
         query: {
-          multi_match: {
-            query: text,
-            type: 'cross_fields',
-            fields: ['menuName', 'description', 'eventTypeNames', 'mealNames', 'mealDescriptions', 'categoryNames', 'brandName'],
-            operator: 'and',
+          bool: {
+            must: [
+              ...matchEventTypeNames, // { match: { categoryNames: 'Smoothie' } },
+              { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
+              { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
+              {
+                multi_match: {
+                  query: text,
+                  type: 'cross_fields',
+                  fields: ['menuName', 'description', 'eventTypeNames', 'mealNames', 'mealDescriptions', 'categoryNames', 'brandName'],
+                  operator: 'and',
+                },
+              },
+            ],
           },
         },
       }),
