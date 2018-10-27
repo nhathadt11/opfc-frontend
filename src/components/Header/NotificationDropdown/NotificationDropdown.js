@@ -31,7 +31,7 @@ const NotificationDropdown = ({
               {n['Message']}
             </NotificationContentStyled>
             <NotificationTimeStyled>
-              {moment(n['CreatedAt']).fromNow()}
+              {moment.utc(n['CreatedAt']).fromNow()}
             </NotificationTimeStyled>
           </Menu.Item>
         ))
