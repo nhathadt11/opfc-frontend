@@ -20,9 +20,9 @@ const initialState = {
     value: '',
     categoryNames: [],
     eventTypeNames: [],
-    priceFrom: 100,
+    priceFrom: 1,
     priceTo: 500,
-    servingNumberFrom: 5,
+    servingNumberFrom: 1,
     servingNumberTo: 50,
   },
 };

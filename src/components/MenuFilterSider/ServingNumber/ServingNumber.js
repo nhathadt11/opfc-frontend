@@ -17,12 +17,14 @@ const ServingNumber = ({
         parser={value => value.replace(/\$\s?|(,*)/g, '')}
         onChange={value => changeFullTextSearchCriteriaAction('servingNumberFrom', value)}
         value={servingNumberFrom}
+        min={1}
       />
       <InputNumber
         formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         parser={value => value.replace(/\$\s?|(,*)/g, '')}
         onChange={value => changeFullTextSearchCriteriaAction('servingNumberTo', value)}
         value={servingNumberTo}
+        max={1000}
       />
     </NumberRangeStyled>
   </MenuFilterItemStyled>

@@ -12,7 +12,7 @@ const BudgetRange = ({ priceFrom, priceTo, changeFullTextSearchCriteriaAction })
     <Slider
       range
       defaultValue={[priceFrom, priceTo]}
-      min={100}
+      min={1}
       max={10000000}
       step={10}
       value={[priceFrom, priceTo]}

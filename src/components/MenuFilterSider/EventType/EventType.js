@@ -9,7 +9,7 @@ import {
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
 import { changeFullTextSearchCriteria } from '../../../modules/General/actions/general';
 
-const EventType = ({ eventTypeList, changeFullTextSearchCriteriaAction }) => {
+const EventType = ({ eventTypeList, changeFullTextSearchCriteriaAction, eventTypeNames }) => {
   const onChange = checkedValues => changeFullTextSearchCriteriaAction('eventTypeNames', checkedValues);
 
   return (
@@ -18,6 +18,7 @@ const EventType = ({ eventTypeList, changeFullTextSearchCriteriaAction }) => {
       <Checkbox.Group
         style={{ width: '100%' }}
         onChange={onChange}
+        value={eventTypeNames}
       >
         <Row>
           {
@@ -39,10 +40,12 @@ EventType.propTypes = {
     eventTypeName: string,
   })).isRequired,
   changeFullTextSearchCriteriaAction: func.isRequired,
+  eventTypeNames: arrayOf(string).isRequired,
 };
 
 const mapStateToProps = state => ({
   eventTypeList: state.generalReducer.eventTypeList,
+  eventTypeNames: state.generalReducer.fullTextSearch.eventTypeNames,
 });
 
 const mapDispatchToProps = {
