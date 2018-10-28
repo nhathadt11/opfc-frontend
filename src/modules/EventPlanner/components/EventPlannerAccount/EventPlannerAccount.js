@@ -56,7 +56,7 @@ class EventPlannerAccount extends Component {
       password: account.password,
       confirmPassword: account.password,
       email: account.email,
-      cityDistrictWard: [account.cityId, account.districtId],
+      cityDistrict: [account.cityId, account.districtId],
       phone: account.phone,
       address: account.address,
     });
@@ -78,9 +78,8 @@ class EventPlannerAccount extends Component {
           email: values.email,
           password: values.password,
           phone: values.phonePrefix + values.phone,
-          city: values.cityDistrictWard[0],
-          district: values.cityDistrictWard[1],
-          ward: values.cityDistrictWard[2],
+          city: values.cityDistrict[0],
+          district: values.cityDistrict[1],
           address: values.address,
         };
         createAccountRequestAction(account, this.updateFormValues);
