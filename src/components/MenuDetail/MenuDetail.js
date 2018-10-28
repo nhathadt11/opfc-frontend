@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   Row, Col, Tag, Button, Icon, Affix, Rate,
 } from 'antd';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import {
   shape, func, number, arrayOf,
@@ -114,15 +114,32 @@ class MenuDetail extends Component {
             <Row className="opfc-menu-meal-list">
               <MealList data={menuDetail.mealList} />
             </Row>
-            <Row className="opfc-menu-tag-list">
-              {
-                map(menuDetail.eventTypeLists, ({ id, name }) => (
-                  <Tag key={id}>
-                    {name.length > 20 ? `${name.slice(0, 20)}...` : name}
-                  </Tag>
-                ))
-              }
-            </Row>
+            {
+              !isEmpty(menuDetail.eventTypeList) && (
+                <Row className="opfc-menu-tag-list">
+                  {
+                    map(menuDetail.eventTypeList, ({ id, name }) => (
+                      <Tag key={id}>
+                        {name.length > 20 ? `${name.slice(0, 20)}...` : name}
+                      </Tag>
+                    ))
+                  }
+                </Row>
+              )
+            }
+            {
+              !isEmpty(menuDetail.categoryList) && (
+                <Row className="opfc-menu-tag-list">
+                  {
+                    map(menuDetail.categoryList, ({ id, name }) => (
+                      <Tag key={id}>
+                        {name.length > 20 ? `${name.slice(0, 20)}...` : name}
+                      </Tag>
+                    ))
+                  }
+                </Row>
+              )
+            }
             <Row>
               <p>
                 <Button type="primary" size="large" onClick={() => selectMenuAction(menuDetail)}>Taste it</Button>
