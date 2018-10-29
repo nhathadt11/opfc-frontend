@@ -40,7 +40,7 @@ const NotificationDropdown = ({
   );
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter" trigger="click">
+    <Dropdown overlay={menu} placement="bottomCenter" trigger={['click']}>
       <Badge count={count}>
         { children }
       </Badge>

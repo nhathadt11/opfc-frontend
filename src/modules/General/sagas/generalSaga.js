@@ -13,6 +13,7 @@ import {
   fetchMenuManySuccess, fetchMenuManyFailure, FETCH_MENU_MANY_REQUEST,
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
   fetchMenuManyRequest,
+  fetchEventTypeManyRequest,
 } from '../actions/general';
 
 const getFullTextSearchCriteria = state => state.generalReducer.fullTextSearch;
@@ -138,6 +139,11 @@ function* watchChangeFullTextSearchCriteria() {
   }
 }
 
+function* fetchGeneralDataRequest() {
+  yield put(fetchEventTypeManyRequest());
+  yield fork(fetchCityAndDistrictParallel);
+}
+
 export default function* generalFlow() {
   yield all([
     watchFetchEventTypeMany(),
@@ -148,7 +154,6 @@ export default function* generalFlow() {
     watchChangeFullTextSearchCriteria(),
 
     // fetch general data at initial load time
-    fork(fetchEventTypeMany),
-    fork(fetchCityAndDistrictParallel),
+    fork(fetchGeneralDataRequest),
   ]);
 }

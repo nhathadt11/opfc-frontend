@@ -11,6 +11,7 @@ import {
 
 const initialState = {
   fetching: false,
+  fetchingEventTypeList: false,
   eventTypeList: [],
   cityList: [],
   districtList: [],
@@ -38,6 +39,10 @@ const generalReducer = (state = initialState, { type, payload }) => {
         },
       };
     case FETCH_EVENT_TYPE_MANY_REQUEST:
+      return {
+        ...state,
+        fetchingEventTypeList: true,
+      };
     case FETCH_CITY_MANY_REQUEST:
     case FETCH_DISTRICT_MANY_REQUEST:
     case FETCH_CITY_AND_DISTRICT_REQUEST:
@@ -55,7 +60,7 @@ const generalReducer = (state = initialState, { type, payload }) => {
     case FETCH_EVENT_TYPE_MANY_SUCCESS:
       return {
         ...state,
-        fetching: false,
+        fetchingEventTypeList: false,
         eventTypeList: payload.eventTypeList,
       };
     case FETCH_CITY_MANY_SUCCESS:
@@ -89,6 +94,10 @@ const generalReducer = (state = initialState, { type, payload }) => {
         menuList: payload.menuList,
       };
     case FETCH_EVENT_TYPE_MANY_FAILURE:
+      return {
+        ...state,
+        fetchingEventTypeList: false,
+      };
     case FETCH_CITY_MANY_FAILURE:
     case FETCH_DISTRICT_MANY_FAILURE:
     case FETCH_CITY_AND_DISTRICT_FAILURE:
