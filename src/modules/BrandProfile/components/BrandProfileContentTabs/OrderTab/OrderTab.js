@@ -2,67 +2,64 @@ import React, { Component, Fragment } from 'react';
 import {
   Table, Badge, Button, Icon,
 } from 'antd';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { func, arrayOf, shape } from 'prop-types';
 import { ActionGroupStyled, OrderNoStyled } from './OrderTab.styled';
 import OrderModal from './OrderModal';
-
-const data = [];
-for (let i = 0; i < 9; i += 1) {
-  data.push({
-    key: i,
-    orderId: Math.floor(Math.random() * 255),
-    eventId: Math.floor(Math.random() * 255),
-    eventName: 'Tet Holiday',
-    eventTypeId: 'Conference',
-    startAt: '2014-12-24 23:12:00',
-    endAt: '2014-12-24 23:12:00',
-    status: '',
-    servingNumber: (i + 1) * 2,
-    cityId: 'Ho Chi Minh',
-    districtId: 'Quan 12',
-    address: 'CVPM Quan Trung',
-    total: (i + 1) * 5,
-  });
-}
+import { fetchOrderManyRequest } from '../../../actions/order';
 
 class OrderTab extends Component {
-  state = {
-    visible: false,
+  static propTypes = {
+    fetchOrderManyRequestAction: func.isRequired,
+    orderList: arrayOf(shape({})).isRequired,
   }
 
-  openModal = () => this.setState({ visible: true })
+  state = {
+    visible: false,
+    data: {},
+  }
 
-  closeModal = () => this.setState({ visible: false })
+  componentDidMount() {
+    const { fetchOrderManyRequestAction } = this.props;
+    fetchOrderManyRequestAction();
+  }
+
+  openModal = data => this.setState({ visible: true, data });
+
+  closeModal = () => this.setState({ visible: false, data: {} })
 
   render() {
     const columns = [
       {
         title: 'Order No.',
-        dataIndex: 'orderId',
-        key: 'orderId',
+        dataIndex: 'orderNo',
+        key: 'orderNo',
         fixed: 'left',
         width: 100,
         render: text => <OrderNoStyled>#{text}</OrderNoStyled>,
       },
-      { title: 'Event No.', dataIndex: 'eventId', key: 'eventId', fixed: 'left', width: 100 }, // eslint-disable-line
+      { title: 'Event No.', dataIndex: 'eventNo', key: 'eventNo', fixed: 'left', width: 100 }, // eslint-disable-line
       { title: 'Event Name', dataIndex: 'eventName', key: 'eventName', width: 150 }, // eslint-disable-line
-      { title: 'Event Type', dataIndex: 'eventTypeId', key: 'eventTypeId', width: 150 }, // eslint-disable-line
-      { title: 'Start At', dataIndex: 'startAt', key: 'startAt', width: 200 }, // eslint-disable-line
-      { title: 'End At', dataIndex: 'endAt', key: 'endAt', width: 200 }, // eslint-disable-line
-      { title: 'Status', key: 'status', render: () => <span><Badge status="processing" />On Going</span>, width: 150 }, // eslint-disable-line
+      { title: 'Event Type', dataIndex: 'eventTypeName', key: 'eventTypeName', width: 150 }, // eslint-disable-line
+      { title: 'Start At', dataIndex: 'startAt', key: 'startAt', width: 200, render: text => moment(text).format('YYYY-MM-DD HH:mm') }, // eslint-disable-line
+      { title: 'End At', dataIndex: 'endAt', key: 'endAt', width: 200, render: text => moment(text).format('YYYY-MM-DD HH:mm') }, // eslint-disable-line
+      { title: 'Status', key: 'eventStatus', render: () => <span><Badge status="processing" />On Going</span>, width: 150 }, // eslint-disable-line
       { title: 'Serving Number', dataIndex: 'servingNumber', key: 'servingNumber', width: 150 }, // eslint-disable-line
-      { title: 'City', dataIndex: 'cityId', key: 'cityId', width: 150 }, // eslint-disable-line
-      { title: 'District', dataIndex: 'districtId', key: 'districtId', width: 150 }, // eslint-disable-line
+      { title: 'City', dataIndex: 'cityName', key: 'cityName', width: 150 }, // eslint-disable-line
+      { title: 'District', dataIndex: 'districtName', key: 'districtName', width: 150 }, // eslint-disable-line
       { title: 'Address', dataIndex: 'address', key: 'address', width: 150 }, // eslint-disable-line
-      { title: 'Total', dataIndex: 'total', key: 'total', width: 150 }, // eslint-disable-line
+      { title: 'Total', dataIndex: 'totalPrice', key: 'totalPrice', width: 150 }, // eslint-disable-line
       {
         title: 'Action',
         key: 'operation',
-        render: () => (
+        render: (text, record) => (
           <ActionGroupStyled>
             <Button shape="circle" type="primary">
               <Icon type="check" theme="outlined" />
             </Button>
-            <Button shape="circle" type="default" onClick={this.openModal}>
+            <Button shape="circle" type="default" onClick={() => this.openModal(record)}>
               <Icon type="eye" theme="outlined" />
             </Button>
           </ActionGroupStyled>
@@ -71,20 +68,36 @@ class OrderTab extends Component {
         fixed: 'right',
       },
     ];
-    const { visible } = this.state;
+    const { visible, data } = this.state;
+    const { orderList } = this.props;
 
     return (
       <Fragment>
         <Table
           className="components-table-demo-nested"
           columns={columns}
-          dataSource={data}
+          dataSource={orderList}
           scroll={{ x: 1850, y: 420 }}
         />
-        <OrderModal visible={visible} onOk={this.closeModal} onCancel={this.closeModal} />
+        <OrderModal
+          visible={visible}
+          onOk={this.closeModal}
+          onCancel={this.closeModal}
+          orderLineList={data.brandOderLineList}
+        />
       </Fragment>
     );
   }
 }
 
-export default OrderTab;
+const mapStateToProps = state => ({
+  orderList: state.brandProfileReducer.order.orderList,
+});
+
+const mapDispatchToProps = {
+  fetchOrderManyRequestAction: fetchOrderManyRequest,
+};
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+)(OrderTab);

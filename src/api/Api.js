@@ -206,6 +206,8 @@ const fetchMenuRatingMany = menuId => axios.get(`/Rating/Menu/${menuId}`);
 
 const createMenuRating = (menuId, userId, rating) => axios.post(`/Rating/Menu/${menuId}/User/${userId}`, rating);
 
+const fetchOrderMany = brandId => axios.get(`/Order/Brand/${brandId}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -235,6 +237,7 @@ export default {
   createOrder,
   fetchMenuRatingMany,
   createMenuRating,
+  fetchOrderMany,
   // Elastic search
   fetchMenuManyEs,
 };

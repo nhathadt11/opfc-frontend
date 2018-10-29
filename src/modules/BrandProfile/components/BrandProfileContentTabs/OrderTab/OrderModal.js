@@ -2,22 +2,27 @@ import React from 'react';
 import {
   Modal, Table, Button, Icon,
 } from 'antd';
-import { bool, func } from 'prop-types';
+import {
+  bool, func, arrayOf, shape,
+} from 'prop-types';
 import { ActionGroupStyled } from './OrderTab.styled';
 
 const columns = [{
   title: 'Menu Name',
   dataIndex: 'menuName',
   key: 'menuName',
-  render: text => <a href="javascript:;">{text}</a>,
 }, {
-  title: 'Description',
-  dataIndex: 'description',
-  key: 'description',
+  title: 'Note',
+  dataIndex: 'note',
+  key: 'note',
 }, {
   title: 'Price',
   dataIndex: 'price',
   key: 'price',
+}, {
+  title: 'Status',
+  dataIndex: 'status',
+  key: 'status',
 }, {
   title: 'Action',
   key: 'action',
@@ -34,24 +39,9 @@ const columns = [{
   width: 110,
 }];
 
-const data = [{
-  key: '1',
-  menuName: 'John Brown',
-  price: Math.floor(Math.random() * 255),
-  description: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  menuName: 'Jim Green',
-  price: Math.floor(Math.random() * 255),
-  description: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  menuName: 'Joe Black',
-  price: Math.floor(Math.random() * 255),
-  description: 'Sidney No. 1 Lake Park',
-}];
-
-const OrderModal = ({ visible, onOk, onCancel }) => (
+const OrderModal = ({
+  visible, onOk, onCancel, orderLineList,
+}) => (
   <Modal
     title="Order #32"
     visible={visible}
@@ -60,7 +50,7 @@ const OrderModal = ({ visible, onOk, onCancel }) => (
     footer={null}
     width={700}
   >
-    <Table columns={columns} dataSource={data} pagination={false} />
+    <Table columns={columns} dataSource={orderLineList} pagination={false} />
   </Modal>
 );
 
@@ -68,6 +58,7 @@ OrderModal.propTypes = {
   visible: bool.isRequired,
   onOk: func.isRequired,
   onCancel: func.isRequired,
+  orderLineList: arrayOf(shape({})).isRequired,
 };
 
 export default OrderModal;

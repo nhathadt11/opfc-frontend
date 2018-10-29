@@ -18,6 +18,7 @@ import {
   FETCH_BRAND_MENU_MANY_REQUEST, FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealManySuccess,
   fetchBrandMenuManySuccess, fetchBrandMealManyRequest,
 } from '../actions/brand';
+import { FETCH_ORDER_MANY_REQUEST, fetchOrderManyFailure, fetchOrderManySuccess } from '../actions/order';
 
 const getBrandId = state => state.brandProfileReducer.brand.brandDetail.id;
 
@@ -159,6 +160,22 @@ function* watchDeleteMeal() {
   yield takeEvery(DELETE_MEAL_REQUEST, deleteMeal);
 }
 
+function* fetchOrderMany() {
+  try {
+    const brandId = yield select(getBrandId);
+    const { data } = yield call(Api.fetchOrderMany, brandId);
+
+    yield put(fetchOrderManySuccess(data));
+  } catch (error) {
+    message.error('Could not fetch order list.');
+    yield put(fetchOrderManyFailure(error));
+  }
+}
+
+function* watchFetchOrderMany() {
+  yield takeLatest(FETCH_ORDER_MANY_REQUEST, fetchOrderMany);
+}
+
 export default function* brandProfielFlow() {
   yield all([
     watchCreateMeal(),
@@ -169,5 +186,6 @@ export default function* brandProfielFlow() {
     watchFetchBrandDetail(),
     watchFetchBrandMenuMany(),
     watchFetchBrandMealMany(),
+    watchFetchOrderMany(),
   ]);
 }
