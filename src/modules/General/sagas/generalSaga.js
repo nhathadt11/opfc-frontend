@@ -12,6 +12,7 @@ import {
   FETCH_MENU_DETAIL_REQUEST, fetchMenuDetailFailure, fetchMenuDetailSuccess,
   fetchMenuManySuccess, fetchMenuManyFailure, FETCH_MENU_MANY_REQUEST,
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
+  fetchMenuManyRequest,
 } from '../actions/general';
 
 const getFullTextSearchCriteria = state => state.generalReducer.fullTextSearch;
@@ -122,7 +123,8 @@ function* changeFullTextSearchCriteria() {
   yield call(delay, 400);
 
   const searchText = yield select(getFullTextSearchValue);
-  yield fork(fetchMenuMany, { payload: { text: searchText } });
+  yield put(fetchMenuManyRequest(searchText));
+  // yield fork(fetchMenuMany, { payload: { text: searchText } });
 }
 
 function* watchChangeFullTextSearchCriteria() {

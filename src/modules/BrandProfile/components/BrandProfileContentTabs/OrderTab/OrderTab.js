@@ -5,7 +5,9 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { func, arrayOf, shape } from 'prop-types';
+import {
+  func, arrayOf, shape, bool,
+} from 'prop-types';
 import { ActionGroupStyled, OrderNoStyled } from './OrderTab.styled';
 import OrderModal from './OrderModal';
 import { fetchOrderManyRequest } from '../../../actions/order';
@@ -14,6 +16,7 @@ class OrderTab extends Component {
   static propTypes = {
     fetchOrderManyRequestAction: func.isRequired,
     orderList: arrayOf(shape({})).isRequired,
+    fetching: bool.isRequired,
   }
 
   state = {
@@ -69,7 +72,7 @@ class OrderTab extends Component {
       },
     ];
     const { visible, data } = this.state;
-    const { orderList } = this.props;
+    const { orderList, fetching } = this.props;
 
     return (
       <Fragment>
@@ -78,6 +81,7 @@ class OrderTab extends Component {
           columns={columns}
           dataSource={orderList}
           scroll={{ x: 1850, y: 420 }}
+          loading={fetching}
         />
         <OrderModal
           visible={visible}
@@ -92,6 +96,7 @@ class OrderTab extends Component {
 
 const mapStateToProps = state => ({
   orderList: state.brandProfileReducer.order.orderList,
+  fetching: state.brandProfileReducer.order.fetching,
 });
 
 const mapDispatchToProps = {

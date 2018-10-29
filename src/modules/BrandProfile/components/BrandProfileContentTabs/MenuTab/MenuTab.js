@@ -5,11 +5,12 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map } from 'lodash';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import CreateMenuModal from '../../Menu/components/CreateMenuModal/CreateMenuModal';
 import BrandMenuCard from '../../BrandMenuCard/BrandMenuCard';
 import { showCreateMenuModal } from '../../../actions/modals';
 import { fetchBrandMenuManyRequest } from '../../../actions/brand';
+import './MenuTab.css';
 
 class MenuTab extends Component {
   static propTypes = {
@@ -21,11 +22,13 @@ class MenuTab extends Component {
     })),
     showCreateMenuModalAction: func.isRequired,
     profiling: bool,
+    fetching: bool,
   }
 
   static defaultProps = {
     menuList: [],
     profiling: false,
+    fetching: false,
   }
 
   openEditModal = (selectedMenu) => {
@@ -34,29 +37,31 @@ class MenuTab extends Component {
   }
 
   render() {
-    const { menuList, profiling } = this.props;
+    const { menuList, profiling, fetching } = this.props;
 
     return (
       <Fragment>
-        <Row type="flex" gutter={24}>
-          {
-            map(menuList, (menu, index) => (
-              <Col
-                key={index}
-                xs={{ span: 24 }}
-                md={{ span: 12 }}
-                lg={{ span: 8 }}
-                style={{ marginTop: 16 }}
-              >
-                <BrandMenuCard
-                  menu={menu}
-                  openEditModal={() => this.openEditModal(menu)}
-                  profiling={profiling}
-                />
-              </Col>
-            ))
-          }
-        </Row>
+        <Spin spinning={fetching}>
+          <Row type="flex" gutter={24} className="opfc-brand-menu-tab">
+            {
+              map(menuList, (menu, index) => (
+                <Col
+                  key={index}
+                  xs={{ span: 24 }}
+                  md={{ span: 12 }}
+                  lg={{ span: 8 }}
+                  style={{ marginTop: 16 }}
+                >
+                  <BrandMenuCard
+                    menu={menu}
+                    openEditModal={() => this.openEditModal(menu)}
+                    profiling={profiling}
+                  />
+                </Col>
+              ))
+            }
+          </Row>
+        </Spin>
         <CreateMenuModal />
       </Fragment>
     );
@@ -65,6 +70,7 @@ class MenuTab extends Component {
 
 const mapStateToProps = state => ({
   menuList: state.brandProfileReducer.brand.menuList,
+  fetching: state.brandProfileReducer.brand.fetchingMenu,
 });
 
 const mapDispatchToProps = {

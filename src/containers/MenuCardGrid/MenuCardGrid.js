@@ -1,20 +1,35 @@
 import React from 'react';
 import { map } from 'lodash';
-import { Row, Col } from 'antd';
-import { arrayOf, shape } from 'prop-types';
+import { Row, Col, Spin } from 'antd';
+import { arrayOf, shape, bool } from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import MenuCard from '../../components/MenuCard/MenuCard';
 import './MenuCardGrid.css';
 
-const MenuCardGrid = ({ dataList }) => (
-  <Row type="flex" gutter={24} className="opfc-menu-card-grid">
-    {
-      map(dataList, (item, index) => <Col key={index} style={{ margin: '12px 0' }}><MenuCard menu={item} /></Col>)
-    }
-  </Row>
+const MenuCardGrid = ({ dataList, fetching }) => (
+  <Spin spinning={fetching}>
+    <Row type="flex" gutter={24} className="opfc-menu-card-grid">
+      {
+        map(dataList, (item, index) => <Col key={index} style={{ margin: '12px 0' }}><MenuCard menu={item} /></Col>)
+      }
+    </Row>
+  </Spin>
 );
 
 MenuCardGrid.propTypes = {
   dataList: arrayOf(shape({})).isRequired,
+  fetching: bool,
 };
 
-export default MenuCardGrid;
+MenuCardGrid.defaultProps = {
+  fetching: true,
+};
+
+const mapStateToProps = state => ({
+  fetching: state.generalReducer.fetching,
+});
+
+export default compose(
+  connect(mapStateToProps),
+)(MenuCardGrid);

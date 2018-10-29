@@ -1,13 +1,14 @@
 import React, { Fragment, Component } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  arrayOf, shape, string, number,
+  arrayOf, shape, string, number, bool,
 } from 'prop-types';
 import MealCard from '../../MealCard/MealCard';
 import CreateMealModal from '../../CreateMealModal/CreateMealModal';
 import { fetchBrandMealManyRequest } from '../../../actions/brand';
+import './MealTab.css';
 
 // eslint-disable-next-line
 class MealTab extends Component {
@@ -17,28 +18,35 @@ class MealTab extends Component {
       mealName: string,
       description: string,
     })).isRequired,
+    fetching: bool,
+  }
+
+  static defaultProps = {
+    fetching: false,
   }
 
   render() {
-    const { mealList } = this.props;
+    const { mealList, fetching } = this.props;
 
     return (
       <Fragment>
-        <Row type="flex" gutter={24}>
-          {
-            mealList.map(meal => (
-              <Col
-                key={meal.id}
-                xs={{ span: 24 }}
-                md={{ span: 12 }}
-                lg={{ span: 8 }}
-                style={{ marginTop: 16 }}
-              >
-                <MealCard meal={meal} />
-              </Col>
-            ))
-          }
-        </Row>
+        <Spin spinning={fetching}>
+          <Row type="flex" gutter={24}>
+            {
+              mealList.map(meal => (
+                <Col
+                  key={meal.id}
+                  xs={{ span: 24 }}
+                  md={{ span: 12 }}
+                  lg={{ span: 8 }}
+                  style={{ marginTop: 16 }}
+                >
+                  <MealCard meal={meal} />
+                </Col>
+              ))
+            }
+          </Row>
+        </Spin>
         <CreateMealModal />
       </Fragment>
     );
@@ -47,6 +55,7 @@ class MealTab extends Component {
 
 const mapStateToProps = state => ({
   mealList: state.brandProfileReducer.brand.mealList,
+  fetching: state.brandProfileReducer.brand.fetchingMeal,
 });
 
 const mapDispatchToProps = {
