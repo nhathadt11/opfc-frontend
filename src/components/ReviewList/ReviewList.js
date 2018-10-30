@@ -1,13 +1,19 @@
 import React from 'react';
-import { Row, Col, Rate } from 'antd';
+import {
+  Row, Col, Rate, Spin,
+} from 'antd';
 import { map } from 'lodash';
-import { arrayOf, shape, string } from 'prop-types';
+import {
+  arrayOf, shape, string, bool,
+} from 'prop-types';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import './ReviewList.css';
 import ReviewItem from './ReviewItem/ReviewItem';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { ReviewListStyled } from './ReviewList.styled';
 
-const ReviewList = ({ menuName, dataList }) => (
+const ReviewList = ({ menuName, dataList, fetching }) => (
   <ReviewListStyled>
     <Row>
       <h2>Reviews for menu {menuName || 'N/A'}</h2>
@@ -23,15 +29,30 @@ const ReviewList = ({ menuName, dataList }) => (
         <ReviewForm />
       </Col>
     </Row>
-    {
-      map(dataList, r => <ReviewItem key={r.ratingId} data={r} />)
-    }
+    <Spin spinning={fetching}>
+      <Row className="opfc-review-list">
+        {
+          map(dataList, r => <ReviewItem key={r.ratingId} data={r} />)
+        }
+      </Row>
+    </Spin>
   </ReviewListStyled>
 );
 
 ReviewList.propTypes = {
   dataList: arrayOf(shape({})).isRequired,
   menuName: string.isRequired,
+  fetching: bool,
 };
 
-export default ReviewList;
+ReviewList.defaultProps = {
+  fetching: false,
+};
+
+const mapStateToProps = state => ({
+  fetching: state.ratingReducer.fetching,
+});
+
+export default compose(
+  connect(mapStateToProps),
+)(ReviewList);
