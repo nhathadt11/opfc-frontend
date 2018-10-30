@@ -122,9 +122,9 @@ class MenuDetail extends Component {
               !isEmpty(menuDetail.eventTypeList) && (
                 <Row className="opfc-menu-tag-list">
                   {
-                    map(menuDetail.eventTypeList, ({ id, name }) => (
+                    map(menuDetail.eventTypeList, ({ id, eventTypeName }) => (
                       <Tag key={id}>
-                        {name.length > 20 ? `${name.slice(0, 20)}...` : name}
+                        {eventTypeName && eventTypeName.length > 20 ? `${eventTypeName.slice(0, 20)}...` : (eventTypeName || 'N/A')}
                       </Tag>
                     ))
                   }
@@ -137,7 +137,7 @@ class MenuDetail extends Component {
                   {
                     map(menuDetail.categoryList, ({ id, name }) => (
                       <Tag key={id}>
-                        {name.length > 20 ? `${name.slice(0, 20)}...` : name}
+                        {name && name.length > 20 ? `${name.slice(0, 20)}...` : (name || 'N/A')}
                       </Tag>
                     ))
                   }
