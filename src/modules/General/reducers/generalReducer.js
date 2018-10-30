@@ -1,3 +1,4 @@
+import { union } from 'lodash';
 import {
   FETCH_EVENT_TYPE_MANY_REQUEST, FETCH_EVENT_TYPE_MANY_SUCCESS, FETCH_EVENT_TYPE_MANY_FAILURE,
   FETCH_CITY_MANY_REQUEST, FETCH_DISTRICT_MANY_REQUEST, FETCH_CITY_MANY_FAILURE,
@@ -6,6 +7,7 @@ import {
   FETCH_MENU_DETAIL_REQUEST, FETCH_MENU_DETAIL_FAILURE, FETCH_MENU_DETAIL_SUCCESS,
   FETCH_MENU_MANY_REQUEST, FETCH_MENU_MANY_FAILURE, FETCH_MENU_MANY_SUCCESS,
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
+  ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE,
 } from '../actions/general';
 
 
@@ -97,6 +99,14 @@ const generalReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetchingEventTypeList: false,
+      };
+    case ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE:
+      return {
+        ...state,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          eventTypeNames: union(state.fullTextSearch.eventTypeNames, [payload.eventTypeName]),
+        },
       };
     case FETCH_CITY_MANY_FAILURE:
     case FETCH_DISTRICT_MANY_FAILURE:

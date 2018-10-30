@@ -15,7 +15,7 @@ import { StatSpanStyled } from '../../modules/BrandProfile/components/BrandProfi
 import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
-import { fetchMenuDetailRequest } from '../../modules/General/actions/general';
+import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 
 // const tags = [
@@ -61,6 +61,7 @@ class MenuDetail extends Component {
     fetchMenuRatingManyRequestAction: func.isRequired,
     ratingList: arrayOf(shape({})).isRequired,
     clearRatingListAction: func.isRequired,
+    addEventTypeAction: func.isRequired,
   }
 
   componentWillMount() {
@@ -81,6 +82,13 @@ class MenuDetail extends Component {
 
   bookmakrMenuAction = (id) => {
     console.log(id);
+  }
+
+  handleEventTypeSelect = (eventTypeName) => {
+    const { addEventTypeAction, history: { push } } = this.props;
+
+    addEventTypeAction(eventTypeName);
+    push('/');
   }
 
   render() {
@@ -123,7 +131,10 @@ class MenuDetail extends Component {
                 <Row className="opfc-menu-tag-list">
                   {
                     map(menuDetail.eventTypeList, ({ id, eventTypeName }) => (
-                      <Tag key={id}>
+                      <Tag
+                        key={id}
+                        onClick={() => this.handleEventTypeSelect(eventTypeName)}
+                      >
                         {eventTypeName && eventTypeName.length > 20 ? `${eventTypeName.slice(0, 20)}...` : (eventTypeName || 'N/A')}
                       </Tag>
                     ))
@@ -209,6 +220,7 @@ const mapDispatchToProps = {
   fetchMenuDetailRequestAction: fetchMenuDetailRequest,
   fetchMenuRatingManyRequestAction: fetchMenuRatingManyRequest,
   clearRatingListAction: clearRatingList,
+  addEventTypeAction: addFullTextSearchCriteriaEventType,
 };
 
 export default compose(
