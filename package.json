@@ -28,7 +28,8 @@
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-app-rewired eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy": "yarn build && cp build/index.html build/200.html && surge build --domain https://opfc-frontend.surge.sh"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.4.11",
