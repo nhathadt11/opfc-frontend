@@ -4,30 +4,36 @@ import {
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { shape, func, number } from 'prop-types';
+import moment from 'moment';
 import './EventPlannerOrderItem.css';
 import {
   LabelStyled, OrderStatusStyled, PriceAndMenuStyled, OrderNoteStyled, EventDateStyled, ValueStyled,
 } from './EventPlannerOrderItem.styled';
 
-const EventPlannerOrderItem = ({ history, id }) => (
+const EventPlannerOrderItem = ({ history, id, data }) => (
   <Row className="opfc-event-planner-order-item" gutter={24}>
     <Col span={6}>
-      <div className="opfc-event-planner-event-name">Event name</div>
-      <div className="opfc-event-planner-event-date">Ordered on 2018, Sep 12</div>
+      <div className="opfc-event-planner-event-name">{data.eventName}</div>
+      <div className="opfc-event-planner-event-date">Ordered on {moment.utc(data.orderAt).format('YYYY, MMM DD')}</div>
       <PriceAndMenuStyled>
-        <section><LabelStyled>Price: </LabelStyled><ValueStyled>$128,900</ValueStyled></section>
-        <section><LabelStyled>No. of Menus: </LabelStyled><ValueStyled>2</ValueStyled></section>
+        <section>
+          <LabelStyled>Price: </LabelStyled>
+          <ValueStyled>${data.totalPrice}</ValueStyled>
+        </section>
+        <section>
+          <LabelStyled>No. of Menus: </LabelStyled>
+          <ValueStyled>{data.orderLineList.length}</ValueStyled>
+        </section>
       </PriceAndMenuStyled>
     </Col>
     <Col span={14}>
       <section>
         <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-        <OrderStatusStyled success>Serviced</OrderStatusStyled>
-        <EventDateStyled>on 2018, Sep 22 at 12:00 pm</EventDateStyled>
+        <OrderStatusStyled success>{data.orderStatus}</OrderStatusStyled>
+        <EventDateStyled>on {moment.utc(data.startAt).format('YYYY, MMM DD [at] HH:mm A')}</EventDateStyled>
       </section>
       <OrderNoteStyled>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Integer eget ante id urna blandit venenatis in vitae enim.
+        {data.note || 'N/A'}
       </OrderNoteStyled>
     </Col>
     <Col span={4} className="opfc-order-detail-actions">
@@ -46,6 +52,7 @@ EventPlannerOrderItem.propTypes = {
     push: func.isRequired,
   }).isRequired,
   id: number.isRequired,
+  data: shape({}).isRequired,
 };
 
 export default withRouter(EventPlannerOrderItem);

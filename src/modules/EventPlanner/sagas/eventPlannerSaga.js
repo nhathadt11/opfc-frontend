@@ -10,9 +10,15 @@ import {
 import Api from '../../../api/Api';
 import {
   FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess,
-  CREATE_ORDER_REQUEST, createOrderFailure, createOrderSuccess, deselectMenuAll, changeEventPlanCurrentStep,
+  CREATE_ORDER_REQUEST, createOrderFailure, createOrderSuccess, deselectMenuAll,
+  changeEventPlanCurrentStep,
 } from '../actions/planningFlow';
 import { parseErrorMessage } from '../../../utils/Utils';
+import {
+  FETCH_EVENT_PLANNER_ORDER_MANY_REQUEST, fetchEventPlannerManyFailure,
+  fetchEventPlannerManySuccess, FETCH_EVENT_PLANNER_ORDER_DETAIL_REQUEST,
+  fetchEventPlannerOrderDetailFailure, fetchEventPlannerOrderDetailSuccess,
+} from '../actions/order';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 const getEventId = state => state.eventPlannerReducer.event.event.id;
@@ -98,11 +104,43 @@ function* watchCreateOrder() {
   yield takeLatest(CREATE_ORDER_REQUEST, createOrder);
 }
 
+function* fetchEventPlannerOrderMany() {
+  try {
+    const userId = yield select(getUserId);
+    const { data } = yield call(Api.fetchEventPlannerOrderMany, userId);
+
+    yield put(fetchEventPlannerManySuccess(data));
+  } catch (error) {
+    message.error('Could not fetch orders.');
+    yield put(fetchEventPlannerManyFailure(error));
+  }
+}
+
+function* watchFetchEventPlannerOrderMany() {
+  yield takeLatest(FETCH_EVENT_PLANNER_ORDER_MANY_REQUEST, fetchEventPlannerOrderMany);
+}
+
+function* fetchEventPlannerOrderDetail({ payload: { orderId } }) {
+  try {
+    const { data } = yield call(Api.fetchEventPlannerDetail, orderId);
+    yield put(fetchEventPlannerOrderDetailSuccess(data));
+  } catch (error) {
+    message.error('Could not fetch order detail.');
+    yield put(fetchEventPlannerOrderDetailFailure(error));
+  }
+}
+
+function* watchFetchEventPlannerOrderDetail() {
+  yield takeLatest(FETCH_EVENT_PLANNER_ORDER_DETAIL_REQUEST, fetchEventPlannerOrderDetail);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
     watchFetchEventMany(),
     watchFetchSuggestedMenuMany(),
     watchCreateOrder(),
+    watchFetchEventPlannerOrderMany(),
+    watchFetchEventPlannerOrderDetail(),
   ]);
 }
