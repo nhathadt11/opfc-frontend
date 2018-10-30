@@ -79,6 +79,10 @@ class MenuDetail extends Component {
     clearRatingListAction();
   }
 
+  bookmakrMenuAction = (id) => {
+    console.log(id);
+  }
+
   render() {
     const {
       history: { push }, selectMenuAction, menuDetail,
@@ -141,8 +145,15 @@ class MenuDetail extends Component {
               )
             }
             <Row>
-              <p>
-                <Button type="primary" size="large" onClick={() => selectMenuAction(menuDetail)}>Taste it</Button>
+              <p className="opfc-menu-detail-action-group">
+                <Button type="primary" size="large" onClick={() => selectMenuAction(menuDetail)}>
+                  <LocalIcon type="icon-spoon" />
+                  Taste it
+                </Button>
+                <Button type="default" size="large" onClick={() => this.bookmakrMenuAction(menuDetail.id)}>
+                  <LocalIcon type="icon-bookmark" />
+                  Bookmark
+                </Button>
               </p>
             </Row>
           </Col>
