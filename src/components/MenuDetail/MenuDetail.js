@@ -171,18 +171,18 @@ class MenuDetail extends Component {
           <Col className="opfc-brand-info-list">
             <Affix offsetTop={20}>
               <div className="opfc-brand-info-item">
-                <h3>Brand Name</h3>
+                <h3>{menuDetail.brandName || 'N/A'}</h3>
                 <Row>
                   <Col span={4} className="opfc-brand-info-label"><Icon type="phone" style={{ fontSize: 18 }} /></Col>
-                  <Col><section className="opfc-brand-info-label">Hotline</section><section>123456789</section></Col>
+                  <Col><section className="opfc-brand-info-label">Hotline</section><section>{menuDetail.brandPhone || 'N/A'}</section></Col>
                 </Row>
                 <Row>
                   <Col span={4} className="opfc-brand-info-label"><Icon type="mail" style={{ fontSize: 18 }} /></Col>
-                  <Col><section className="opfc-brand-info-label">Email</section><section>johndoe@gmail.com</section></Col>
+                  <Col><section className="opfc-brand-info-label">Email</section><section>{menuDetail.brandEmail || 'N/A'}</section></Col>
                 </Row>
                 <Row>
                   <Col span={4} className="opfc-brand-info-label"><Icon type="team" style={{ fontSize: 18 }} /></Col>
-                  <Col><section className="opfc-brand-info-label">Members</section><section>12</section></Col>
+                  <Col><section className="opfc-brand-info-label">Members</section><section>{menuDetail.brandParticipantNumber || 'N/A'}</section></Col>
                 </Row>
               </div>
 
