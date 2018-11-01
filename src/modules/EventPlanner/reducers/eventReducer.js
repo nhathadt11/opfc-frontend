@@ -9,7 +9,7 @@ import {
   SHOW_RATING_MODAL, HIDE_RATING_MODAL, FETCH_SUGGESTED_MENU_MANY_REQUEST,
   FETCH_SUGGESTED_MENU_MANY_SUCCESS, FETCH_SUGGESTED_MENU_MANY_FAILURE,
   CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS,
-  DESELECT_MENU_ALL, DESELECT_MENU,
+  DESELECT_MENU_ALL, DESELECT_MENU, SELECT_MENU_MANY,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -83,6 +83,12 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedMenuList: [],
+      };
+    }
+    case SELECT_MENU_MANY: {
+      return {
+        ...state,
+        selectedMenuList: [...state.selectedMenuList, ...payload.menus],
       };
     }
     case FETCH_EVENT_MANY_REQUEST: {

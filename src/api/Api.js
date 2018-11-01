@@ -212,6 +212,8 @@ const fetchEventPlannerOrderMany = userId => axios.get(`/Order/EventPlanner/User
 
 const fetchEventPlannerDetail = orderId => axios.get(`/Order/EventPlanner/${orderId}`);
 
+const fetchSuggestedMenuMany = eventId => axios.get(`/Event/GetSuggestion/${eventId}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -244,6 +246,7 @@ export default {
   fetchOrderMany,
   fetchEventPlannerOrderMany,
   fetchEventPlannerDetail,
+  fetchSuggestedMenuMany,
   // Elastic search
   fetchMenuManyEs,
 };

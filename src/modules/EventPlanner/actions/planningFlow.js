@@ -5,6 +5,7 @@ export const PREV_EVENT_PLAN_STEP = 'PREV_EVENT_PLAN_STEP';
 export const SELECT_MENU = 'SELECT_MENU';
 export const DESELECT_MENU = 'DESELECT_MENU';
 export const DESELECT_MENU_ALL = 'DESELECT_MENU_ALL';
+export const SELECT_MENU_MANY = 'SELECT_MENU_MANY';
 
 export const SELECT_EVENT = 'SELECT_EVENT';
 export const DESELECT_EVENT = 'DESELECT_EVENT';
@@ -52,6 +53,13 @@ export const deselectMenu = menuId => ({
 
 export const deselectMenuAll = () => ({
   type: DESELECT_MENU_ALL,
+});
+
+export const selectMenuMany = menus => ({
+  type: SELECT_MENU_MANY,
+  payload: {
+    menus,
+  },
 });
 
 export const selectEvent = event => ({
