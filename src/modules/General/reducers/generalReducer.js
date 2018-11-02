@@ -8,6 +8,7 @@ import {
   FETCH_MENU_MANY_REQUEST, FETCH_MENU_MANY_FAILURE, FETCH_MENU_MANY_SUCCESS,
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
   ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE,
+  CHANGE_MENU_MANY_PAGE,
 } from '../actions/general';
 
 
@@ -27,6 +28,8 @@ const initialState = {
     priceTo: 500,
     servingNumberFrom: 1,
     servingNumberTo: 50,
+    page: 1,
+    total: 0,
   },
 };
 
@@ -38,6 +41,7 @@ const generalReducer = (state = initialState, { type, payload }) => {
         fullTextSearch: {
           ...state.fullTextSearch,
           [payload.criteria]: payload.value,
+          page: 1,
         },
       };
     case FETCH_EVENT_TYPE_MANY_REQUEST:
@@ -94,6 +98,10 @@ const generalReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetching: false,
         menuList: payload.menuList,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          total: payload.total,
+        },
       };
     case FETCH_EVENT_TYPE_MANY_FAILURE:
       return {
@@ -106,6 +114,14 @@ const generalReducer = (state = initialState, { type, payload }) => {
         fullTextSearch: {
           ...state.fullTextSearch,
           eventTypeNames: union(state.fullTextSearch.eventTypeNames, [payload.eventTypeName]),
+        },
+      };
+    case CHANGE_MENU_MANY_PAGE:
+      return {
+        ...state,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          page: payload.page,
         },
       };
     case FETCH_CITY_MANY_FAILURE:

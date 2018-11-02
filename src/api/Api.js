@@ -14,7 +14,7 @@ const fetchMenuManyEs = (text, criteria) => {
     return esAxios.get('menus/_search', {
       params: {
         source: JSON.stringify({
-          from: 0,
+          from: criteria.page,
           size: 20,
           query: {
             bool: {
@@ -34,7 +34,7 @@ const fetchMenuManyEs = (text, criteria) => {
   return esAxios.get('menus/_search', {
     params: {
       source: JSON.stringify({
-        from: 0,
+        from: criteria.page,
         size: 20,
         query: {
           bool: {

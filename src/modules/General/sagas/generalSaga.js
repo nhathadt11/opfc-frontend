@@ -14,6 +14,7 @@ import {
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
   fetchMenuManyRequest,
   fetchEventTypeManyRequest,
+  CHANGE_MENU_MANY_PAGE,
 } from '../actions/general';
 
 const getFullTextSearchCriteria = state => state.generalReducer.fullTextSearch;
@@ -107,7 +108,7 @@ function* fetchMenuMany({ payload: { text } }) {
     const { data } = yield call(Api.fetchMenuManyEs, text || criteria.value, criteria);
 
     const menus = map(data.hits.hits, h => h._source); //eslint-disable-line
-    yield put(fetchMenuManySuccess(menus));
+    yield put(fetchMenuManySuccess(menus, data.hits.total));
   } catch (error) {
     yield put(fetchMenuManyFailure(error));
     message.error('Could not fetch menus');
@@ -131,7 +132,7 @@ function* changeFullTextSearchCriteria() {
 function* watchChangeFullTextSearchCriteria() {
   let task;
   while (true) {
-    yield take(CHANGE_FULL_TEXT_SEARCH_CRITERIA);
+    yield take([CHANGE_FULL_TEXT_SEARCH_CRITERIA, CHANGE_MENU_MANY_PAGE]);
     if (task) {
       yield cancel(task);
     }
