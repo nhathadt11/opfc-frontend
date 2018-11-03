@@ -15,7 +15,7 @@ const NotificationDropdown = ({
   children, count, notificationList, decreaseNotificationCountAction,
 }) => {
   const menu = (
-    <Menu>
+    <Menu className="opfc-notification-dropdown-menu">
       {
         isEmpty(notificationList) ? (
           <Menu.Item className="opfc-notification-item">

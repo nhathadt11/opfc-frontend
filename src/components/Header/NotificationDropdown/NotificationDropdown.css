@@ -1,3 +1,8 @@
+.opfc-notification-dropdown-menu {
+  max-height: 400px;
+  overflow-y: overlay;
+}
+
 .opfc-notification-item {
   font-size: 12px;
 }
