@@ -62,8 +62,6 @@ function* loginAccount({ payload: { username, password, onSuccess } }) {
     yield put(loginAccountSuccess(data));
 
     message.success('Login successfully!');
-    yield fork(persistAuthentication, data);
-    yield fork(configAxiosAuthHeader, data.token);
     if (isFunction(onSuccess)) onSuccess(data);
   } catch (error) {
     message.error(parseErrorMessage(error));
@@ -87,8 +85,15 @@ function* registerUserToFirebaseNoti({ payload: { account } }) {
   }
 }
 
+function* afterLoginSuccess(action) {
+  const { payload: { account } } = action;
+  yield fork(persistAuthentication, account);
+  yield fork(configAxiosAuthHeader, account.token);
+  yield fork(registerUserToFirebaseNoti, action);
+}
+
 function* watchLoginSuccess() {
-  yield takeLatest(LOGIN_ACCOUNT_SUCCESS, registerUserToFirebaseNoti);
+  yield takeLatest(LOGIN_ACCOUNT_SUCCESS, afterLoginSuccess);
 }
 
 export default function* accountFlow() {

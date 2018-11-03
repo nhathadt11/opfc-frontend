@@ -3,7 +3,7 @@ import {
 } from 'redux-saga/effects';
 import { map } from 'lodash';
 import { message } from 'antd';
-import { parseErrorMessage } from '../../../utils/Utils';
+import { parseErrorMessage, getAuthentication } from '../../../utils/Utils';
 import Api from '../../../api/Api';
 import {
   FETCH_EVENT_TYPE_MANY_REQUEST, fetchEventTypeManySuccess, fetchEventTypeManyFailure,
@@ -16,6 +16,7 @@ import {
   fetchEventTypeManyRequest,
   CHANGE_MENU_MANY_PAGE,
 } from '../actions/general';
+import { loginAccountSuccess } from '../../Account/actions/account';
 
 const getFullTextSearchCriteria = state => state.generalReducer.fullTextSearch;
 const getFullTextSearchValue = state => state.generalReducer.fullTextSearchValue;
@@ -140,9 +141,19 @@ function* watchChangeFullTextSearchCriteria() {
   }
 }
 
+function* initAuthentication() {
+  const data = getAuthentication();
+
+  if (!data) return;
+
+  const account = JSON.parse(data);
+  yield put(loginAccountSuccess(account));
+}
+
 function* fetchGeneralDataRequest() {
   yield put(fetchEventTypeManyRequest());
   yield fork(fetchCityAndDistrictParallel);
+  yield fork(initAuthentication);
 }
 
 export default function* generalFlow() {
