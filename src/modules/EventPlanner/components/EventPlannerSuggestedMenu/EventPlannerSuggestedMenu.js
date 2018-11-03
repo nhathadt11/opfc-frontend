@@ -19,9 +19,9 @@ const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuMany
           <Card
             key={index}
             bordered
-            actions={[<Button type="default" onClick={() => selectMenuManyAction(m)}><Icon type="plus" />Add</Button>]}
+            actions={[<Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>]}
           >
-            <MenuCardGrid dataList={m} />
+            <MenuCardGrid dataList={m.menus} />
           </Card>))
       }
     </Row>
