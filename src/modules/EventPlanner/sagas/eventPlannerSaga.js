@@ -67,7 +67,8 @@ function* watchFetchEventMany() {
 
 function* fetchSuggestedMenuMany({ payload: { eventId } }) {
   try {
-    const { data } = yield call(Api.fetchSuggestedMenuMany, eventId);
+    const userId = yield select(getUserId);
+    const { data } = yield call(Api.fetchSuggestedMenuMany, userId, eventId);
     yield put(fetchSuggestedMenuManySuccess(data));
   } catch (error) {
     yield put(fetchSuggestedMenuManyFailure(error));

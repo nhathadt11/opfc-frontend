@@ -212,7 +212,7 @@ const fetchEventPlannerOrderMany = userId => axios.get(`/Order/EventPlanner/User
 
 const fetchEventPlannerDetail = orderId => axios.get(`/Order/EventPlanner/${orderId}`);
 
-const fetchSuggestedMenuMany = eventId => axios.get(`/Event/GetSuggestion/${eventId}`);
+const fetchSuggestedMenuMany = (userId, eventId) => axios.get(`/User/${userId}/Event/${eventId}/GetSuggestion`);
 
 export default {
   createBrand,
