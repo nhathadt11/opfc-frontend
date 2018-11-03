@@ -10,8 +10,7 @@ import {
 import Api from '../../../api/Api';
 import {
   FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess,
-  CREATE_ORDER_REQUEST, createOrderFailure, createOrderSuccess, deselectMenuAll,
-  changeEventPlanCurrentStep,
+  CREATE_ORDER_REQUEST, createOrderFailure,
 } from '../actions/planningFlow';
 import { parseErrorMessage } from '../../../utils/Utils';
 import {
@@ -90,11 +89,12 @@ function* createOrder() {
     const menuIds = map(selectedMenuList, m => m.id);
     const { data } = yield call(Api.createOrder, userId, eventId, menuIds);
 
-    yield put(createOrderSuccess(data));
-    yield put(deselectMenuAll());
-    yield put(changeEventPlanCurrentStep(0));
+    // yield put(createOrderSuccess(data));
+    // yield put(deselectMenuAll());
+    // yield put(changeEventPlanCurrentStep(0));
 
-    message.success('Create Order successfully!');
+    // message.success('Create Order successfully!');
+    window.location.href = data.redirect;
   } catch (error) {
     message.error('Order could be made.');
     yield put(createOrderFailure(error));
