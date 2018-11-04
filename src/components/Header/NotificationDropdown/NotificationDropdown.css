@@ -5,4 +5,9 @@
 
 .opfc-notification-item {
   font-size: 12px;
+  background-color: #f6f6f6;
+}
+
+.opfc-notification-item.notification-item-read {
+  background-color: #fff;
 }

@@ -9,7 +9,7 @@ import { map, isEmpty } from 'lodash';
 import moment from 'moment';
 import { decreaseNotificationCount } from '../../../modules/Account/actions/notification';
 import './NotificationDropdown.css';
-import { NotificationContentStyled, NotificationTimeStyled } from './NotificationDropdown.styled';
+import { NotificationContentStyled, NotificationTimeStyled, NotificationContentWrapperStyled } from './NotificationDropdown.styled';
 
 const NotificationDropdown = ({
   children, count, notificationList, decreaseNotificationCountAction,
@@ -22,7 +22,7 @@ const NotificationDropdown = ({
             You have nothing new.
           </Menu.Item>
         ) : map(notificationList, n => (
-          <Menu.Item className="opfc-notification-item" onClick={decreaseNotificationCountAction}>
+          <Menu.Item className={`opfc-notification-item ${n['Read'] ? 'notification-item-read' : ''}`} onClick={decreaseNotificationCountAction}>
             <NotificationContentStyled bold>
               {n['FromUsername']}
             </NotificationContentStyled>
