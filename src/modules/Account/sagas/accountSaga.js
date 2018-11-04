@@ -17,6 +17,7 @@ import {
 } from '../../../utils/Utils';
 import { increaseNotificationCount } from '../actions/notification';
 import store from '../../../store';
+import { fetchGeneralDataRequest } from '../../General/sagas/generalSaga';
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -102,6 +103,9 @@ function* logoutAccount() {
   try {
     unpersistAuthentication();
     yield put(logoutAccountSuccess());
+
+    // fetch general data at initial load time
+    yield fork(fetchGeneralDataRequest);
   } catch (error) {
     message.error('Could not logout');
     yield put(logoutAccountFailure(error));

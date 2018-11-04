@@ -150,7 +150,7 @@ function* initAuthentication() {
   yield put(loginAccountSuccess(account));
 }
 
-function* fetchGeneralDataRequest() {
+export function* fetchGeneralDataRequest() {
   yield put(fetchEventTypeManyRequest());
   yield fork(fetchCityAndDistrictParallel);
   yield fork(initAuthentication);
