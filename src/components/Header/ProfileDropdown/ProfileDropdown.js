@@ -15,7 +15,7 @@ const ProfileDropdown = ({ children, logoutAccountRequestAction }) => {
   );
 
   return (
-    <Dropdown overlay={menu}>
+    <Dropdown overlay={menu} placement="bottomCenter">
       {children}
     </Dropdown>
   );
