@@ -11,7 +11,7 @@ const notificationReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         count: state.count + 1,
-        notificationList: [...state.notificationList, payload.notification],
+        notificationList: [payload.notification, ...state.notificationList],
       };
     case DECREASE_NOTIFICATION_COUNT:
       return {
