@@ -13,7 +13,7 @@ const ReviewItem = ({ data }) => (
       <div className="opfc-review-item-log">
         <section>{data.author || 'N/A'}</section>
         <section>{data.cityName || 'N/A'}</section>
-        <section>{data.rateTime && moment(data.rateTime).isValid() ? moment.utc(data.rateTime).fromNow() : 'N/A'}</section>
+        <section>{data.rateTime && moment(data.rateTime).isValid() ? moment(data.rateTime).fromNow() : 'N/A'}</section>
       </div>
     </Col>
     <Col className="opfc-review-item-content">

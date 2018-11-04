@@ -3,6 +3,7 @@ import { brandProfileReducer } from '../modules/BrandProfile';
 import { eventPlannerReducer } from '../modules/EventPlanner';
 import { generalReducer } from '../modules/General';
 import { ratingReducer } from '../modules/Rating';
+import { bookmarkReducer } from '../modules/Bookmark';
 
 export default {
   accountReducer,
@@ -10,4 +11,5 @@ export default {
   eventPlannerReducer,
   generalReducer,
   ratingReducer,
+  bookmarkReducer,
 };

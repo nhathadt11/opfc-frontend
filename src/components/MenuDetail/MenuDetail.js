@@ -17,6 +17,7 @@ import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
+import { bookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
 
 // const tags = [
 //   { id: 0, name: 'wedding' },
@@ -62,6 +63,7 @@ class MenuDetail extends Component {
     ratingList: arrayOf(shape({})).isRequired,
     clearRatingListAction: func.isRequired,
     addEventTypeAction: func.isRequired,
+    bookmarkMenuRequestAction: func.isRequired,
   }
 
   componentWillMount() {
@@ -80,8 +82,9 @@ class MenuDetail extends Component {
     clearRatingListAction();
   }
 
-  bookmakrMenuAction = (id) => {
-    console.log(id);
+  bookmarkMenuRequestAction = (menuId) => {
+    const { bookmarkMenuRequestAction } = this.props;
+    bookmarkMenuRequestAction(menuId);
   }
 
   handleEventTypeSelect = (eventTypeName) => {
@@ -116,7 +119,7 @@ class MenuDetail extends Component {
               </StatSpanStyled>
               <StatSpanStyled>
                 <LocalIcon type="icon-bookmark" className="opfc-menu-stat" />
-                {menuDetail.totalBookmark || 0} Saved
+                {menuDetail.totalBookmark || 0} Bookmarks
               </StatSpanStyled>
             </div>
             <Rate allowHalf value={2.5} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
@@ -161,7 +164,7 @@ class MenuDetail extends Component {
                   <LocalIcon type="icon-spoon" />
                   Taste it
                 </Button>
-                <Button type="default" size="large" onClick={() => this.bookmakrMenuAction(menuDetail.id)}>
+                <Button type="default" size="large" onClick={() => this.bookmarkMenuRequestAction(menuDetail.id)}>
                   <LocalIcon type="icon-bookmark" />
                   Bookmark
                 </Button>
@@ -221,6 +224,7 @@ const mapDispatchToProps = {
   fetchMenuRatingManyRequestAction: fetchMenuRatingManyRequest,
   clearRatingListAction: clearRatingList,
   addEventTypeAction: addFullTextSearchCriteriaEventType,
+  bookmarkMenuRequestAction: bookmarkRequest,
 };
 
 export default compose(
