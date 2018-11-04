@@ -86,3 +86,9 @@ export const OrderItemSubTotalPriceStyled = styled.span`
 export const OrderItemTotalLabel = styled.span`
   font-size: 18px;
 `;
+
+export const EventPlannerOrderDetailLineStyled = styled.span`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;

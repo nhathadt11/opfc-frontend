@@ -22,7 +22,7 @@ const EventPlannerOrderItem = ({ history, id, data }) => (
         </section>
         <section>
           <LabelStyled>No. of Menus: </LabelStyled>
-          <ValueStyled>{data.orderLineList.length}</ValueStyled>
+          <ValueStyled>{data.menuNumber || 0}</ValueStyled>
         </section>
       </PriceAndMenuStyled>
     </Col>
