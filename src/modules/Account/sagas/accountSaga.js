@@ -8,10 +8,12 @@ import Api from '../../../api/Api';
 import {
   CREATE_ACCOUNT_REQUEST, createAccountFailure, createAccountSuccess,
   LOGIN_ACCOUNT_REQUEST, loginAccountFailure, loginAccountSuccess, LOGIN_ACCOUNT_SUCCESS,
+  LOGOUT_ACCOUNT_REQUEST, logoutAccountFailure, logoutAccountSuccess,
 } from '../actions/account';
 import {
   parseErrorMessage, persistAuthentication, configAxiosAuthHeader,
   registerUserFirebaseNotification,
+  unpersistAuthentication,
 } from '../../../utils/Utils';
 import { increaseNotificationCount } from '../actions/notification';
 import store from '../../../store';
@@ -96,11 +98,26 @@ function* watchLoginSuccess() {
   yield takeLatest(LOGIN_ACCOUNT_SUCCESS, afterLoginSuccess);
 }
 
+function* logoutAccount() {
+  try {
+    unpersistAuthentication();
+    yield put(logoutAccountSuccess());
+  } catch (error) {
+    message.error('Could not logout');
+    yield put(logoutAccountFailure(error));
+  }
+}
+
+function* watchLogoutAccount() {
+  yield takeEvery(LOGOUT_ACCOUNT_REQUEST, logoutAccount);
+}
+
 export default function* accountFlow() {
   yield all([
     watchCreateBrand(),
     watchCreateAccount(),
     watchLoginAccount(),
     watchLoginSuccess(),
+    watchLogoutAccount(),
   ]);
 }

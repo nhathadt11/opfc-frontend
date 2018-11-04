@@ -20,7 +20,8 @@
   font-size: 28px;
 }
 
-.header-icon-notification > i {
+.header-icon-notification > i,
+.header-icon-profile > i {
   font-size: 33px !important;
 }
 

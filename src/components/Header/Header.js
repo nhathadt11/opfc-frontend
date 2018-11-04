@@ -12,6 +12,7 @@ import { showLoginModal } from '../../modules/Account/actions/modal';
 import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
 import NotificationDropdown from './NotificationDropdown/NotificationDropdown';
 import { fetchMenuManyRequest } from '../../modules/General/actions/general';
+import ProfileDropdown from './ProfileDropdown/ProfileDropdown';
 
 const Header = ({
   history: { push }, account, loggedIn,
@@ -46,7 +47,9 @@ const Header = ({
               account.user.userRoleId === 2 ? '/profile/brand' : '/profile/event-planner/account'
             }
           >
-            <Button icon="smile" size="large" shape="circle" className="header-icon" />
+            <ProfileDropdown>
+              <Button icon="smile" size="large" shape="circle" className="header-icon header-icon-profile" />
+            </ProfileDropdown>
           </Link>
         ) : (
           <Button icon="meh" size="large" shape="circle" className="header-icon" onClick={showLoginModalAction} />

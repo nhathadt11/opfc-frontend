@@ -6,6 +6,10 @@ export const LOGIN_ACCOUNT_REQUEST = 'LOGIN_ACCOUNT_REQUEST';
 export const LOGIN_ACCOUNT_SUCCESS = 'LOGIN_ACCOUNT_SUCCESS';
 export const LOGIN_ACCOUNT_FAILURE = 'LOGIN_ACCOUNT_FAILURE';
 
+export const LOGOUT_ACCOUNT_REQUEST = 'LOGOUT_ACCOUNT_REQUEST';
+export const LOGOUT_ACCOUNT_SUCCESS = 'LOGOUT_ACCOUNT_SUCCESS';
+export const LOGOUT_ACCOUNT_FAILURE = 'LOGOUT_ACCOUNT_FAILURE';
+
 export const createAccountRequest = (account, onSuccess) => ({
   type: CREATE_ACCOUNT_REQUEST,
   payload: {
@@ -46,6 +50,21 @@ export const loginAccountSuccess = account => ({
 
 export const loginAccountFailure = error => ({
   type: LOGIN_ACCOUNT_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const logoutAccountRequest = () => ({
+  type: LOGOUT_ACCOUNT_REQUEST,
+});
+
+export const logoutAccountSuccess = () => ({
+  type: LOGOUT_ACCOUNT_SUCCESS,
+});
+
+export const logoutAccountFailure = error => ({
+  type: LOGOUT_ACCOUNT_FAILURE,
   payload: {
     error,
   },
