@@ -122,7 +122,7 @@ class MenuDetail extends Component {
                 {menuDetail.totalBookmark || 0} Bookmarks
               </StatSpanStyled>
             </div>
-            <Rate allowHalf value={menuDetail.averageRatingPoint} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
+            <Rate allowHalf value={menuDetail.averageRatingPoint} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} reviews)</span>
             <p className="opfc-menu-desc">
               {menuDetail.description}
             </p>

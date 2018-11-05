@@ -67,7 +67,7 @@ class ReviewForm extends Component {
             getFieldDecorator('rate', {
               rules: [{ required: true, message: 'Rating is required!' }],
             })(
-              <Rate />,
+              <Rate allowHalf />,
             )
           }
         </Form.Item>

@@ -13,7 +13,9 @@ import ReviewItem from './ReviewItem/ReviewItem';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { ReviewListStyled } from './ReviewList.styled';
 
-const ReviewList = ({ menuName, dataList, fetching, totalRating, averageRatingPoint }) => (
+const ReviewList = ({
+  menuName, dataList, fetching, totalRating, averageRatingPoint,
+}) => (
   <ReviewListStyled>
     <Row>
       <h2>Reviews for menu {menuName || 'N/A'}</h2>
@@ -22,7 +24,7 @@ const ReviewList = ({ menuName, dataList, fetching, totalRating, averageRatingPo
       <Col span={6} className="opfc-rating-overall">
         <h4>Overall</h4>
         <div className="opfc-rating-overall-point">{averageRatingPoint.toFixed(1)}/5</div>
-        <Rate value={averageRatingPoint} disabled />
+        <Rate value={averageRatingPoint} allowHalf disabled />
         <p className="opfc-rating-overall-count">{totalRating} Reviews</p>
       </Col>
       <Col span={18}>
@@ -44,7 +46,7 @@ ReviewList.propTypes = {
   menuName: string.isRequired,
   fetching: bool,
   averageRatingPoint: number,
-  totalRating: number,  
+  totalRating: number,
 };
 
 ReviewList.defaultProps = {
