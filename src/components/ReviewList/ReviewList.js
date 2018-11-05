@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import { map } from 'lodash';
 import {
-  arrayOf, shape, string, bool,
+  arrayOf, shape, string, bool, number,
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ import ReviewItem from './ReviewItem/ReviewItem';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { ReviewListStyled } from './ReviewList.styled';
 
-const ReviewList = ({ menuName, dataList, fetching }) => (
+const ReviewList = ({ menuName, dataList, fetching, totalRating, averageRatingPoint }) => (
   <ReviewListStyled>
     <Row>
       <h2>Reviews for menu {menuName || 'N/A'}</h2>
@@ -21,9 +21,9 @@ const ReviewList = ({ menuName, dataList, fetching }) => (
     <Row>
       <Col span={6} className="opfc-rating-overall">
         <h4>Overall</h4>
-        <div className="opfc-rating-overall-point">4/5</div>
-        <Rate value={4.5} disabled />
-        <p className="opfc-rating-overall-count">324 Reviews</p>
+        <div className="opfc-rating-overall-point">{averageRatingPoint.toFixed(1)}/5</div>
+        <Rate value={averageRatingPoint} disabled />
+        <p className="opfc-rating-overall-count">{totalRating} Reviews</p>
       </Col>
       <Col span={18}>
         <ReviewForm />
@@ -43,10 +43,14 @@ ReviewList.propTypes = {
   dataList: arrayOf(shape({})).isRequired,
   menuName: string.isRequired,
   fetching: bool,
+  averageRatingPoint: number,
+  totalRating: number,  
 };
 
 ReviewList.defaultProps = {
   fetching: false,
+  averageRatingPoint: 0,
+  totalRating: 0,
 };
 
 const mapStateToProps = state => ({

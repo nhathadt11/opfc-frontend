@@ -122,7 +122,7 @@ class MenuDetail extends Component {
                 {menuDetail.totalBookmark || 0} Bookmarks
               </StatSpanStyled>
             </div>
-            <Rate allowHalf value={2.5} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
+            <Rate allowHalf value={menuDetail.averageRatingPoint} disabled /> <span className="opfc-menu-rating">({menuDetail.totalRating || 0} ratings)</span>
             <p className="opfc-menu-desc">
               {menuDetail.description}
             </p>
@@ -207,7 +207,12 @@ class MenuDetail extends Component {
             </Affix>
           </Col>
         </Row>
-        <ReviewList menuName={menuDetail.menuName} dataList={ratingList} />
+        <ReviewList
+          menuName={menuDetail.menuName}
+          averageRatingPoint={menuDetail.averageRatingPoint}
+          totalRating={menuDetail.totalRating}
+          dataList={ratingList}
+        />
       </div>
     );
   }
