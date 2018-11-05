@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Modal, Table, Button, Icon,
-} from 'antd';
+import { Modal, Table } from 'antd';
 import {
   bool, func, arrayOf, shape,
 } from 'prop-types';
-import { ActionGroupStyled } from './OrderTab.styled';
 
 const columns = [{
   title: 'Menu Name',
@@ -19,24 +16,6 @@ const columns = [{
   title: 'Price',
   dataIndex: 'price',
   key: 'price',
-}, {
-  title: 'Status',
-  dataIndex: 'status',
-  key: 'status',
-}, {
-  title: 'Action',
-  key: 'action',
-  render: () => (
-    <ActionGroupStyled>
-      <Button shape="circle" type="primary">
-        <Icon type="check" theme="outlined" />
-      </Button>
-      <Button shape="circle" type="danger">
-        <Icon type="close" theme="outlined" />
-      </Button>
-    </ActionGroupStyled>
-  ),
-  width: 110,
 }];
 
 const OrderModal = ({

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {
-  Table, Badge, Button, Icon,
+  Table, Badge, Button, Icon, Modal,
 } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -10,13 +10,14 @@ import {
 } from 'prop-types';
 import { ActionGroupStyled, OrderNoStyled } from './OrderTab.styled';
 import OrderModal from './OrderModal';
-import { fetchOrderManyRequest } from '../../../actions/order';
+import { fetchOrderManyRequest, cancelBrandOrderRequest } from '../../../actions/order';
 
 class OrderTab extends Component {
   static propTypes = {
     fetchOrderManyRequestAction: func.isRequired,
     orderList: arrayOf(shape({})).isRequired,
     fetching: bool.isRequired,
+    cancelBrandOrderRequestAction: func.isRequired,
   }
 
   state = {
@@ -32,6 +33,19 @@ class OrderTab extends Component {
   openModal = data => this.setState({ visible: true, data });
 
   closeModal = () => this.setState({ visible: false, data: {} })
+
+  confirmCancelBrandOrder = (orderLineId) => {
+    const { cancelBrandOrderRequestAction } = this.props;
+
+    const modal = Modal.confirm({
+      title: 'Cancel order',
+      content: `Are you sure to cancel order #${orderLineId}`,
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => cancelBrandOrderRequestAction(orderLineId, modal.destroy),
+      maskClosable: true,
+    });
+  }
 
   render() {
     const columns = [
@@ -62,12 +76,15 @@ class OrderTab extends Component {
             <Button shape="circle" type="primary">
               <Icon type="check" theme="outlined" />
             </Button>
+            <Button shape="circle" type="danger" onClick={() => this.confirmCancelBrandOrder(record.orderNo)}>
+              <Icon type="close" theme="outlined" />
+            </Button>
             <Button shape="circle" type="default" onClick={() => this.openModal(record)}>
               <Icon type="eye" theme="outlined" />
             </Button>
           </ActionGroupStyled>
         ),
-        width: 110,
+        width: 150,
         fixed: 'right',
       },
     ];
@@ -101,6 +118,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchOrderManyRequestAction: fetchOrderManyRequest,
+  cancelBrandOrderRequestAction: cancelBrandOrderRequest,
 };
 
 export default compose(

@@ -216,6 +216,8 @@ const fetchSuggestedMenuMany = (userId, eventId) => axios.get(`/User/${userId}/E
 
 const bookmark = (userId, menuId) => axios.post(`/BookMark/User/${userId}/Menu/${menuId}`);
 
+const cancelBrandOrder = orderLineId => axios.post(`/Paypal/Refund/${orderLineId}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -250,6 +252,7 @@ export default {
   fetchEventPlannerDetail,
   fetchSuggestedMenuMany,
   bookmark,
+  cancelBrandOrder,
   // Elastic search
   fetchMenuManyEs,
 };

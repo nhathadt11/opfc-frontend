@@ -18,7 +18,10 @@ import {
   FETCH_BRAND_MENU_MANY_REQUEST, FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealManySuccess,
   fetchBrandMenuManySuccess, fetchBrandMealManyRequest,
 } from '../actions/brand';
-import { FETCH_ORDER_MANY_REQUEST, fetchOrderManyFailure, fetchOrderManySuccess } from '../actions/order';
+import {
+  FETCH_ORDER_MANY_REQUEST, fetchOrderManyFailure, fetchOrderManySuccess,
+  CANCEL_BRAND_ORDER_REQUEST, cancelBrandOrderFailure,
+} from '../actions/order';
 
 const getBrandId = state => state.brandProfileReducer.brand.brandDetail.id;
 
@@ -176,6 +179,23 @@ function* watchFetchOrderMany() {
   yield takeLatest(FETCH_ORDER_MANY_REQUEST, fetchOrderMany);
 }
 
+function* cancelBrandOrder({ payload: { orderLineId, success } }) {
+  try {
+    yield call(Api.cancelBrandOrder, orderLineId);
+
+    yield fork(fetchOrderMany);
+    if (isFunction(success)) success();
+    message.success(`Order #${orderLineId} has been canceled.`);
+  } catch (error) {
+    message.error(`Order #${orderLineId} could not be cancel.`);
+    yield put(cancelBrandOrderFailure(error));
+  }
+}
+
+function* watchCancelBrandOrder() {
+  yield takeLatest(CANCEL_BRAND_ORDER_REQUEST, cancelBrandOrder);
+}
+
 export default function* brandProfielFlow() {
   yield all([
     watchCreateMeal(),
@@ -187,5 +207,6 @@ export default function* brandProfielFlow() {
     watchFetchBrandMenuMany(),
     watchFetchBrandMealMany(),
     watchFetchOrderMany(),
+    watchCancelBrandOrder(),
   ]);
 }
