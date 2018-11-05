@@ -53,7 +53,7 @@ class OrderTab extends Component {
       { title: 'City', dataIndex: 'cityName', key: 'cityName', width: 150 }, // eslint-disable-line
       { title: 'District', dataIndex: 'districtName', key: 'districtName', width: 150 }, // eslint-disable-line
       { title: 'Address', dataIndex: 'address', key: 'address', width: 150 }, // eslint-disable-line
-      { title: 'Total', dataIndex: 'totalPrice', key: 'totalPrice', width: 150 }, // eslint-disable-line
+      { title: 'Total', dataIndex: 'totalAmount', key: 'totalAmount', width: 150 }, // eslint-disable-line
       {
         title: 'Action',
         key: 'operation',
