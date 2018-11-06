@@ -53,7 +53,7 @@ export const registerUserFirebaseNotification = userId => ({ onChildAdded }) => 
   const messagesRef = fire.database().ref().child('users').child(userId);
 
   messagesRef.on('child_added', (snapshot) => {
-    onChildAdded(snapshot.val());
+    onChildAdded({ key: snapshot.key, val: snapshot.val() });
   });
   messagesRef.on('value', spanshot => console.log(spanshot.val()));
 };

@@ -16,16 +16,18 @@ export const decreaseNotificationCount = () => ({
   type: DECREASE_NOTIFICATION_COUNT,
 });
 
-export const markNotificationAsReadRequest = (userId, notiId) => ({
+export const markNotificationAsReadRequest = key => ({
   type: MARK_NOTIFICATION_AS_READ_REQUEST,
   payload: {
-    userId,
-    notiId,
+    key,
   },
 });
 
-export const markNotificationAsReadSuccess = () => ({
+export const markNotificationAsReadSuccess = key => ({
   type: MARK_NOTIFICATION_AS_READ_SUCCESS,
+  payload: {
+    key,
+  },
 });
 
 export const markNotificationAsReadFailure = error => ({

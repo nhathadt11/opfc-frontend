@@ -7,12 +7,12 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map, isEmpty } from 'lodash';
 import moment from 'moment';
-import { decreaseNotificationCount } from '../../../modules/Account/actions/notification';
+import { markNotificationAsReadRequest } from '../../../modules/Account/actions/notification';
 import './NotificationDropdown.css';
-import { NotificationContentStyled, NotificationTimeStyled, NotificationContentWrapperStyled } from './NotificationDropdown.styled';
+import { NotificationContentStyled, NotificationTimeStyled } from './NotificationDropdown.styled';
 
 const NotificationDropdown = ({
-  children, count, notificationList, decreaseNotificationCountAction,
+  children, count, notificationList, markNotificationAsReadRequestAction,
 }) => {
   const menu = (
     <Menu className="opfc-notification-dropdown-menu">
@@ -21,17 +21,21 @@ const NotificationDropdown = ({
           <Menu.Item className="opfc-notification-item">
             You have nothing new.
           </Menu.Item>
-        ) : map(notificationList, n => (
-          <Menu.Item className={`opfc-notification-item ${n['Read'] ? 'notification-item-read' : ''}`} onClick={decreaseNotificationCountAction}>
+        ) : map(notificationList, ({ key, val }) => (
+          <Menu.Item
+            key={key}
+            className={`opfc-notification-item ${val['Read'] ? 'notification-item-read' : ''}`}
+            onClick={() => markNotificationAsReadRequestAction(key)}
+          >
             <NotificationContentStyled bold>
-              {n['FromUsername']}
+              {val['FromUsername']}
             </NotificationContentStyled>
-              ordered
+              request for
             <NotificationContentStyled bold>
-              {n['Message']}
+              {val['Message']}
             </NotificationContentStyled>
             <NotificationTimeStyled>
-              {moment.utc(n['CreatedAt']).fromNow()}
+              {moment.utc(val['CreatedAt']).fromNow()}
             </NotificationTimeStyled>
           </Menu.Item>
         ))
@@ -52,7 +56,7 @@ NotificationDropdown.propTypes = {
   children: element.isRequired,
   count: number.isRequired,
   notificationList: arrayOf(shape({})).isRequired,
-  decreaseNotificationCountAction: func.isRequired,
+  markNotificationAsReadRequestAction: func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -61,7 +65,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  decreaseNotificationCountAction: decreaseNotificationCount,
+  markNotificationAsReadRequestAction: markNotificationAsReadRequest,
 };
 
 export default compose(

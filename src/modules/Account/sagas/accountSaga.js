@@ -1,5 +1,5 @@
 import {
-  takeEvery, all, put, call, fork, takeLatest,
+  takeEvery, all, put, call, fork, takeLatest, select,
 } from 'redux-saga/effects';
 import { isFunction } from 'lodash';
 import { message } from 'antd';
@@ -15,9 +15,15 @@ import {
   registerUserFirebaseNotification,
   unpersistAuthentication,
 } from '../../../utils/Utils';
-import { increaseNotificationCount } from '../actions/notification';
+import {
+  increaseNotificationCount, MARK_NOTIFICATION_AS_READ_REQUEST, markNotificationAsReadFailure,
+  decreaseNotificationCount, markNotificationAsReadSuccess,
+} from '../actions/notification';
 import store from '../../../store';
 import { fetchGeneralDataRequest } from '../../General/sagas/generalSaga';
+import fire from '../../../utils/Firebase';
+
+const getUserId = state => state.accountReducer.account.account.user.id;
 
 function* createBrand({ payload: { brand, success } }) {
   try {
@@ -116,6 +122,22 @@ function* watchLogoutAccount() {
   yield takeEvery(LOGOUT_ACCOUNT_REQUEST, logoutAccount);
 }
 
+function* markNotificationAsRead({ payload: { key } }) {
+  try {
+    const userId = yield select(getUserId);
+    fire.database().ref(`users/${userId}/${key}`).update({ Read: true });
+    yield put(decreaseNotificationCount());
+    yield put(markNotificationAsReadSuccess(key));
+  } catch (error) {
+    message.error('Notification could not be marked as read.');
+    yield put(markNotificationAsReadFailure(error));
+  }
+}
+
+function* watchMarkNotificationAsRead() {
+  yield takeLatest(MARK_NOTIFICATION_AS_READ_REQUEST, markNotificationAsRead);
+}
+
 export default function* accountFlow() {
   yield all([
     watchCreateBrand(),
@@ -123,5 +145,6 @@ export default function* accountFlow() {
     watchLoginAccount(),
     watchLoginSuccess(),
     watchLogoutAccount(),
+    watchMarkNotificationAsRead(),
   ]);
 }
