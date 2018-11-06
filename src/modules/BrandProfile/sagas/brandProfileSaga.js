@@ -20,7 +20,8 @@ import {
 } from '../actions/brand';
 import {
   FETCH_ORDER_MANY_REQUEST, fetchOrderManyFailure, fetchOrderManySuccess,
-  CANCEL_BRAND_ORDER_REQUEST, cancelBrandOrderFailure,
+  CANCEL_BRAND_ORDER_REQUEST, cancelBrandOrderFailure, approveBrandOrderFailure,
+  APPROVE_BRAND_ORDER_REQUEST,
 } from '../actions/order';
 
 const getBrandId = state => state.brandProfileReducer.brand.brandDetail.id;
@@ -187,13 +188,30 @@ function* cancelBrandOrder({ payload: { orderLineId, success } }) {
     if (isFunction(success)) success();
     message.success(`Order #${orderLineId} has been canceled.`);
   } catch (error) {
-    message.error(`Order #${orderLineId} could not be cancel.`);
+    message.error(`Order #${orderLineId} could not be canceled.`);
     yield put(cancelBrandOrderFailure(error));
   }
 }
 
 function* watchCancelBrandOrder() {
   yield takeLatest(CANCEL_BRAND_ORDER_REQUEST, cancelBrandOrder);
+}
+
+function* approveBrandOrder({ payload: { orderLineId, success } }) {
+  try {
+    yield call(Api.approveBrandOrder, orderLineId);
+
+    yield fork(fetchOrderMany);
+    if (isFunction(success)) success();
+    message.success(`Order #${orderLineId} has been approveed.`);
+  } catch (error) {
+    message.error(`Order #${orderLineId} could not be approved.`);
+    yield put(approveBrandOrderFailure(error));
+  }
+}
+
+function* watchApproveBrandOrder() {
+  yield takeLatest(APPROVE_BRAND_ORDER_REQUEST, approveBrandOrder);
 }
 
 export default function* brandProfielFlow() {
@@ -208,5 +226,6 @@ export default function* brandProfielFlow() {
     watchFetchBrandMealMany(),
     watchFetchOrderMany(),
     watchCancelBrandOrder(),
+    watchApproveBrandOrder(),
   ]);
 }

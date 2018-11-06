@@ -10,7 +10,7 @@ import {
 } from 'prop-types';
 import { ActionGroupStyled, OrderNoStyled } from './OrderTab.styled';
 import OrderModal from './OrderModal';
-import { fetchOrderManyRequest, cancelBrandOrderRequest } from '../../../actions/order';
+import { fetchOrderManyRequest, cancelBrandOrderRequest, approveBrandOrderRequest } from '../../../actions/order';
 
 class OrderTab extends Component {
   static propTypes = {
@@ -18,6 +18,7 @@ class OrderTab extends Component {
     orderList: arrayOf(shape({})).isRequired,
     fetching: bool.isRequired,
     cancelBrandOrderRequestAction: func.isRequired,
+    approveBrandOrderRequestAction: func.isRequired,
   }
 
   state = {
@@ -43,6 +44,19 @@ class OrderTab extends Component {
       okText: 'Yes',
       cancelText: 'No',
       onOk: () => cancelBrandOrderRequestAction(orderLineId, modal.destroy),
+      maskClosable: true,
+    });
+  }
+
+  confirmApproveBrandOrder = (orderLineId) => {
+    const { approveBrandOrderRequestAction } = this.props;
+
+    const modal = Modal.confirm({
+      title: 'Approve order',
+      content: `Are you sure to approve order #${orderLineId}`,
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => approveBrandOrderRequestAction(orderLineId, modal.destroy),
       maskClosable: true,
     });
   }
@@ -74,7 +88,7 @@ class OrderTab extends Component {
         key: 'operation',
         render: (text, record) => (
           <ActionGroupStyled>
-            <Button shape="circle" type="primary">
+            <Button shape="circle" type="primary" onClick={() => this.confirmApproveBrandOrder(record.orderNo)}>
               <Icon type="check" theme="outlined" />
             </Button>
             <Button shape="circle" type="danger" onClick={() => this.confirmCancelBrandOrder(record.orderNo)}>
@@ -120,6 +134,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchOrderManyRequestAction: fetchOrderManyRequest,
   cancelBrandOrderRequestAction: cancelBrandOrderRequest,
+  approveBrandOrderRequestAction: approveBrandOrderRequest,
 };
 
 export default compose(

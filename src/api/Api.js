@@ -218,6 +218,8 @@ const bookmark = (userId, menuId) => axios.post(`/BookMark/User/${userId}/Menu/$
 
 const cancelBrandOrder = orderLineId => axios.post(`/Paypal/Refund/${orderLineId}`);
 
+const approveBrandOrder = orderLineId => axios.post(`/Order/Brand/Approve/${orderLineId}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -253,6 +255,7 @@ export default {
   fetchSuggestedMenuMany,
   bookmark,
   cancelBrandOrder,
+  approveBrandOrder,
   // Elastic search
   fetchMenuManyEs,
 };
