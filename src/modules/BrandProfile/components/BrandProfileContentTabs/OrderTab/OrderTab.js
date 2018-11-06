@@ -62,8 +62,8 @@ class OrderTab extends Component {
       { title: 'Event Type', dataIndex: 'eventTypeName', key: 'eventTypeName', width: 150 }, // eslint-disable-line
       { title: 'Start At', dataIndex: 'startAt', key: 'startAt', width: 200, render: text => moment(text).format('YYYY-MM-DD HH:mm') }, // eslint-disable-line
       { title: 'End At', dataIndex: 'endAt', key: 'endAt', width: 200, render: text => moment(text).format('YYYY-MM-DD HH:mm') }, // eslint-disable-line
-      { title: 'Order Status', key: 'orderStatus', render: text => <span><Badge status="processing" />{text.orderStatus}</span>, width: 150 }, // eslint-disable-line
-      { title: 'Event Status', key: 'eventStatus', render: text => <span><Badge status="processing" />{text.eventStatus}</span>, width: 150 }, // eslint-disable-line
+      { title: 'Order Status', dataIndex: 'orderStatus', key: 'orderStatus', render: text => <span><Badge status="processing" />{text}</span>, width: 150 }, // eslint-disable-line
+      { title: 'Event Status', dataIndex: 'eventStatus', key: 'eventStatus', render: text => <span><Badge status="processing" />{text}</span>, width: 150 }, // eslint-disable-line
       { title: 'Serving Number', dataIndex: 'servingNumber', key: 'servingNumber', width: 150 }, // eslint-disable-line
       { title: 'City', dataIndex: 'cityName', key: 'cityName', width: 150 }, // eslint-disable-line
       { title: 'District', dataIndex: 'districtName', key: 'districtName', width: 150 }, // eslint-disable-line
