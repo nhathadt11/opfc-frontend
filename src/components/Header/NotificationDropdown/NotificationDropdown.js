@@ -28,11 +28,11 @@ const NotificationDropdown = ({
             onClick={() => markNotificationAsReadRequestAction(key)}
           >
             <NotificationContentStyled bold>
-              {val['FromUsername']}
+              {val['Subject']}
             </NotificationContentStyled>
-              request for
+            {val['Verb']}
             <NotificationContentStyled bold>
-              {val['Message']}
+              {val['Object']}
             </NotificationContentStyled>
             <NotificationTimeStyled>
               {moment.utc(val['CreatedAt']).fromNow()}
