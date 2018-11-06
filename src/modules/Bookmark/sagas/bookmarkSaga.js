@@ -7,10 +7,11 @@ import Api from '../../../api/Api';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 
-function* bookmark({ payload: { menuId } }) {
+function* bookmark({ payload: { menuId, menuName } }) {
   try {
     const userId = yield select(getUserId);
     yield call(Api.bookmark, userId, menuId);
+    message.success(`Successfully bookmarked ${menuName}`);
   } catch (error) {
     message.error('Menu could not be bookmarked.');
     yield put(bookmarkFailure(error));

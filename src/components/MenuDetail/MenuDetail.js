@@ -82,9 +82,9 @@ class MenuDetail extends Component {
     clearRatingListAction();
   }
 
-  bookmarkMenuRequestAction = (menuId) => {
+  bookmarkMenuRequestAction = (menuId, menuName) => {
     const { bookmarkMenuRequestAction } = this.props;
-    bookmarkMenuRequestAction(menuId);
+    bookmarkMenuRequestAction(menuId, menuName);
   }
 
   handleEventTypeSelect = (eventTypeName) => {
@@ -164,7 +164,7 @@ class MenuDetail extends Component {
                   <LocalIcon type="icon-spoon" />
                   Taste it
                 </Button>
-                <Button type="default" size="large" onClick={() => this.bookmarkMenuRequestAction(menuDetail.id)}>
+                <Button type="default" size="large" onClick={() => this.bookmarkMenuRequestAction(menuDetail.id, menuDetail.menuName)}>
                   <LocalIcon type="icon-bookmark" />
                   Bookmark
                 </Button>

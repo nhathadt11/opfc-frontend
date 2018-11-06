@@ -2,10 +2,11 @@ export const BOOKMARK_REQUEST = 'BOOKMARK_REQUEST';
 export const BOOKMARK_SUCCESS = 'BOOKMARK_SUCCESS';
 export const BOOKMARK_FAILURE = 'BOOKMARK_FAILURE';
 
-export const bookmarkRequest = menuId => ({
+export const bookmarkRequest = (menuId, menuName) => ({
   type: BOOKMARK_REQUEST,
   payload: {
     menuId,
+    menuName,
   },
 });
 
