@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {
   shape, arrayOf, number, string,
 } from 'prop-types';
-import { find } from 'lodash';
+import { find, join } from 'lodash';
 import moment from 'moment';
 import {
   SiderItemTitleStyled, SiderItemValueStyled,
@@ -29,6 +29,12 @@ const StepPickMenuSider = ({ selectedEvent, eventTypeList }) => {
         </SiderItemValueStyled>
       </StepPickMenuSiderItemStyled>
       <StepPickMenuSiderItemStyled>
+        <SiderItemTitleStyled>Categories</SiderItemTitleStyled>
+        <SiderItemValueStyled>
+          {join(selectedEvent.categoryNames, ', ')}
+        </SiderItemValueStyled>
+      </StepPickMenuSiderItemStyled>
+      <StepPickMenuSiderItemStyled>
         <SiderItemTitleStyled>Budget</SiderItemTitleStyled>
         <SiderItemValueStyled>{selectedEvent.budget}</SiderItemValueStyled>
       </StepPickMenuSiderItemStyled>
@@ -37,10 +43,20 @@ const StepPickMenuSider = ({ selectedEvent, eventTypeList }) => {
         <SiderItemValueStyled>{selectedEvent.servingNumber}</SiderItemValueStyled>
       </StepPickMenuSiderItemStyled>
       <StepPickMenuSiderItemStyled>
+        <SiderItemTitleStyled>Date</SiderItemTitleStyled>
+        <SiderItemValueStyled>
+          { moment(selectedEvent.date).format('YYYY - MM - DD') }
+        </SiderItemValueStyled>
+      </StepPickMenuSiderItemStyled>
+      <StepPickMenuSiderItemStyled>
         <SiderItemTitleStyled>Time Range</SiderItemTitleStyled>
         <SiderItemValueStyled>
           { moment(selectedEvent.startAt).format('HH:mm A') } - { moment(selectedEvent.endAt).format('HH:mm A') }
         </SiderItemValueStyled>
+      </StepPickMenuSiderItemStyled>
+      <StepPickMenuSiderItemStyled>
+        <SiderItemTitleStyled>City - District</SiderItemTitleStyled>
+        <SiderItemValueStyled>{selectedEvent.cityName} - {selectedEvent.districtName}</SiderItemValueStyled>
       </StepPickMenuSiderItemStyled>
       <StepPickMenuSiderItemStyled>
         <SiderItemTitleStyled>Address</SiderItemTitleStyled>

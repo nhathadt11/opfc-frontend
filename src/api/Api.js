@@ -131,6 +131,7 @@ const createEvent = (userId, _event) => {
 const updateEvent = (userId, _event) => {
   const event = {
     event: {
+      ..._event,
       eventName: _event.eventName,
       description: _event.description,
       date: _event.date.toISOString(),

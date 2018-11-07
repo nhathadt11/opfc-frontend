@@ -42,7 +42,7 @@ function* createEvent({ payload: { event, onSuccess } }) {
     if (isFunction(onSuccess)) onSuccess(response.data);
   } catch (error) {
     yield put(createEventFailure(error));
-    message.error('Could not create Event');
+    message.error('Could not create or update Event');
     console.error(error);
   }
 }

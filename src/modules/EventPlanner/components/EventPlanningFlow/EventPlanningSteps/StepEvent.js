@@ -71,6 +71,7 @@ class StepEvent extends Component {
         createEventRequestAction({
           id: selectedEvent.id,
           userId: selectedEvent.userId,
+          ...selectedEvent,
           ...values,
         }, navigateToEventDetail);
       }
@@ -188,7 +189,7 @@ class StepEvent extends Component {
                     {
                       map(
                         eventTypeList,
-                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
+                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>, // eslint-disable-line
                       )
                     }
                   </Select>,
