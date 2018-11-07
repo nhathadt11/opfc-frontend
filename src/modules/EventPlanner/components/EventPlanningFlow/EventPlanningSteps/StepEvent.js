@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Form, Input, DatePicker, Cascader, InputNumber, Select, Row, Col,
+  Form, Input, DatePicker, Cascader, InputNumber, Select, Row, Col, TimePicker,
 } from 'antd';
 import { compose } from 'redux';
 import { shape, func, arrayOf } from 'prop-types';
@@ -10,14 +10,13 @@ import { map } from 'lodash';
 import './StepEvent.css';
 import { createEventRequest } from '../../../actions/event';
 
-const { RangePicker } = DatePicker;
-
 const StepEvent = ({
   form: { getFieldDecorator, validateFieldsAndScroll },
   next,
   createEventRequestAction,
   selectedEvent,
   eventTypeList,
+  categoryList,
   cityAndDistrictList,
 }) => {
   const handleSubmit = (e) => {
@@ -48,19 +47,42 @@ const StepEvent = ({
               )
             }
           </Form.Item>
-          <Form.Item label="Time Range">
+          <Form.Item label="Date">
             {
-              getFieldDecorator('timeRange', {
-                initialValue: [
-                  selectedEvent.endAt && moment(selectedEvent.startAt).isValid() ? moment(selectedEvent.startAt) : null, //eslint-disable-line
-                  selectedEvent.endAt && moment(selectedEvent.endAt).isValid() ? moment(selectedEvent.endAt) : null, //eslint-disable-line
-                ],
-                rules: [{ required: true, message: 'Time range is required!' }],
+              getFieldDecorator('date', {
+                initialValue: selectedEvent.date && moment(selectedEvent.date).isValid() ? moment(selectedEvent.date) : null, //eslint-disable-line
+                rules: [{ required: true, message: 'Date is required!' }],
               })(
-                <RangePicker showTime format="YYYY-MM-DD HH:mm" />,
+                <DatePicker format="YYYY-MM-DD" />,
               )
             }
           </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="Start Time">
+                {
+                  getFieldDecorator('startAt', {
+                    initialValue: selectedEvent.startAt && moment(selectedEvent.startAt).isValid() ? moment(selectedEvent.startAt) : null, //eslint-disable-line
+                    rules: [{ required: true, message: 'Start Time is required!' }],
+                  })(
+                    <TimePicker />,
+                  )
+                }
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="End Time">
+                {
+                  getFieldDecorator('endAt', {
+                    initialValue: selectedEvent.endAt && moment(selectedEvent.endAt).isValid() ? moment(selectedEvent.endAt) : null, //eslint-disable-line
+                    rules: [{ required: true, message: 'End Time is required!' }],
+                  })(
+                    <TimePicker />,
+                  )
+                }
+              </Form.Item>
+            </Col>
+          </Row>
           <Form.Item label="City and District">
             {
               getFieldDecorator('cityDistrict', {
@@ -120,6 +142,23 @@ const StepEvent = ({
               )
             }
           </Form.Item>
+          <Form.Item label="Categories">
+            {
+              getFieldDecorator('categoryIds', {
+                initialValue: selectedEvent.categoryId,
+                rules: [{ required: true, message: 'At least one category is required!' }],
+              })(
+                <Select mode="multiple">
+                  {
+                    map(
+                      categoryList,
+                      t => <Select.Option key={t.id} value={t.id}>{t.name}</Select.Option>,
+                    )
+                  }
+                </Select>,
+              )
+            }
+          </Form.Item>
           <Form.Item label="Description">
             {
               getFieldDecorator('description', {
@@ -145,12 +184,14 @@ StepEvent.propTypes = {
   createEventRequestAction: func.isRequired,
   selectedEvent: shape({}).isRequired,
   eventTypeList: arrayOf(shape({})).isRequired,
+  categoryList: arrayOf(shape({})).isRequired,
   cityAndDistrictList: arrayOf(shape({})).isRequired,
 };
 
 const mapStateToProps = state => ({
   selectedEvent: state.eventPlannerReducer.event.event,
   eventTypeList: state.generalReducer.eventTypeList,
+  categoryList: state.generalReducer.categoryList,
   cityAndDistrictList: state.generalReducer.cityAndDistrictList,
 });
 

@@ -111,14 +111,16 @@ const createEvent = (userId, _event) => {
     event: {
       eventName: _event.eventName,
       description: _event.description,
-      startAt: _event.timeRange[0].toISOString(),
-      endAt: _event.timeRange[1].toISOString(),
+      date: _event.date.toISOString(),
+      startAt: _event.startAt.toISOString(),
+      endAt: _event.endAt.toISOString(),
       budget: _event.budget,
       servingNumber: _event.servingNumber,
       cityId: _event.cityDistrict[0],
       districtId: _event.cityDistrict[1],
       address: _event.address,
       eventTypeId: _event.eventTypeId,
+      categoryIds: _event.categoryIds,
       userId,
     },
   };
