@@ -59,12 +59,16 @@
 }
 
 .opfc-menu-detail-main .opfc-menu-tag-list {
-  padding-bottom: 30px;
+  padding-bottom: 20px;
 }
 
 .opfc-menu-detail-main .opfc-menu-tag-new {
   background: #fff;
   border-style: dashed;
+}
+
+.opfc-menu-tag-list .opfc-menu-tag-item {
+  font-size: 13px !important;
 }
 
 .opfc-menu-detail .opfc-brand-info-list {
@@ -86,6 +90,10 @@
 }
 
 .opfc-menu-detail .opfc-brand-info-list .opfc-brand-info-item:not(:first-child) {
+  margin-top: 15px;
+}
+
+.opfc-menu-detail-action-group {
   margin-top: 15px;
 }
 

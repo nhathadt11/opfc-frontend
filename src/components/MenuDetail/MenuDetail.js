@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   Row, Col, Tag, Button, Icon, Affix, Rate,
 } from 'antd';
@@ -18,6 +18,7 @@ import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType, addFullTextSearchCriteriaCategory } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 import { bookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
+import { ListTitleStyled } from './MenuDetail.styled';
 
 // const tags = [
 //   { id: 0, name: 'wedding' },
@@ -139,34 +140,46 @@ class MenuDetail extends Component {
             </Row>
             {
               !isEmpty(menuDetail.eventTypeList) && (
-                <Row className="opfc-menu-tag-list">
-                  {
-                    map(menuDetail.eventTypeList, ({ id, eventTypeName }) => (
-                      <Tag
-                        key={id}
-                        onClick={() => this.handleEventTypeSelect(eventTypeName)}
-                      >
-                        {eventTypeName && eventTypeName.length > 20 ? `${eventTypeName.slice(0, 20)}...` : (eventTypeName || 'N/A')}
-                      </Tag>
-                    ))
-                  }
-                </Row>
+                <Fragment>
+                  <ListTitleStyled>
+                    Event Types
+                  </ListTitleStyled>
+                  <Row className="opfc-menu-tag-list">
+                    {
+                      map(menuDetail.eventTypeList, ({ id, eventTypeName }) => (
+                        <Tag
+                          className="opfc-menu-tag-item"
+                          key={id}
+                          onClick={() => this.handleEventTypeSelect(eventTypeName)}
+                        >
+                          {eventTypeName && eventTypeName.length > 20 ? `${eventTypeName.slice(0, 20)}...` : (eventTypeName || 'N/A')}
+                        </Tag>
+                      ))
+                    }
+                  </Row>
+                </Fragment>
               )
             }
             {
               !isEmpty(menuDetail.categoryList) && (
-                <Row className="opfc-menu-tag-list">
-                  {
-                    map(menuDetail.categoryList, ({ id, name }) => (
-                      <Tag
-                        key={id}
-                        onClick={() => this.handleCategorySelect(name)}
-                      >
-                        {name && name.length > 20 ? `${name.slice(0, 20)}...` : (name || 'N/A')}
-                      </Tag>
-                    ))
-                  }
-                </Row>
+                <Fragment>
+                  <ListTitleStyled>
+                    Categories
+                  </ListTitleStyled>
+                  <Row className="opfc-menu-tag-list">
+                    {
+                      map(menuDetail.categoryList, ({ id, name }) => (
+                        <Tag
+                          className="opfc-menu-tag-item"
+                          key={id}
+                          onClick={() => this.handleCategorySelect(name)}
+                        >
+                          {name && name.length > 20 ? `${name.slice(0, 20)}...` : (name || 'N/A')}
+                        </Tag>
+                      ))
+                    }
+                  </Row>
+                </Fragment>
               )
             }
             <Row>
