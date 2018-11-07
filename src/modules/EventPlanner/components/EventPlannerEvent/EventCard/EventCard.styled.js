@@ -7,6 +7,7 @@ export const EventNameStyled = styled.h3`
 export const EventInfoLabelStyled = styled.span`
   color: #999;
   margin-right: 7px;
+  text-align: right;
 `;
 
 export const EventInfoValueStyled = styled.span`

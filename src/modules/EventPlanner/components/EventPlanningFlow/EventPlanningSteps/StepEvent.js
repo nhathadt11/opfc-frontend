@@ -119,7 +119,7 @@ class StepEvent extends Component {
                       initialValue: selectedEvent.startAt && moment(selectedEvent.startAt).isValid() ? moment(selectedEvent.startAt) : null, //eslint-disable-line
                       rules: [{ required: true, message: 'Start Time is required!' }],
                     })(
-                      <TimePicker />,
+                      <TimePicker format="HH:mm" />,
                     )
                   }
                 </Form.Item>
@@ -131,7 +131,7 @@ class StepEvent extends Component {
                       initialValue: selectedEvent.endAt && moment(selectedEvent.endAt).isValid() ? moment(selectedEvent.endAt) : null, //eslint-disable-line
                       rules: [{ required: true, message: 'End Time is required!' }],
                     })(
-                      <TimePicker />,
+                      <TimePicker format="HH:mm" />,
                     )
                   }
                 </Form.Item>

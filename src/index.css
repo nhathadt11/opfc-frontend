@@ -14,3 +14,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.opfc-spinning {
+  min-height: 150px;
+}

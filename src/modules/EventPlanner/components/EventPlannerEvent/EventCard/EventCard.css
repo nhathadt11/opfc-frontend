@@ -2,6 +2,10 @@
   margin-top: 12px;
 }
 
+.opfc-event-card .opfc-event-card-label {
+  text-align: right;
+}
+
 .opfc-event-card-create {
   width: 100%;
   height: 100%;

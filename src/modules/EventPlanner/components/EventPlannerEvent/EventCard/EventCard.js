@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Row, Tooltip } from 'antd';
+import {
+  Card, Row, Tooltip, Col,
+} from 'antd';
 import moment from 'moment';
 import {
   shape, string, number, func, arrayOf,
@@ -33,34 +35,68 @@ const EventCard = ({
     >
       <Row><EventNameStyled>{data.eventName}</EventNameStyled></Row>
       <Row>
-        <EventInfoLabelStyled>Status:</EventInfoLabelStyled>
-        <EventInfoValueStyled>Ongoing</EventInfoValueStyled>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Status:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>Ongoing</EventInfoValueStyled>
+        </Col>
       </Row>
       <Row>
-        <section>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Date:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{moment(data.date).format('YYYY - MM - DD')}</EventInfoValueStyled>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={8} className="opfc-event-card-label">
           <EventInfoLabelStyled>From:</EventInfoLabelStyled>
-          <EventInfoValueStyled>{moment(data.startAt).format('lll')}</EventInfoValueStyled>
-        </section>
-        <section>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{moment(data.startAt).format('HH:mm A')}</EventInfoValueStyled>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={8} className="opfc-event-card-label">
           <EventInfoLabelStyled>To:</EventInfoLabelStyled>
-          <EventInfoValueStyled>{moment(data.endAt).format('lll')}</EventInfoValueStyled>
-        </section>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{moment(data.endAt).format('HH:mm A')}</EventInfoValueStyled>
+        </Col>
       </Row>
       <Row>
-        <EventInfoLabelStyled>Location:</EventInfoLabelStyled>
-        <EventInfoValueStyled>{`${data.address}, ${data.district}, ${data.district}, ${data.ward}`}</EventInfoValueStyled>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Location:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{`${data.address}, ${data.districtName}, ${data.cityName}`}</EventInfoValueStyled>
+        </Col>
       </Row>
       <Row>
-        <EventInfoLabelStyled>Budget:</EventInfoLabelStyled>
-        <EventInfoValueStyled>${data.budget}</EventInfoValueStyled>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Budget:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{data.budget}</EventInfoValueStyled>
+        </Col>
       </Row>
       <Row>
-        <EventInfoLabelStyled>Servings:</EventInfoLabelStyled>
-        <EventInfoValueStyled>{data.servingNumber}</EventInfoValueStyled>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Servings:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{data.servingNumber}</EventInfoValueStyled>
+        </Col>
       </Row>
       <Row>
-        <EventInfoLabelStyled>Event Type:</EventInfoLabelStyled>
-        <EventInfoValueStyled>{getEventTypeNameFromId(data.eventTypeId, eventTypeList)}</EventInfoValueStyled>
+        <Col span={8} className="opfc-event-card-label">
+          <EventInfoLabelStyled>Event Type:</EventInfoLabelStyled>
+        </Col>
+        <Col span={16}>
+          <EventInfoValueStyled>{getEventTypeNameFromId(data.eventTypeId, eventTypeList)}</EventInfoValueStyled>
+        </Col>
       </Row>
     </Card>
   </Tooltip>

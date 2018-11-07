@@ -12,7 +12,7 @@ import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
 import { selectMenuMany } from '../../actions/planningFlow';
 
 const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuManyAction }) => (
-  <Spin spinning={fetching}>
+  <Spin spinning={fetching} className="opfc-spinning">
     <Row type="flex">
       {
         map(suggestedMenuList, (m, index) => (
