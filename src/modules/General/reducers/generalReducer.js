@@ -9,13 +9,19 @@ import {
   CHANGE_FULL_TEXT_SEARCH_CRITERIA,
   ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE,
   CHANGE_MENU_MANY_PAGE,
+  FETCH_CATEGORY_MANY_REQUEST,
+  FETCH_CATEGORY_MANY_FAILURE,
+  FETCH_CATEGORY_MANY_SUCCESS,
+  ADD_FULL_TEXT_SEARCH_CRITERIA_CATEGORY,
 } from '../actions/general';
 
 
 const initialState = {
   fetching: false,
   fetchingEventTypeList: false,
+  fetchingCategoryList: false,
   eventTypeList: [],
+  categoryList: [],
   cityList: [],
   districtList: [],
   cityAndDistrictList: [],
@@ -49,6 +55,11 @@ const generalReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetchingEventTypeList: true,
       };
+    case FETCH_CATEGORY_MANY_REQUEST:
+      return {
+        ...state,
+        fetchingCategoryList: true,
+      };
     case FETCH_CITY_MANY_REQUEST:
     case FETCH_DISTRICT_MANY_REQUEST:
     case FETCH_CITY_AND_DISTRICT_REQUEST:
@@ -68,6 +79,12 @@ const generalReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetchingEventTypeList: false,
         eventTypeList: payload.eventTypeList,
+      };
+    case FETCH_CATEGORY_MANY_SUCCESS:
+      return {
+        ...state,
+        fetchingCategoryList: false,
+        categoryList: payload.categoryList,
       };
     case FETCH_CITY_MANY_SUCCESS:
       return {
@@ -108,12 +125,25 @@ const generalReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetchingEventTypeList: false,
       };
+    case FETCH_CATEGORY_MANY_FAILURE:
+      return {
+        ...state,
+        fetchingCategoryList: false,
+      };
     case ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE:
       return {
         ...state,
         fullTextSearch: {
           ...state.fullTextSearch,
           eventTypeNames: union(state.fullTextSearch.eventTypeNames, [payload.eventTypeName]),
+        },
+      };
+    case ADD_FULL_TEXT_SEARCH_CRITERIA_CATEGORY:
+      return {
+        ...state,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          categoryNames: union(state.fullTextSearch.categoryNames, [payload.categoryName]),
         },
       };
     case CHANGE_MENU_MANY_PAGE:

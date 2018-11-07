@@ -2,6 +2,10 @@ export const FETCH_EVENT_TYPE_MANY_REQUEST = 'FETCH_EVENT_TYPE_MANY_REQUEST';
 export const FETCH_EVENT_TYPE_MANY_SUCCESS = 'FETCH_EVENT_TYPE_MANY_SUCCESS';
 export const FETCH_EVENT_TYPE_MANY_FAILURE = 'FETCH_EVENT_TYPE_MANY_FAILURE';
 
+export const FETCH_CATEGORY_MANY_REQUEST = 'FETCH_CATEGORY_MANY_REQUEST';
+export const FETCH_CATEGORY_MANY_SUCCESS = 'FETCH_CATEGORY_MANY_SUCCESS';
+export const FETCH_CATEGORY_MANY_FAILURE = 'FETCH_CATEGORY_MANY_FAILURE';
+
 export const FETCH_DISTRICT_MANY_REQUEST = 'FETCH_DISTRICT_MANY_REQUEST';
 export const FETCH_DISTRICT_MANY_SUCCESS = 'FETCH_DISTRICT_MANY_SUCCESS';
 export const FETCH_DISTRICT_MANY_FAILURE = 'FETCH_DISTRICT_MANY_FAILURE';
@@ -26,6 +30,7 @@ export const FETCH_MENU_MANY_FAILURE = 'FETCH_MENU_MANY_FAILURE';
 export const CHANGE_MENU_MANY_PAGE = 'CHANGE_MENU_MANY_PAGE';
 export const CHANGE_FULL_TEXT_SEARCH_CRITERIA = 'CHANGE_FULL_TEXT_SEARCH_CRITERIA';
 export const ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE = 'ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE';
+export const ADD_FULL_TEXT_SEARCH_CRITERIA_CATEGORY = 'ADD_FULL_TEXT_SEARCH_CRITERIA_CATEGORY';
 
 export const fetchEventTypeManyRequest = () => ({
   type: FETCH_EVENT_TYPE_MANY_REQUEST,
@@ -40,6 +45,24 @@ export const fetchEventTypeManySuccess = eventTypeList => ({
 
 export const fetchEventTypeManyFailure = error => ({
   type: FETCH_EVENT_TYPE_MANY_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const fetchCategoryManyRequest = () => ({
+  type: FETCH_CATEGORY_MANY_REQUEST,
+});
+
+export const fetchCategoryManySuccess = categoryList => ({
+  type: FETCH_CATEGORY_MANY_SUCCESS,
+  payload: {
+    categoryList,
+  },
+});
+
+export const fetchCategoryManyFailure = error => ({
+  type: FETCH_CATEGORY_MANY_FAILURE,
   payload: {
     error,
   },
@@ -161,5 +184,12 @@ export const addFullTextSearchCriteriaEventType = eventTypeName => ({
   type: ADD_FULL_TEXT_SEARCH_CRITERIA_EVENT_TYPE,
   payload: {
     eventTypeName,
+  },
+});
+
+export const addFullTextSearchCriteriaCategory = categoryName => ({
+  type: ADD_FULL_TEXT_SEARCH_CRITERIA_CATEGORY,
+  payload: {
+    categoryName,
   },
 });

@@ -8,7 +8,8 @@ const esAxios = axios.create({
 });
 
 const fetchMenuManyEs = (text, criteria) => {
-  const matchEventTypeNames = map(criteria.eventTypeNames, c => ({ match: { eventTypeNames: c } }));
+  const matchEventTypeNames = map(criteria.eventTypeNames, e => ({ match: { eventTypeNames: e } }));
+  const matchCategoryNames = map(criteria.categoryNames, c => ({ match: { categoryNames: c } })); // eslint-disable-line
 
   if (!text) {
     return esAxios.get('menus/_search', {
@@ -19,7 +20,8 @@ const fetchMenuManyEs = (text, criteria) => {
           query: {
             bool: {
               must: [
-                ...matchEventTypeNames, // { match: { categoryNames: 'Smoothie' } },
+                ...matchEventTypeNames,
+                ...matchCategoryNames,
                 { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
                 { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
               ],
@@ -39,7 +41,8 @@ const fetchMenuManyEs = (text, criteria) => {
         query: {
           bool: {
             must: [
-              ...matchEventTypeNames, // { match: { categoryNames: 'Smoothie' } },
+              ...matchEventTypeNames,
+              ...matchCategoryNames,
               { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
               { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
               {
@@ -182,6 +185,8 @@ const loginAccount = (username, password) => axios.post('/User/Authenticate', { 
 
 const fetchEventTypeMany = () => axios.get('/EventType');
 
+const fetchCategoryMany = () => axios.get('/Category');
+
 const fetchBrandDetail = id => axios.get(`/Brand/${id}`);
 
 const fetchBrandMenuMany = id => axios.get(`/Menu/Brand/${id}`);
@@ -238,6 +243,7 @@ export default {
   updateAccount,
   loginAccount,
   fetchEventTypeMany,
+  fetchCategoryMany,
   fetchEventManyByUserId,
   fetchBrandDetail,
   fetchBrandMenuMany,

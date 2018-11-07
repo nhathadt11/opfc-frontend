@@ -15,7 +15,7 @@ import { StatSpanStyled } from '../../modules/BrandProfile/components/BrandProfi
 import LocalIcon from '../../fonts/LocalFont';
 import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
-import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType } from '../../modules/General/actions/general';
+import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType, addFullTextSearchCriteriaCategory } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 import { bookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
 
@@ -63,6 +63,7 @@ class MenuDetail extends Component {
     ratingList: arrayOf(shape({})).isRequired,
     clearRatingListAction: func.isRequired,
     addEventTypeAction: func.isRequired,
+    addCategoryAction: func.isRequired,
     bookmarkMenuRequestAction: func.isRequired,
   }
 
@@ -91,6 +92,13 @@ class MenuDetail extends Component {
     const { addEventTypeAction, history: { push } } = this.props;
 
     addEventTypeAction(eventTypeName);
+    push('/');
+  }
+
+  handleCategorySelect = (categoryName) => {
+    const { addCategoryAction, history: { push } } = this.props;
+
+    addCategoryAction(categoryName);
     push('/');
   }
 
@@ -150,7 +158,10 @@ class MenuDetail extends Component {
                 <Row className="opfc-menu-tag-list">
                   {
                     map(menuDetail.categoryList, ({ id, name }) => (
-                      <Tag key={id}>
+                      <Tag
+                        key={id}
+                        onClick={() => this.handleCategorySelect(name)}
+                      >
                         {name && name.length > 20 ? `${name.slice(0, 20)}...` : (name || 'N/A')}
                       </Tag>
                     ))
@@ -229,6 +240,7 @@ const mapDispatchToProps = {
   fetchMenuRatingManyRequestAction: fetchMenuRatingManyRequest,
   clearRatingListAction: clearRatingList,
   addEventTypeAction: addFullTextSearchCriteriaEventType,
+  addCategoryAction: addFullTextSearchCriteriaCategory,
   bookmarkMenuRequestAction: bookmarkRequest,
 };
 

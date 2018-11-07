@@ -15,6 +15,8 @@ import {
   fetchMenuManyRequest,
   fetchEventTypeManyRequest,
   CHANGE_MENU_MANY_PAGE,
+  fetchCategoryManySuccess,
+  fetchCategoryManyFailure,
 } from '../actions/general';
 import { loginAccountSuccess } from '../../Account/actions/account';
 
@@ -34,6 +36,21 @@ function* fetchEventTypeMany() {
 
 function* watchFetchEventTypeMany() {
   yield takeLatest(FETCH_EVENT_TYPE_MANY_REQUEST, fetchEventTypeMany);
+}
+
+function* fetchCategoryMany() {
+  try {
+    const { data } = yield call(Api.fetchCategoryMany);
+    yield put(fetchCategoryManySuccess(data));
+  } catch (error) {
+    const errorMessage = parseErrorMessage(error);
+    yield put(fetchCategoryManyFailure(errorMessage));
+    message.error(errorMessage);
+  }
+}
+
+function* watchFetchCategoryMany() {
+  yield takeLatest(FETCH_EVENT_TYPE_MANY_REQUEST, fetchCategoryMany);
 }
 
 function* fetchDistrictMany() {
@@ -159,6 +176,7 @@ export function* fetchGeneralDataRequest() {
 export default function* generalFlow() {
   yield all([
     watchFetchEventTypeMany(),
+    watchFetchCategoryMany(),
     watchFetchDistrictMany(),
     watchFetchCityMany(),
     watchFetchMenuDetail(),
