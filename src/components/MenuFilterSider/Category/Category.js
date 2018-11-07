@@ -25,7 +25,7 @@ const Category = ({
           style={{ width: '100%' }}
           onChange={onChange}
           value={categoryNames}
-          className="opfc-category-type-list"
+          className="opfc-category-list"
         >
           <Row>
             {

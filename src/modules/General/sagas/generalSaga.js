@@ -17,6 +17,8 @@ import {
   CHANGE_MENU_MANY_PAGE,
   fetchCategoryManySuccess,
   fetchCategoryManyFailure,
+  fetchCategoryManyRequest,
+  FETCH_CATEGORY_MANY_REQUEST,
 } from '../actions/general';
 import { loginAccountSuccess } from '../../Account/actions/account';
 
@@ -50,7 +52,7 @@ function* fetchCategoryMany() {
 }
 
 function* watchFetchCategoryMany() {
-  yield takeLatest(FETCH_EVENT_TYPE_MANY_REQUEST, fetchCategoryMany);
+  yield takeLatest(FETCH_CATEGORY_MANY_REQUEST, fetchCategoryMany);
 }
 
 function* fetchDistrictMany() {
@@ -169,6 +171,7 @@ function* initAuthentication() {
 
 export function* fetchGeneralDataRequest() {
   yield put(fetchEventTypeManyRequest());
+  yield put(fetchCategoryManyRequest());
   yield fork(fetchCityAndDistrictParallel);
   yield fork(initAuthentication);
 }
