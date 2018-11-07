@@ -6,6 +6,7 @@ import { isFunction, map } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure,
   FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess, createEventFailure,
+  FETCH_EVENT_DETAIL_REQUEST, fetchEventDetailFailure, fetchEventDetailSuccess,
 } from '../actions/event';
 import Api from '../../../api/Api';
 import {
@@ -42,6 +43,7 @@ function* createEvent({ payload: { event, onSuccess } }) {
   } catch (error) {
     yield put(createEventFailure(error));
     message.error('Could not create Event');
+    console.error(error);
   }
 }
 
@@ -62,6 +64,21 @@ function* fetchEventMany() {
 
 function* watchFetchEventMany() {
   yield takeLatest(FETCH_EVENT_MANY_REQUEST, fetchEventMany);
+}
+
+function* fetchEventDetail({ payload: { eventId, success } }) {
+  try {
+    const { data } = yield call(Api.fetchEventDetail, eventId);
+    yield put(fetchEventDetailSuccess(data));
+    if (isFunction(success)) success(data);
+  } catch (error) {
+    message.error('Event could not be fetched.');
+    yield put(fetchEventDetailFailure(error));
+  }
+}
+
+function* watchFetchEventDetail() {
+  yield takeLatest(FETCH_EVENT_DETAIL_REQUEST, fetchEventDetail);
 }
 
 function* fetchSuggestedMenuMany({ payload: { eventId } }) {
@@ -143,5 +160,6 @@ export default function* eventFlow() {
     watchCreateOrder(),
     watchFetchEventPlannerOrderMany(),
     watchFetchEventPlannerOrderDetail(),
+    watchFetchEventDetail(),
   ]);
 }

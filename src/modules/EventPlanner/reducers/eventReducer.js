@@ -2,6 +2,7 @@ import { filter } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, CREATE_EVENT_SUCCESS, CREATE_EVENT_FAILURE,
   FETCH_EVENT_MANY_REQUEST, FETCH_EVENT_MANY_SUCCESS, FETCH_EVENT_MANY_FAILURE,
+  FETCH_EVENT_DETAIL_REQUEST, FETCH_EVENT_DETAIL_SUCCESS, FETCH_EVENT_DETAIL_FAILURE,
 } from '../actions/event';
 import {
   CHANGE_EVENT_PLAN_CURRENT_STEP, NEXT_EVENT_PLAN_STEP,
@@ -17,6 +18,7 @@ const initialState = {
   event: {},
   submitting: false,
   fetching: false,
+  fetchingEventDetail: false,
   currentStep: 0,
   selectedMenuList: [],
   suggestedMenuList: [],
@@ -34,6 +36,7 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
     case CREATE_EVENT_SUCCESS:
       return {
         ...state,
+        event: payload.event,
         submitting: false,
       };
     case CREATE_ORDER_SUCCESS:
@@ -152,6 +155,25 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetching: false,
+      };
+    }
+    case FETCH_EVENT_DETAIL_REQUEST: {
+      return {
+        ...state,
+        fetchingEventDetail: true,
+      };
+    }
+    case FETCH_EVENT_DETAIL_SUCCESS: {
+      return {
+        ...state,
+        event: payload.event,
+        fetchingEventDetail: false,
+      };
+    }
+    case FETCH_EVENT_DETAIL_FAILURE: {
+      return {
+        ...state,
+        fetchingEventDetail: false,
       };
     }
     default:
