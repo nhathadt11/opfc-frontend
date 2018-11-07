@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { map } from 'lodash';
-import { CLOUDINARY_API_KEY, CLOUDINARY_UPLOAD_PRESET } from '../constants/AppConstants';
+import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME } from '../constants/AppConstants';
 
 // Elastic search
 const esAxios = axios.create({
@@ -98,12 +98,16 @@ const uploadImage = (file) => {
 
   formData.append('file', file);
   formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-  formData.append('api_key', CLOUDINARY_API_KEY);
   formData.append('timestamp', Date.now() / 1000);
 
-  return axios.post(`https://api.cloudinary.com/v1_1/${CLOUDINARY_UPLOAD_PRESET}/image/upload`, formData, {
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-  });
+  return fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+    method: 'POST',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    body: formData,
+  }).then(response => response.json())
+    .then(data => ({ data })); // match axios response schema
 };
 
 const createEvent = (userId, _event) => {
