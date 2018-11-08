@@ -6,7 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import './Header.css';
 import { UserIconGroupStyled, LogoStyled } from './Header.styled';
-import MenuBrowse from './MenuBrowse/MenuBrowse';
+// import MenuBrowse from './MenuBrowse/MenuBrowse';
 import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButton';
 import { showLoginModal } from '../../modules/Account/actions/modal';
 import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
@@ -22,10 +22,10 @@ const Header = ({
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
 
     <div>
-      <MenuBrowse />
+      {/* <MenuBrowse /> */}
 
       <Input.Search
-        placeholder="Menus"
+        placeholder="Menu, category, event type,..."
         size="large"
         className="header-search"
         enterButton

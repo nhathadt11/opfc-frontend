@@ -69,8 +69,6 @@ class StepEvent extends Component {
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         createEventRequestAction({
-          id: selectedEvent.id,
-          userId: selectedEvent.userId,
           ...selectedEvent,
           ...values,
         }, navigateToEventDetail);
