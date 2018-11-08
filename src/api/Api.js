@@ -226,7 +226,7 @@ const fetchEventPlannerOrderMany = userId => axios.get(`/Order/EventPlanner/User
 
 const fetchEventPlannerDetail = orderId => axios.get(`/Order/EventPlanner/${orderId}`);
 
-const fetchSuggestedMenuMany = (userId, eventId) => axios.get(`/User/${userId}/Event/${eventId}/GetSuggestion`);
+const fetchSuggestedMenuMany = (userId, eventId) => axios.get(`/Event/GetSuggestion/${eventId}`);
 
 const bookmark = (userId, menuId) => axios.post(`/BookMark/User/${userId}/Menu/${menuId}`);
 
