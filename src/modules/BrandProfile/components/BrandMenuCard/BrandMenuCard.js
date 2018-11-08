@@ -1,27 +1,13 @@
 import React from 'react';
 import {
-  Card, Row, Col, Button, Icon, Modal, Tag,
+  Card, Row, Col, Button, Icon, Modal,
 } from 'antd';
 import { shape, func, bool } from 'prop-types';
-import {
-  find, map, join, isEmpty,
-} from 'lodash';
+import { join, isEmpty } from 'lodash';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 import './BrandMenuCard.css';
 import { MenuInfoTitleStyled, MenuInfoValueStyled } from './BrandMenuCard.styled';
-
-const tags = [
-  { id: 1, name: 'Wedding' },
-  { id: 2, name: 'Birthday' },
-  { id: 3, name: 'Family' },
-];
-
-const tagById = (id) => {
-  const found = find(tags, tag => tag.id === id);
-
-  return found ? found.name : undefined;
-};
 
 const BrandMenuCard = ({
   menu, openEditModal, profiling, history,
@@ -65,12 +51,6 @@ const BrandMenuCard = ({
       </Row>
       <Row>
         <Col>
-          <MenuInfoTitleStyled>Event Types:</MenuInfoTitleStyled>
-          <MenuInfoValueStyled>{isEmpty(menu.eventTypeNames) ? 'N/A' : join(menu.eventTypeNames, ', ')}</MenuInfoValueStyled>
-        </Col>
-      </Row>
-      <Row>
-        <Col>
           <MenuInfoTitleStyled>Meals:</MenuInfoTitleStyled>
           <MenuInfoValueStyled>{isEmpty(menu.mealNames) ? 'N/A' : join(menu.mealNames, ', ')}</MenuInfoValueStyled>
         </Col>
@@ -81,10 +61,17 @@ const BrandMenuCard = ({
           <MenuInfoValueStyled desc>{menu.description ? menu.description : 'N/A'}</MenuInfoValueStyled>
         </Col>
       </Row>
-      <Row className="opfc-brand-menu-card-tag">
-        {
-          map(menu.tagList, tag => <Tag key={tag}>{tagById(tag)}</Tag>)
-        }
+      <Row>
+        <Col>
+          <MenuInfoTitleStyled>Event Types:</MenuInfoTitleStyled>
+          <MenuInfoValueStyled>{isEmpty(menu.eventTypeNames) ? 'N/A' : join(menu.eventTypeNames, ', ')}</MenuInfoValueStyled>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <MenuInfoTitleStyled>Categories:</MenuInfoTitleStyled>
+          <MenuInfoValueStyled>{isEmpty(menu.categoryNames) ? 'N/A' : join(menu.categoryNames, ', ')}</MenuInfoValueStyled>
+        </Col>
       </Row>
     </Card>
   );

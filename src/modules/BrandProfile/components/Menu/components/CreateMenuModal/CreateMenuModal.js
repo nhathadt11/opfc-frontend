@@ -13,12 +13,6 @@ import { hideCreateMenuModal } from '../../../../actions/modals';
 import { createMenuRequest } from '../../../../actions/menu';
 import Api from '../../../../../../api/Api';
 
-const tags = [
-  { id: 1, name: 'Wedding' },
-  { id: 2, name: 'Birthday' },
-  { id: 3, name: 'Family' },
-];
-
 class CreateMenuModal extends Component {
   static propTypes = {
     form: shape({
@@ -29,6 +23,7 @@ class CreateMenuModal extends Component {
     createMenuRequestAction: func.isRequired,
     selectedMenu: shape({}).isRequired,
     eventTypeList: arrayOf(shape({})).isRequired,
+    categoryList: arrayOf(shape({})).isRequired,
     mealList: arrayOf(shape({})).isRequired,
   }
 
@@ -79,10 +74,6 @@ class CreateMenuModal extends Component {
       .catch(this.handleUploadError);
   }
 
-  getTagOptions = () => tags.map(tag => (
-    <Select.Option key={tag.id}>{tag.name}</Select.Option>
-  ))
-
   handleOk = () => {
     const { form: { validateFieldsAndScroll }, createMenuRequestAction, selectedMenu } = this.props;
     const { uploadedFileList } = this.state;
@@ -127,7 +118,7 @@ class CreateMenuModal extends Component {
       available: { value: menu.available, errors: null },
       eventTypeIds: { value: map(menu.eventTypeIds, id => id), errors: null },
       mealIds: { value: map(menu.mealIds, id => id), errors: null },
-      tags: { value: map(menu.tags, t => String(t)), errors: null },
+      categoryIds: { value: map(menu.categoryIds, id => id), errors: null },
     });
   }
 
@@ -142,6 +133,7 @@ class CreateMenuModal extends Component {
       visible,
       selectedMenu,
       eventTypeList,
+      categoryList,
       mealList,
     } = this.props;
     const { uploadedFileList } = this.state;
@@ -202,26 +194,6 @@ class CreateMenuModal extends Component {
               </Form.Item>
             </Col>
             <Col span={12}>
-              <Form.Item label="Event Types">
-                {getFieldDecorator('eventTypeIds', {
-                  rules: [{
-                    required: true, message: 'Event Types is required!',
-                  }],
-                })(
-                  <Select
-                    mode="multiple"
-                    style={{ width: '100%' }}
-                    placeholder="Please select"
-                  >
-                    {
-                      map(
-                        eventTypeList,
-                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
-                      )
-                    }
-                  </Select>,
-                )}
-              </Form.Item>
               <Form.Item label="Meals">
                 {getFieldDecorator('mealIds', {
                   rules: [{
@@ -242,16 +214,41 @@ class CreateMenuModal extends Component {
                   </Select>,
                 )}
               </Form.Item>
-              <Form.Item label="Tags">
+              <Form.Item label="Event Types">
+                {getFieldDecorator('eventTypeIds', {
+                  rules: [{
+                    required: true, message: 'Event Types is required!',
+                  }],
+                })(
+                  <Select
+                    mode="multiple"
+                    style={{ width: '100%' }}
+                    placeholder="Please select"
+                  >
+                    {
+                      map(
+                        eventTypeList,
+                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
+                      )
+                    }
+                  </Select>,
+                )}
+              </Form.Item>
+              <Form.Item label="Categories">
                 {
-                  getFieldDecorator('tags', {
+                  getFieldDecorator('categoryIds', {
+                    rules: [{
+                      required: true, message: 'Categories is required!',
+                    }],
                   })(
                     <Select
                       mode="multiple"
                       style={{ width: '100%' }}
                       placeholder="Please select"
                     >
-                      {this.getTagOptions()}
+                      {map(categoryList, c => (
+                        <Select.Option key={c.id} value={c.id}>{c.name}</Select.Option>
+                      ))}
                     </Select>,
                   )
                 }
@@ -281,6 +278,7 @@ const mapStateToProps = state => ({
   visible: state.brandProfileReducer.modal.menuModalVisible,
   selectedMenu: state.brandProfileReducer.modal.selectedMenu,
   eventTypeList: state.generalReducer.eventTypeList,
+  categoryList: state.generalReducer.categoryList,
   mealList: state.brandProfileReducer.brand.mealList,
 });
 
