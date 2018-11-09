@@ -10,6 +10,10 @@ export const APPROVE_BRAND_ORDER_REQUEST = 'APPROVE_BRAND_ORDER_REQUEST';
 export const APPROVE_BRAND_ORDER_SUCCESS = 'APPROVE_BRAND_ORDER_SUCCESS';
 export const APPROVE_BRAND_ORDER_FAILURE = 'APPROVE_BRAND_ORDER_FAILURE';
 
+export const MARK_AS_COMPLETED_REQUEST = 'MARK_AS_COMPLETED_REQUEST';
+export const MARK_AS_COMPLETED_SUCCESS = 'MARK_AS_COMPLETED_SUCCESS';
+export const MARK_AS_COMPLETED_FAILURE = 'MARK_AS_COMPLETED_FAILURE';
+
 export const fetchOrderManyRequest = () => ({
   type: FETCH_ORDER_MANY_REQUEST,
 });
@@ -61,6 +65,24 @@ export const approveBrandOrderSuccess = () => ({
 
 export const approveBrandOrderFailure = error => ({
   type: APPROVE_BRAND_ORDER_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const markAsCompletedRequest = orderLineId => ({
+  type: MARK_AS_COMPLETED_REQUEST,
+  payload: {
+    orderLineId,
+  },
+});
+
+export const markAsCompletedSuccess = () => ({
+  type: MARK_AS_COMPLETED_SUCCESS,
+});
+
+export const markAsCompletedFailure = error => ({
+  type: MARK_AS_COMPLETED_FAILURE,
   payload: {
     error,
   },

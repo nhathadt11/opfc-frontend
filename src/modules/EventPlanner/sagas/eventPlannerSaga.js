@@ -1,5 +1,5 @@
 import {
-  all, takeEvery, call, put, takeLatest, select,
+  all, takeEvery, call, put, takeLatest, select, fork,
 } from 'redux-saga/effects';
 import { message } from 'antd';
 import { isFunction, map } from 'lodash';
@@ -19,9 +19,11 @@ import {
   fetchEventPlannerManySuccess, FETCH_EVENT_PLANNER_ORDER_DETAIL_REQUEST,
   fetchEventPlannerOrderDetailFailure, fetchEventPlannerOrderDetailSuccess,
 } from '../actions/order';
+import { markAsCompletedFailure, MARK_AS_COMPLETED_REQUEST } from '../../BrandProfile/actions/order';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 const getEventId = state => state.eventPlannerReducer.event.event.id;
+const getOrderId = state => state.eventPlannerReducer.order.orderDetail.orderNo;
 const getSelectedMenuList = state => state.eventPlannerReducer.event.selectedMenuList;
 
 function* createEvent({ payload: { event, onSuccess } }) {
@@ -152,6 +154,23 @@ function* watchFetchEventPlannerOrderDetail() {
   yield takeLatest(FETCH_EVENT_PLANNER_ORDER_DETAIL_REQUEST, fetchEventPlannerOrderDetail);
 }
 
+function* markAsCompleted({ payload: { orderLineId } }) {
+  try {
+    yield call(Api.markAsCompleted, orderLineId);
+
+    const orderId = yield select(getOrderId);
+    yield fork(fetchEventPlannerOrderDetail, { payload: { orderId } });
+    message.success('Order has been marked as completed.');
+  } catch (error) {
+    message.error('Order could not be marked as completed.');
+    yield put(markAsCompletedFailure(error));
+  }
+}
+
+function* watchMarkAsCompleted() {
+  yield takeLatest(MARK_AS_COMPLETED_REQUEST, markAsCompleted);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
@@ -161,5 +180,6 @@ export default function* eventFlow() {
     watchFetchEventPlannerOrderMany(),
     watchFetchEventPlannerOrderDetail(),
     watchFetchEventDetail(),
+    watchMarkAsCompleted(),
   ]);
 }

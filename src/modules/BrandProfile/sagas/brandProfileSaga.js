@@ -203,7 +203,7 @@ function* approveBrandOrder({ payload: { orderLineId, success } }) {
 
     yield fork(fetchOrderMany);
     if (isFunction(success)) success();
-    message.success(`Order #${orderLineId} has been approveed.`);
+    message.success(`Order #${orderLineId} has been approved.`);
   } catch (error) {
     message.error(`Order #${orderLineId} could not be approved.`);
     yield put(approveBrandOrderFailure(error));

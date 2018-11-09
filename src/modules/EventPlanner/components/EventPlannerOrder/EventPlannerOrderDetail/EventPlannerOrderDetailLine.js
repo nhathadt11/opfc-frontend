@@ -2,7 +2,7 @@ import React from 'react';
 import { Row, Col, List } from 'antd';
 import { shape } from 'prop-types';
 import {
-  EventPlannerOrderDetailLineStyled, MenuNameStyled, OrderItemPriceLabel,
+  EventPlannerOrderDetailLineStyled, MenuNameStyled, OrderItemPriceLabel, OrderItemShippingFeeLabel,
 } from './EventPlannerOrderDetail.styled';
 
 const EventPlannerOrderDetailLine = ({ data }) => (
@@ -30,14 +30,14 @@ const EventPlannerOrderDetailLine = ({ data }) => (
             <span>${data.price || 0}</span>
           </Col>
         </Row>
-        {/* <Row>
+        <Row>
           <Col span={12}>
-            <OrderItemShippingFeeLabel>Shipping fee:</OrderItemShippingFeeLabel>
+            <OrderItemShippingFeeLabel>Other fee:</OrderItemShippingFeeLabel>
           </Col>
           <Col className="opfc-order-detail-item-price">
             <span>${data.otherFee || 0}</span>
           </Col>
-        </Row> */}
+        </Row>
         {/* <Row>
           <Col span={12}>
             <OrderItemSubTotalLabel>Sub Total:</OrderItemSubTotalLabel>

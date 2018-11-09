@@ -234,6 +234,8 @@ const cancelBrandOrder = orderLineId => axios.post(`/Paypal/Refund/${orderLineId
 
 const approveBrandOrder = orderLineId => axios.post(`/Order/Brand/Approve/${orderLineId}`);
 
+const markAsCompleted = orderLineId => axios.post(`/Order/MarkAsCompleted/${orderLineId}`);
+
 const fetchEventDetail = eventId => axios.get(`/Event/${eventId}`);
 
 export default {
@@ -273,6 +275,7 @@ export default {
   bookmark,
   cancelBrandOrder,
   approveBrandOrder,
+  markAsCompleted,
   fetchEventDetail,
   // Elastic search
   fetchMenuManyEs,

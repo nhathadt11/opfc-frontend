@@ -13,16 +13,19 @@ import { groupBy, map, reduce } from 'lodash';
 import './EventPlannerOrderDetail.css';
 import {
   OrderDetailEventNameStyled, OrderDetailDateStyled, OrderDetailStatusOverallStyled,
-  OrderDetailStatusOverallWrapperStyled, OverallStyled,
+  OrderDetailStatusOverallWrapperStyled,
   EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel,
 } from './EventPlannerOrderDetail.styled';
 import { fetchEventPlannerOrderDetailRequest } from '../../../actions/order';
 import EventPlannerOrderDetailLine from './EventPlannerOrderDetailLine';
+import { markAsCompletedRequest } from '../../../../BrandProfile/actions/order';
+import { ORDER_STATUS } from '../../../../../constants/AppConstants';
 
 class EventPlannerOrderDetail extends Component {
   static propTypes = {
     orderDetail: shape({}).isRequired,
     fetchEventPlannerOrderDetailRequestAction: func.isRequired,
+    markAsCompletedRequestAction: func.isRequired,
     match: shape({
       params: shape({
         id: oneOfType([string, number]),
@@ -45,7 +48,7 @@ class EventPlannerOrderDetail extends Component {
   }
 
   render() {
-    const { orderDetail, fetching } = this.props;
+    const { orderDetail, fetching, markAsCompletedRequestAction } = this.props;
     const orderLineListByBrandName = groupBy(orderDetail.orderLineList, ol => ol.brandName);
 
     return (
@@ -79,7 +82,16 @@ class EventPlannerOrderDetail extends Component {
                     <ByBrandNameStyled>
                       {brandName}
                       <span style={{ float: 'right' }}>
-                        <a href="javascript:;" style={{ fontSize: '14px' }}>Mark as Serviced</a>
+                        {ORDER_STATUS.APPROVED === ol[0].statusId ? (
+                          <a
+                            href="javascript:;"
+                            role="button"
+                            style={{ fontSize: '14px' }}
+                            onClick={() => markAsCompletedRequestAction(ol[0].brandOrderLineId)}
+                          >
+                            Mark as Completed
+                          </a>
+                        ) : ol[0].statusName}
                       </span>
                     </ByBrandNameStyled>)}
                   bordered={false}
@@ -130,6 +142,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchEventPlannerOrderDetailRequestAction: fetchEventPlannerOrderDetailRequest,
+  markAsCompletedRequestAction: markAsCompletedRequest,
 };
 
 export default compose(
