@@ -38,14 +38,14 @@ export const OrderDetailStatusOverallWrapperStyled = styled.span`
 `;
 
 export const MenuNameStyled = styled.div`
-
+  margin-bottom: 10px;
 `;
 
 export const ByBrandNameStyled = styled.section`
-  font-size: 11px;
-  color: #9d9d9d;
+  font-size: 15px;
   margin-bottom: 10px;
-  font-style: italic;
+  font-weight: 600;
+  text-align: center;
 `;
 
 export const OrderDetailStatusWrapperStyled = styled.div`
@@ -63,7 +63,7 @@ export const OrderDetailStatusStyled = styled.span`
 `;
 
 export const OrderItemPriceLabel = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   color: #9d9d9d;
   margin-right: 7px;
 `;

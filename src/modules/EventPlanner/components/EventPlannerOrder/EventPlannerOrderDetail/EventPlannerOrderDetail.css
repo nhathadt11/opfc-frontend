@@ -5,6 +5,7 @@
 .opfc-order-detail-info {
   min-width: 200px;
   max-width: 300px;
+  padding-top: 16px;
 }
 
 .opfc-order-detail-item {
@@ -20,16 +21,32 @@
   flex: 1;
 }
 
-.opfc-order-detail-overall {
+.opfc-order-detail-subtotal {
   width: 100%;
   justify-content: flex-end;
-  font-size: 18px;
+  font-size: 15px;
 }
 
-.opfc-order-detail-overall .opfc-order-detail-total {
+.opfc-order-detail-subtotal .opfc-order-detail-subtotal-inner {
   width: 200px;
   padding-left: 24px;
   display: flex;
   justify-content: space-between;
   font-weight: 600;
+}
+
+.opfc-order-detail-total {
+  width: 100%;
+  justify-content: flex-end;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+.opfc-order-detail-total .opfc-order-detail-total-overall {
+  width: 200px;
+  padding-left: 24px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  font-size: 20px;
 }
