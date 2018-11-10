@@ -1,0 +1,3 @@
+.opfc-combo-menu-card:not(:first-child) {
+  margin-top: 15px;
+}

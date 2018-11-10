@@ -11,6 +11,7 @@ import { map } from 'lodash';
 import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
 import { selectMenuMany } from '../../actions/planningFlow';
 import { ComboTotalStyled, ComnoTotalTitleStyled } from './EventPlannerSuggestionMenu.styled';
+import './EventPlannerSuggestedMenu.css';
 
 const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuManyAction }) => (
   <Spin spinning={fetching} className="opfc-spinning">
@@ -20,6 +21,7 @@ const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuMany
           <Card
             key={index}
             bordered
+            className="opfc-combo-menu-card"
             actions={[
               <span />,
               <Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>,
