@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   Row, Spin, Card, Icon, Button,
 } from 'antd';
@@ -10,6 +10,7 @@ import {
 import { map } from 'lodash';
 import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
 import { selectMenuMany } from '../../actions/planningFlow';
+import { ComboTotalStyled, ComnoTotalTitleStyled } from './EventPlannerSuggestionMenu.styled';
 
 const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuManyAction }) => (
   <Spin spinning={fetching} className="opfc-spinning">
@@ -19,7 +20,14 @@ const EventPlannerSuggestedMenu = ({ suggestedMenuList, fetching, selectMenuMany
           <Card
             key={index}
             bordered
-            actions={[<Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>]}
+            actions={[
+              <span />,
+              <Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>,
+              <Fragment>
+                <ComnoTotalTitleStyled>Total: </ComnoTotalTitleStyled>
+                <ComboTotalStyled>{m.comboTotal}</ComboTotalStyled>
+              </Fragment>,
+            ]}
           >
             <MenuCardGrid dataList={m.menus} />
           </Card>))
