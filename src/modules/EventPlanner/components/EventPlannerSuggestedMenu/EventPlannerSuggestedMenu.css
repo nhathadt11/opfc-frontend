@@ -1,3 +1,16 @@
 .opfc-combo-menu-card:not(:first-child) {
   margin-top: 15px;
 }
+
+.opfc-combo-menu-card > .ant-card-body {
+  padding: 0;
+}
+
+.opfc-suggestion-menu-pagination {
+  margin: 30px 0;
+  text-align: center;
+}
+
+.opfc-suggestion-menu-list {
+  min-height: 150px;
+}

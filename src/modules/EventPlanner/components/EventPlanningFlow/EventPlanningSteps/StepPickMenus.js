@@ -17,7 +17,7 @@ class StepPickMenus extends Component {
 
   componentDidMount() {
     const { fetchSuggestedMenuManyRequestAction, eventId } = this.props;
-    fetchSuggestedMenuManyRequestAction(eventId);
+    fetchSuggestedMenuManyRequestAction(eventId, 1);
   }
 
   render() {

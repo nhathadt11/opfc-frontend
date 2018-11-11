@@ -10,7 +10,7 @@ import {
   SHOW_RATING_MODAL, HIDE_RATING_MODAL, FETCH_SUGGESTED_MENU_MANY_REQUEST,
   FETCH_SUGGESTED_MENU_MANY_SUCCESS, FETCH_SUGGESTED_MENU_MANY_FAILURE,
   CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS,
-  DESELECT_MENU_ALL, DESELECT_MENU, SELECT_MENU_MANY,
+  DESELECT_MENU_ALL, DESELECT_MENU, SELECT_MENU_MANY, CHANGE_SUGGESTED_MENU_MANY_PARAMS,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -22,6 +22,11 @@ const initialState = {
   currentStep: 0,
   selectedMenuList: [],
   suggestedMenuList: [],
+  params: {
+    page: 1,
+    size: 10,
+    total: 0,
+  },
   ratingModalVisible: false,
 };
 
@@ -141,6 +146,10 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
     case FETCH_SUGGESTED_MENU_MANY_REQUEST: {
       return {
         ...state,
+        params: {
+          ...state.params,
+          page: payload.page,
+        },
         fetching: true,
       };
     }
@@ -149,6 +158,10 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetching: false,
         suggestedMenuList: payload.suggestedMenuList,
+        params: {
+          ...state.params,
+          total: payload.total,
+        },
       };
     }
     case FETCH_SUGGESTED_MENU_MANY_FAILURE: {
@@ -174,6 +187,17 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetchingEventDetail: false,
+      };
+    }
+    case CHANGE_SUGGESTED_MENU_MANY_PARAMS: {
+      return {
+        ...state,
+        suggestedMenuList: [],
+        fetching: true,
+        params: {
+          ...state.params,
+          ...payload.params,
+        },
       };
     }
     default:

@@ -11,7 +11,7 @@ import {
 import Api from '../../../api/Api';
 import {
   FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess,
-  CREATE_ORDER_REQUEST, createOrderFailure,
+  CREATE_ORDER_REQUEST, createOrderFailure, CHANGE_SUGGESTED_MENU_MANY_PARAMS,
 } from '../actions/planningFlow';
 import { parseErrorMessage } from '../../../utils/Utils';
 import {
@@ -25,6 +25,7 @@ const getUserId = state => state.accountReducer.account.account.user.id;
 const getEventId = state => state.eventPlannerReducer.event.event.id;
 const getOrderId = state => state.eventPlannerReducer.order.orderDetail.orderNo;
 const getSelectedMenuList = state => state.eventPlannerReducer.event.selectedMenuList;
+const getSuggestedMenuManyParams = state => state.eventPlannerReducer.event.params;
 
 function* createEvent({ payload: { event, onSuccess } }) {
   try {
@@ -86,8 +87,11 @@ function* watchFetchEventDetail() {
 function* fetchSuggestedMenuMany({ payload: { eventId } }) {
   try {
     const userId = yield select(getUserId);
-    const { data } = yield call(Api.fetchSuggestedMenuMany, userId, eventId);
-    yield put(fetchSuggestedMenuManySuccess(data));
+    const params = yield select(getSuggestedMenuManyParams);
+    const { data: { total, result } } = yield call(
+      Api.fetchSuggestedMenuMany, userId, eventId, params,
+    );
+    yield put(fetchSuggestedMenuManySuccess(result, total));
   } catch (error) {
     yield put(fetchSuggestedMenuManyFailure(error));
     const errorMessage = parseErrorMessage(error);
@@ -97,6 +101,15 @@ function* fetchSuggestedMenuMany({ payload: { eventId } }) {
 
 function* watchFetchSuggestedMenuMany() {
   yield takeLatest(FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuMany);
+}
+
+function* changeSuggestedMenuManyParams() {
+  const eventId = yield select(getEventId);
+  yield fork(fetchSuggestedMenuMany, { payload: { eventId } });
+}
+
+function* watchChangeSuggestedMenuManyParams() {
+  yield takeLatest(CHANGE_SUGGESTED_MENU_MANY_PARAMS, changeSuggestedMenuManyParams);
 }
 
 function* createOrder() {
@@ -181,5 +194,6 @@ export default function* eventFlow() {
     watchFetchEventPlannerOrderDetail(),
     watchFetchEventDetail(),
     watchMarkAsCompleted(),
+    watchChangeSuggestedMenuManyParams(),
   ]);
 }

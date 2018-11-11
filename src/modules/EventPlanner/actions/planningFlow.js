@@ -17,6 +17,8 @@ export const FETCH_SUGGESTED_MENU_MANY_REQUEST = 'FETCH_SUGGESTED_MENU_MANY_REQU
 export const FETCH_SUGGESTED_MENU_MANY_SUCCESS = 'FETCH_SUGGESTED_MENU_MANY_SUCCESS';
 export const FETCH_SUGGESTED_MENU_MANY_FAILURE = 'FETCH_SUGGESTED_MENU_MANY_FAILURE';
 
+export const CHANGE_SUGGESTED_MENU_MANY_PARAMS = 'CHANGE_SUGGESTED_MENU_MANY_PARAMS';
+
 export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
@@ -81,19 +83,30 @@ export const hideRatingModal = () => ({
   type: HIDE_RATING_MODAL,
 });
 
-export const fetchSuggestedMenuManyRequest = eventId => ({
+export const fetchSuggestedMenuManyRequest = (eventId, page) => ({
   type: FETCH_SUGGESTED_MENU_MANY_REQUEST,
   payload: {
     eventId,
+    page,
   },
 });
 
-export const fetchSuggestedMenuManySuccess = suggestedMenuList => ({
+export const fetchSuggestedMenuManySuccess = (suggestedMenuList, total) => ({
   type: FETCH_SUGGESTED_MENU_MANY_SUCCESS,
   payload: {
     suggestedMenuList,
+    total,
   },
 });
+
+const changeSuggestedMenuManyParams = key => value => ({
+  type: CHANGE_SUGGESTED_MENU_MANY_PARAMS,
+  payload: {
+    params: { [key]: value },
+  },
+});
+
+export const changeSuggestedMenuManyPage = changeSuggestedMenuManyParams('page');
 
 export const fetchSuggestedMenuManyFailure = error => ({
   type: FETCH_SUGGESTED_MENU_MANY_FAILURE,
