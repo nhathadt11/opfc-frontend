@@ -6,10 +6,11 @@ export const DELETE_MENU_REQUEST = 'DELETE_MENU_REQUEST';
 export const DELETE_MENU_SUCCESS = 'DELETE_MENU_SUCCESS';
 export const DELETE_MENU_FAILURE = 'DELETE_MENU_FAILURE';
 
-export const createMenuRequest = menu => ({
+export const createMenuRequest = (menu, success) => ({
   type: CREATE_MENU_REQUEST,
   payload: {
     menu,
+    success,
   },
 });
 

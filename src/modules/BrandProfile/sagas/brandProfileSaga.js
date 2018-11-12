@@ -122,7 +122,7 @@ function* watchFetchBrandMealMany() {
   yield takeLatest(FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealMany);
 }
 
-function* createMenu({ payload: { menu, onSuccess } }) {
+function* createMenu({ payload: { menu, success } }) {
   try {
     const brandId = yield select(getBrandId);
     let successMessage = 'Create menu successfully!';
@@ -134,7 +134,7 @@ function* createMenu({ payload: { menu, onSuccess } }) {
       response = yield call(Api.createMenu, brandId, menu);
     }
 
-    if (isFunction(onSuccess)) onSuccess(response.data);
+    if (isFunction(success)) success(response.data);
     message.success(successMessage);
     yield put(createMenuSuccess(response.data));
     yield fork(fetchBrandMenu, { payload: { id: brandId } });
