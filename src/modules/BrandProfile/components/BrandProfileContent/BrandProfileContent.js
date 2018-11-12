@@ -7,7 +7,7 @@ import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 import MealTab from '../BrandProfileContentTabs/MealTab/MealTab';
 import OrderTab from '../BrandProfileContentTabs/OrderTab/OrderTab';
-import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
+// import GalleryTab from '../BrandProfileContentTabs/GalleryTab/GalleryTab';
 import './BrandProfileContent.css';
 import { showCreateMenuModal, showCreateMealModal } from '../../actions/modals';
 
@@ -59,18 +59,22 @@ class BrandProfileContent extends Component {
         >
           <MealTab profiling={profiling} />
         </TabPane>
-        <TabPane
+        {/* <TabPane
           tab={<span><LocalIcon type="icon-gallery" />Gallery</span>}
           key="3"
         >
           <GalleryTab />
-        </TabPane>
-        <TabPane
-          tab={<span><Icon type="form" />Order</span>}
-          key="4"
-        >
-          <OrderTab />
-        </TabPane>
+        </TabPane> */}
+        {
+          profiling && (
+            <TabPane
+              tab={<span><Icon type="form" />Order</span>}
+              key="4"
+            >
+              <OrderTab />
+            </TabPane>
+          )
+        }
       </Tabs>
     );
   }
