@@ -1,0 +1,8 @@
+.opfc-brand-settings-sider {
+  width: 256px !important;
+  min-width: 256px !important;
+}
+
+.opfc-brand-settings-sider .ant-layout-sider-children {
+  width: 256px;
+}

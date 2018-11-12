@@ -16,6 +16,7 @@ import LoginModal from '../modules/Account/components/LoginModal/LoginModal';
 import RatingModal from '../modules/EventPlanner/components/RatingModal/RatingModal';
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 import Home from './Home/Home';
+import BrandSettings from '../modules/BrandSettings/containers/BrandSettings';
 
 const { Footer } = Layout;
 
@@ -33,6 +34,7 @@ const MainLayout = () => (
       <Route path="/menus/:id" component={MenuDetail} />
       <PrivateRoute path="/profile/event-planner" component={EventPlanner} />
       <PrivateRoute path="/profile/brand" component={props => <BrandProfile {...props} profiling />} />
+      <PrivateRoute path="/profile/settings/account" component={BrandSettings} />
       <PrivateRoute path="/cart" component={Cart} />
       <PrivateRoute path="/checkout" component={Checkout} />
     </Switch>

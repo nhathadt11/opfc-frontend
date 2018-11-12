@@ -31,7 +31,10 @@ const accountReducer = (state = initialState, { type, payload }) => {
     case CREATE_ACCOUNT_SUCCESS: {
       return {
         ...state,
-        account: payload.account,
+        account: {
+          ...state.account,
+          account: payload.account,
+        },
       };
     }
     case LOGIN_ACCOUNT_SUCCESS: {
