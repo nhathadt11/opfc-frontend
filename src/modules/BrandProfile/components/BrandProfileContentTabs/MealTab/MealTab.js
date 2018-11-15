@@ -19,14 +19,16 @@ class MealTab extends Component {
       description: string,
     })).isRequired,
     fetching: bool,
+    profiling: bool,
   }
 
   static defaultProps = {
     fetching: false,
+    profiling: false,
   }
 
   render() {
-    const { mealList, fetching } = this.props;
+    const { mealList, fetching, profiling } = this.props;
 
     return (
       <Fragment>
@@ -41,7 +43,7 @@ class MealTab extends Component {
                   lg={{ span: 8 }}
                   style={{ marginTop: 16 }}
                 >
-                  <MealCard meal={meal} />
+                  <MealCard meal={meal} profiling={profiling} />
                 </Col>
               ))
             }
