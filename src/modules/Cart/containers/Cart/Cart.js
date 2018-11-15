@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  List, Row, Col, Button,
+  List, Row, Col, Button, Affix,
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { shape, func, arrayOf } from 'prop-types';
@@ -28,29 +28,31 @@ const Cart = ({ history: { push }, selectedMenuList }) => {
           />
         </Col>
         <Col className="opfc-cart-item-checkout">
-          <Row className="opfc-cart-item-checkout-price-summary">
-            <Col span={12}>
-              <CheckoutSubTotalLabelStyled>Sub Total</CheckoutSubTotalLabelStyled>
-            </Col>
-            <Col className="opfc-cart-item-checkout-price">
-              $ { subTotal }
-            </Col>
-            <Col span={12}>
-              <CheckoutShippingFeeLabelStyled>Shipping fee</CheckoutShippingFeeLabelStyled>
-            </Col>
-            <Col className="opfc-cart-item-checkout-price">
-              $ { totalShippingFee }
-            </Col>
-            <Col span={12}>
-              <CheckoutTotalLabelStyled>Total</CheckoutTotalLabelStyled>
-            </Col>
-            <Col className="opfc-cart-item-checkout-price">
-              <CheckoutTotalStyled>$ { total }</CheckoutTotalStyled>
-            </Col>
-          </Row>
-          <Row>
+          <Affix offsetTop={100} style={{ width: '100%' }}>
+            <Row className="opfc-cart-item-checkout-price-summary">
+              <Col span={12}>
+                <CheckoutSubTotalLabelStyled>Sub Total</CheckoutSubTotalLabelStyled>
+              </Col>
+              <Col className="opfc-cart-item-checkout-price">
+                $ { subTotal }
+              </Col>
+              <Col span={12}>
+                <CheckoutShippingFeeLabelStyled>Shipping fee</CheckoutShippingFeeLabelStyled>
+              </Col>
+              <Col className="opfc-cart-item-checkout-price">
+                $ { totalShippingFee }
+              </Col>
+              <Col span={12}>
+                <CheckoutTotalLabelStyled>Total</CheckoutTotalLabelStyled>
+              </Col>
+              <Col className="opfc-cart-item-checkout-price">
+                <CheckoutTotalStyled>$ { total }</CheckoutTotalStyled>
+              </Col>
+            </Row>
+          </Affix>
+          {/* <Row>
             <Button type="primary" size="large" onClick={() => push('/checkout')}>Checkout Now</Button>
-          </Row>
+          </Row> */}
         </Col>
       </Row>
     </CartStyled>
