@@ -21,7 +21,7 @@ IconText.propTypes = {
 const BrandProfileHeader = ({ brand }) => (
   <Row type="flex" gutter={64} className="opfc-brand-profile-header">
     <Col>
-      <Avatar size={128} icon="user" />
+      <Avatar size={128} icon="user" src={brand.avatar} />
     </Col>
     <Col>
       <h1>{brand.brandName}</h1>
