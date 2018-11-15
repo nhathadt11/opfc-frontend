@@ -1,6 +1,6 @@
 import React from 'react';
 import Sider from 'antd/lib/layout/Sider';
-import { Menu } from 'antd';
+import { Menu, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { shape, func } from 'prop-types';
 import LocalIcon from '../../../../fonts/LocalFont';
@@ -18,6 +18,14 @@ const EventPlannerSider = ({ history }) => (
       <Menu.Item key="/profile/settings/account">
         <LocalIcon type="icon-account" />
         Account
+      </Menu.Item>
+      <Menu.Item key="/profile/settings/information">
+        <Icon type="info-circle" theme="filled" />
+        Information
+      </Menu.Item>
+      <Menu.Item key="/profile/settings/service-location">
+        <LocalIcon type="icon-address" />
+        Service Location
       </Menu.Item>
     </Menu>
   </Sider>

@@ -240,6 +240,10 @@ const markAsCompleted = orderLineId => axios.post(`/Order/MarkAsCompleted/${orde
 
 const fetchEventDetail = eventId => axios.get(`/Event/${eventId}`);
 
+const fetchServiceLocationMany = brandId => axios.get(`/ServiceLocation/Brand/${brandId}`);
+
+const updateServiceLocationMany = (brandId, serviceLocationIds) => axios.put(`/ServiceLocation/Brand/${brandId}`, serviceLocationIds);
+
 export default {
   createBrand,
   uploadImage,
@@ -279,6 +283,8 @@ export default {
   approveBrandOrder,
   markAsCompleted,
   fetchEventDetail,
+  fetchServiceLocationMany,
+  updateServiceLocationMany,
   // Elastic search
   fetchMenuManyEs,
 };

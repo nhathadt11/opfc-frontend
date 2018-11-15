@@ -4,6 +4,7 @@ import { eventPlannerReducer } from '../modules/EventPlanner';
 import { generalReducer } from '../modules/General';
 import { ratingReducer } from '../modules/Rating';
 import { bookmarkReducer } from '../modules/Bookmark';
+import { settingsReducer } from '../modules/BrandSettings';
 
 export default {
   accountReducer,
@@ -12,4 +13,5 @@ export default {
   generalReducer,
   ratingReducer,
   bookmarkReducer,
+  settingsReducer,
 };

@@ -5,6 +5,7 @@ import { brandProfileFlow } from '../modules/BrandProfile';
 import { generalFlow } from '../modules/General';
 import { ratingFlow } from '../modules/Rating';
 import { bookmarkFlow } from '../modules/Bookmark';
+import { settingsSagaFlow } from '../modules/BrandSettings';
 
 export default function* () {
   yield all([
@@ -14,5 +15,6 @@ export default function* () {
     generalFlow(),
     ratingFlow(),
     bookmarkFlow(),
+    settingsSagaFlow(),
   ]);
 }
