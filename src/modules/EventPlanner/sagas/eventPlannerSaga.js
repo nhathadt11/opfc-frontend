@@ -18,6 +18,7 @@ import {
   FETCH_EVENT_PLANNER_ORDER_MANY_REQUEST, fetchEventPlannerManyFailure,
   fetchEventPlannerManySuccess, FETCH_EVENT_PLANNER_ORDER_DETAIL_REQUEST,
   fetchEventPlannerOrderDetailFailure, fetchEventPlannerOrderDetailSuccess,
+  RATE_BRAND_REQUEST, rateBrandFailure,
 } from '../actions/order';
 import { markAsCompletedFailure, MARK_AS_COMPLETED_REQUEST } from '../../BrandProfile/actions/order';
 
@@ -184,6 +185,24 @@ function* watchMarkAsCompleted() {
   yield takeLatest(MARK_AS_COMPLETED_REQUEST, markAsCompleted);
 }
 
+function* rateBrand({ payload: { orderLineId, rate, success } }) {
+  try {
+    const userId = yield select(getUserId);
+
+    yield call(Api.rateBrand, userId, orderLineId, rate);
+
+    message.success('Rating has bessn successfully posted.');
+    if (isFunction(success)) success();
+  } catch (error) {
+    yield put(rateBrandFailure(error));
+    message.error('Rating could not be posted.');
+  }
+}
+
+function* watchRateBrand() {
+  yield takeEvery(RATE_BRAND_REQUEST, rateBrand);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
@@ -195,5 +214,6 @@ export default function* eventFlow() {
     watchFetchEventDetail(),
     watchMarkAsCompleted(),
     watchChangeSuggestedMenuManyParams(),
+    watchRateBrand(),
   ]);
 }

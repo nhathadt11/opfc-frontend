@@ -2,6 +2,10 @@
   margin-top: 15px;
 }
 
+.opfc-event-rating-content .ant-row.ant-form-item {
+  width: 100%;
+}
+
 .opfc-event-rating-label {
   text-align: right;
   margin-top: 7px;

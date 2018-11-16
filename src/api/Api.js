@@ -244,6 +244,14 @@ const fetchServiceLocationMany = brandId => axios.get(`/ServiceLocation/Brand/${
 
 const updateServiceLocationMany = (brandId, serviceLocationIds) => axios.put(`/ServiceLocation/Brand/${brandId}`, serviceLocationIds);
 
+const rateBrand = (userId, orderLineId, rate) => {
+  const payload = {
+    privateRating: rate,
+  };
+
+  return axios.post(`/PrivateRating/User/${userId}/OrderLine/${orderLineId}`, payload);
+};
+
 export default {
   createBrand,
   uploadImage,
@@ -285,6 +293,7 @@ export default {
   fetchEventDetail,
   fetchServiceLocationMany,
   updateServiceLocationMany,
+  rateBrand,
   // Elastic search
   fetchMenuManyEs,
 };

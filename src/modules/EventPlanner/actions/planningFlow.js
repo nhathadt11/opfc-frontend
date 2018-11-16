@@ -75,8 +75,14 @@ export const deselectEvent = () => ({
   type: DESELECT_EVENT,
 });
 
-export const showRatingModal = () => ({
+export const showRatingModal = (orderLineId, brandName, eventName, eventDate) => ({
   type: SHOW_RATING_MODAL,
+  payload: {
+    orderLineId,
+    brandName,
+    eventName,
+    eventDate,
+  },
 });
 
 export const hideRatingModal = () => ({

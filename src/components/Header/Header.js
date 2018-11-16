@@ -16,7 +16,7 @@ import ProfileDropdown from './ProfileDropdown/ProfileDropdown';
 
 const Header = ({
   history: { push }, account, loggedIn,
-  showLoginModalAction, showRatingModalAction, fetchMenuManyRequestAction,
+  showLoginModalAction, fetchMenuManyRequestAction,
 }) => (
   <Layout.Header className="header">
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
@@ -40,7 +40,6 @@ const Header = ({
       <NotificationDropdown>
         <Button icon="notification" size="large" shape="circle" className="header-icon header-icon-notification" />
       </NotificationDropdown>
-      <Button icon="heart" size="large" shape="circle" className="header-icon" onClick={showRatingModalAction} />
       {
         loggedIn ? (
           <Link to={
@@ -71,7 +70,6 @@ Header.propTypes = {
   }).isRequired,
   loggedIn: bool.isRequired,
   showLoginModalAction: func.isRequired,
-  showRatingModalAction: func.isRequired,
   fetchMenuManyRequestAction: func.isRequired,
 };
 

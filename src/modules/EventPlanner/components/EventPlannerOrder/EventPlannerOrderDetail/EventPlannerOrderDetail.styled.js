@@ -45,7 +45,11 @@ export const ByBrandNameStyled = styled.section`
   font-size: 15px;
   margin-bottom: 10px;
   font-weight: 600;
-  text-align: center;
+  text-align: left;
+
+  > span > *:not(:first-child) {
+    margin-left: 15px;
+  }
 `;
 
 export const OrderDetailStatusWrapperStyled = styled.div`

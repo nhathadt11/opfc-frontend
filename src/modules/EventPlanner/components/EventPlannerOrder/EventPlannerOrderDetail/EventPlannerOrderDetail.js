@@ -20,6 +20,7 @@ import { fetchEventPlannerOrderDetailRequest } from '../../../actions/order';
 import EventPlannerOrderDetailLine from './EventPlannerOrderDetailLine';
 import { markAsCompletedRequest } from '../../../../BrandProfile/actions/order';
 import { ORDER_STATUS } from '../../../../../constants/AppConstants';
+import { showRatingModal } from '../../../actions/planningFlow';
 
 class EventPlannerOrderDetail extends Component {
   static propTypes = {
@@ -32,6 +33,7 @@ class EventPlannerOrderDetail extends Component {
       }),
     }).isRequired,
     fetching: bool,
+    showRatingModalAction: func.isRequired,
   }
 
   static defaultProps = {
@@ -48,7 +50,9 @@ class EventPlannerOrderDetail extends Component {
   }
 
   render() {
-    const { orderDetail, fetching, markAsCompletedRequestAction } = this.props;
+    const {
+      orderDetail, fetching, markAsCompletedRequestAction, showRatingModalAction,
+    } = this.props;
     const orderLineListByBrandName = groupBy(orderDetail.orderLineList, ol => ol.brandName);
 
     return (
@@ -82,6 +86,21 @@ class EventPlannerOrderDetail extends Component {
                     <ByBrandNameStyled>
                       {brandName}
                       <span style={{ float: 'right' }}>
+                        {ORDER_STATUS.COMPLETED === ol[0].statusId && (
+                          <a
+                            href="javascript:;"
+                            role="button"
+                            style={{ fontSize: '14px' }}
+                            onClick={() => showRatingModalAction(
+                              ol[0].brandOrderLineId,
+                              brandName,
+                              orderDetail.eventName,
+                              orderDetail.eventDate,
+                            )}
+                          >
+                            Rate for brand
+                          </a>
+                        )}
                         {ORDER_STATUS.APPROVED === ol[0].statusId ? (
                           <a
                             href="javascript:;"
@@ -91,7 +110,7 @@ class EventPlannerOrderDetail extends Component {
                           >
                             Mark as Completed
                           </a>
-                        ) : ol[0].statusName}
+                        ) : <span>{ol[0].statusName}</span>}
                       </span>
                     </ByBrandNameStyled>)}
                   bordered={false}
@@ -143,6 +162,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchEventPlannerOrderDetailRequestAction: fetchEventPlannerOrderDetailRequest,
   markAsCompletedRequestAction: markAsCompletedRequest,
+  showRatingModalAction: showRatingModal,
 };
 
 export default compose(

@@ -28,6 +28,7 @@ const initialState = {
     total: 0,
   },
   ratingModalVisible: false,
+  rate: {},
 };
 
 const eventPlannerReducer = (state = initialState, { type, payload }) => {
@@ -134,6 +135,12 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
     case SHOW_RATING_MODAL: {
       return {
         ...state,
+        rate: {
+          orderLineId: payload.orderLineId,
+          brandName: payload.brandName,
+          eventName: payload.eventName,
+          eventDate: payload.eventDate,
+        },
         ratingModalVisible: true,
       };
     }
