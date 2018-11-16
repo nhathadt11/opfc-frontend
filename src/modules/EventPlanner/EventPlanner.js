@@ -6,8 +6,8 @@ import EventPlannerAccount from './components/EventPlannerAccount/EventPlannerAc
 import './EventPlanner.css';
 import { EventPlannerTabContentStyled } from './EventPlanner.styled';
 import EventPlannerOrder from './components/EventPlannerOrder/EventPlannerOrder';
-import EventPlannerAddress from './components/EventPlannerAddress/EventPlannerAddress';
-import EventPlannerPayment from './components/EventPlannerPayment/EventPlannerPayment';
+// import EventPlannerAddress from './components/EventPlannerAddress/EventPlannerAddress';
+// import EventPlannerPayment from './components/EventPlannerPayment/EventPlannerPayment';
 import EventPlannerBookmark from './components/EventPlannerBookmark/EventPlannerBookmark';
 import EventPlannerEvent from './components/EventPlannerEvent/EventPlannerEvent';
 import EventPlanningFlow from './components/EventPlanningFlow/EventPlanningFlow';
@@ -21,8 +21,8 @@ const EventPlannerProfile = () => (
         <PrivateRoute path="/profile/event-planner/account" component={EventPlannerAccount} />
         <PrivateRoute path="/profile/event-planner/event" component={EventPlannerEvent} />
         <PrivateRoute path="/profile/event-planner/order" component={EventPlannerOrder} />
-        <PrivateRoute path="/profile/event-planner/address" component={EventPlannerAddress} />
-        <PrivateRoute path="/profile/event-planner/payment" component={EventPlannerPayment} />
+        {/* <PrivateRoute path="/profile/event-planner/address" component={EventPlannerAddress} />
+        <PrivateRoute path="/profile/event-planner/payment" component={EventPlannerPayment} /> */}
         <PrivateRoute path="/profile/event-planner/bookmark" component={EventPlannerBookmark} />
       </Switch>
     </EventPlannerTabContentStyled>
