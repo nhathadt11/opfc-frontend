@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {
-  Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader, message, Button,
+  Form, Row, Col, Input, Upload, Icon, InputNumber, Cascader, message, Button,
 } from 'antd';
 import {
-  func, shape, string, arrayOf,
+  func, shape, string, arrayOf, bool,
 } from 'prop-types';
-import { filter } from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 // import './BrandInformation.css';
 import Api from '../../../../api/Api';
+import { updateBrandInformationRequest } from '../../actions/settings';
 
 const FormItem = Form.Item;
 
@@ -28,28 +28,38 @@ class BrandInformation extends Component {
     formValues: shape({
       brandName: string,
     }),
-    onFormValueChange: func.isRequired,
     cityAndDistrictList: arrayOf(shape({})).isRequired,
+    updateBrandInformationRequestAction: func.isRequired,
+    submitting: bool,
+    userAvatar: string,
   }
 
   static defaultProps = {
     formValues: {},
+    submitting: false,
+    userAvatar: null,
   }
 
   state = {
     loading: false,
     imageUrl: null,
+    secureUrl: null,
+  }
+
+  componentDidMount() {
+    const { form: { setFieldsValue }, formValues, userAvatar } = this.props;
+
+    setFieldsValue(formValues);
+    this.setState({ imageUrl: formValues.avatar || userAvatar });
   }
 
   beforeUpload = (file) => {
-    const { onFormValueChange } = this.props;
     this.setState({ loading: true });
 
     Api.uploadImage(file).then(({ data }) => {
-      onFormValueChange('avatar', data.secure_url);
-
       getBase64(file, imageUrl => this.setState({
         imageUrl,
+        secureUrl: data.secure_url,
         loading: false,
       }));
     }).catch(this.handleUploadError);
@@ -60,9 +70,18 @@ class BrandInformation extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { form: { validateFieldsAndScroll } } = this.props;
-    validateFieldsAndScroll((err) => {
-      // TODO:
+    const {
+      form: { validateFieldsAndScroll }, updateBrandInformationRequestAction, formValues,
+    } = this.props;
+    const { secureUrl } = this.state;
+    validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        updateBrandInformationRequestAction({
+          ...formValues,
+          ...values,
+          avatar: secureUrl,
+        });
+      }
     });
   }
 
@@ -74,8 +93,8 @@ class BrandInformation extends Component {
     const {
       form: { getFieldDecorator },
       formValues,
-      onFormValueChange,
       cityAndDistrictList,
+      submitting,
     } = this.props;
     const { imageUrl, loading } = this.state;
     const uploadButton = (
@@ -85,16 +104,16 @@ class BrandInformation extends Component {
       </div>
     );
 
-    const prefixSelector = getFieldDecorator('publicPhonePrefix', {
-      initialValue: formValues.publicPhonePrefix,
-    })(
-      <Select style={{ width: 70 }} onChange={value => onFormValueChange('phonePrefix', value)}>
-        <Select.Option value="84">+84</Select.Option>
-        <Select.Option value="85">+85</Select.Option>
-        <Select.Option value="86">+86</Select.Option>
-        <Select.Option value="87">+87</Select.Option>
-      </Select>,
-    );
+    // const prefixSelector = getFieldDecorator('publicPhonePrefix', {
+    //   initialValue: formValues.publicPhonePrefix,
+    // })(
+    //   <Select style={{ width: 70 }}>
+    //     <Select.Option value="84">+84</Select.Option>
+    //     <Select.Option value="85">+85</Select.Option>
+    //     <Select.Option value="86">+86</Select.Option>
+    //     <Select.Option value="87">+87</Select.Option>
+    //   </Select>,
+    // );
 
     return (
       <Form layout="vertical" onSubmit={this.handleSubmit}>
@@ -113,15 +132,11 @@ class BrandInformation extends Component {
             <FormItem label="Bio">
               {
                 getFieldDecorator('description', {
-                  initialValue: formValues.description,
                   rules: [{
                     required: true, message: 'Bio is required!',
                   }],
                 })(
-                  <Input.TextArea
-                    style={{ width: 200 }}
-                    onChange={e => onFormValueChange('description', e.target.value)}
-                  />,
+                  <Input.TextArea style={{ width: 200 }} />,
                 )
               }
             </FormItem>
@@ -129,48 +144,39 @@ class BrandInformation extends Component {
           <Col>
             <FormItem label="Hotline">
               {
-                getFieldDecorator('publicPhone', {
-                  initialValue: formValues.publicPhone,
+                getFieldDecorator('phone', {
                   rules: [{
                     required: true, message: 'Hotline is required!',
                   }],
                 })(
                   <Input
-                    addonBefore={prefixSelector}
+                    // addonBefore={prefixSelector}
                     style={{ width: '100%' }}
-                    onChange={e => onFormValueChange('publicPhone', e.target.value)}
                   />,
                 )
               }
             </FormItem>
             <FormItem label="Email">
               {
-                getFieldDecorator('publicEmail', {
-                  initialValue: formValues.publicEmail,
+                getFieldDecorator('email', {
                   rules: [{
                     required: true, message: 'Email is required!',
                   }, {
                     type: 'email', message: 'The input is not valid Email!',
                   }],
                 })(
-                  <Input
-                    onChange={e => onFormValueChange('publicEmail', e.target.value)}
-                  />,
+                  <Input />,
                 )
               }
             </FormItem>
             <FormItem label="Number of member">
               {
                 getFieldDecorator('participantNumber', {
-                  initialValue: formValues.participantNumber,
                   rules: [{
                     required: true, message: 'Number of member is required!',
                   }],
                 })(
-                  <InputNumber
-                    min={1}
-                    onChange={value => onFormValueChange('participantNumber', value)}
-                  />,
+                  <InputNumber min={1} />,
                 )
               }
             </FormItem>
@@ -179,27 +185,15 @@ class BrandInformation extends Component {
                 label="City and District"
               >
                 {getFieldDecorator('cityDistrict', {
-                  initialValue: filter(
-                    [formValues.cityId, formValues.districtId],
-                    item => item,
-                  ),
                   rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
                 })(
-                  <Cascader
-                    options={cityAndDistrictList}
-                    onChange={
-                      (values) => {
-                        onFormValueChange('cityId', values[0]);
-                        onFormValueChange('districtId', values[1]);
-                      }
-                    }
-                  />,
+                  <Cascader options={cityAndDistrictList} />,
                 )}
               </FormItem>
             </Row>
           </Col>
         </Row>
-        <Button type="primary">Save</Button>
+        <Button type="primary" htmlType="submit" loading={submitting}>Save</Button>
       </Form>
     );
   }
@@ -207,9 +201,16 @@ class BrandInformation extends Component {
 
 const mapStateToProps = state => ({
   cityAndDistrictList: state.generalReducer.cityAndDistrictList,
+  formValues: state.accountReducer.account.account.brand,
+  userAvatar: state.accountReducer.account.account.user.avatar,
+  submitting: state.settingsReducer.brandInformation.submitting,
 });
+
+const mapDispatchToProps = {
+  updateBrandInformationRequestAction: updateBrandInformationRequest,
+};
 
 export default compose(
   Form.create(),
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(BrandInformation);

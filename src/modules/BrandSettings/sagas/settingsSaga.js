@@ -7,6 +7,9 @@ import {
   fetchServiceLocationManySuccess, UPDATE_SERVICE_LOCATION_MANY_REQUEST,
   updateServiceLocationManyFailure,
   updateServiceLocationManySuccess,
+  UPDATE_BRAND_INFORMATION_REQUEST,
+  updateBrandInformationFailure,
+  updateBrandInformationSuccess,
 } from '../actions/settings';
 import Api from '../../../api/Api';
 
@@ -44,9 +47,26 @@ function* watchUpdateServiceLocationMany() {
   yield takeEvery(UPDATE_SERVICE_LOCATION_MANY_REQUEST, updateServiceLocationMany);
 }
 
+function* updateBrandInformation({ payload: { brand } }) {
+  try {
+    yield call(Api.updateBrandInformation, brand);
+
+    yield put(updateBrandInformationSuccess());
+    message.success('Brand information has been updated.');
+  } catch (error) {
+    yield put(updateBrandInformationFailure(error));
+    message.error('Brand information could not be updated.');
+  }
+}
+
+function* watchUpdateBrandInformation() {
+  yield takeEvery(UPDATE_BRAND_INFORMATION_REQUEST, updateBrandInformation);
+}
+
 export default function* settingsSagaFlow() {
   yield all([
     watchFetchServiceLocationMany(),
     watchUpdateServiceLocationMany(),
+    watchUpdateBrandInformation(),
   ]);
 }
