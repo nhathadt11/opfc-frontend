@@ -96,3 +96,7 @@ export const EventPlannerOrderDetailLineStyled = styled.span`
   flex-direction: column;
   flex: 1;
 `;
+
+export const RatedStyled = styled.span`
+  font-weight: normal;
+`;

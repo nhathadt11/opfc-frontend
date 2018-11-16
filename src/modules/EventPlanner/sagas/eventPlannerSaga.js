@@ -191,6 +191,9 @@ function* rateBrand({ payload: { orderLineId, rate, success } }) {
 
     yield call(Api.rateBrand, userId, orderLineId, rate);
 
+    const orderId = yield select(getOrderId);
+    yield fork(fetchEventPlannerOrderDetail, { payload: { orderId } });
+
     message.success('Rating has bessn successfully posted.');
     if (isFunction(success)) success();
   } catch (error) {

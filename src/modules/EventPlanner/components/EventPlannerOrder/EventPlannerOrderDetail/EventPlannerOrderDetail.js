@@ -14,7 +14,7 @@ import './EventPlannerOrderDetail.css';
 import {
   OrderDetailEventNameStyled, OrderDetailDateStyled, OrderDetailStatusOverallStyled,
   OrderDetailStatusOverallWrapperStyled,
-  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel,
+  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel, RatedStyled,
 } from './EventPlannerOrderDetail.styled';
 import { fetchEventPlannerOrderDetailRequest } from '../../../actions/order';
 import EventPlannerOrderDetailLine from './EventPlannerOrderDetailLine';
@@ -86,7 +86,7 @@ class EventPlannerOrderDetail extends Component {
                     <ByBrandNameStyled>
                       {brandName}
                       <span style={{ float: 'right' }}>
-                        {ORDER_STATUS.COMPLETED === ol[0].statusId && (
+                        {ORDER_STATUS.COMPLETED === ol[0].statusId && !ol[0].didRate && (
                           <a
                             href="javascript:;"
                             role="button"
@@ -100,7 +100,10 @@ class EventPlannerOrderDetail extends Component {
                           >
                             Rate for brand
                           </a>
-                        )}
+                        ) }
+                        {
+                          ol[0].didRate && <RatedStyled>Rated</RatedStyled>
+                        }
                         {ORDER_STATUS.APPROVED === ol[0].statusId ? (
                           <a
                             href="javascript:;"
