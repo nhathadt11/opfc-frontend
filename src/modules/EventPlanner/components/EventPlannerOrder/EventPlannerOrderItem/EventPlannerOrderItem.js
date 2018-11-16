@@ -7,7 +7,7 @@ import { shape, func, number } from 'prop-types';
 import moment from 'moment';
 import './EventPlannerOrderItem.css';
 import {
-  LabelStyled, OrderStatusStyled, PriceAndMenuStyled, OrderNoteStyled, EventDateStyled, ValueStyled,
+  LabelStyled, PriceAndMenuStyled, OrderNoteStyled, EventDateStyled, ValueStyled,
 } from './EventPlannerOrderItem.styled';
 
 const EventPlannerOrderItem = ({ history, id, data }) => (
@@ -28,9 +28,9 @@ const EventPlannerOrderItem = ({ history, id, data }) => (
     </Col>
     <Col span={14}>
       <section>
-        <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-        <OrderStatusStyled success>{data.orderStatus}</OrderStatusStyled>
-        <EventDateStyled>on {moment.utc(data.startAt).format('YYYY, MMM DD [at] HH:mm A')}</EventDateStyled>
+        {/* <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> */}
+        {/* <OrderStatusStyled success>{data.orderStatus}</OrderStatusStyled> */}
+        <EventDateStyled>Starts at {moment.utc(data.startAt).format('YYYY, MMM DD [at] HH:mm A')}</EventDateStyled>
       </section>
       <OrderNoteStyled>
         {data.note || 'N/A'}
@@ -40,9 +40,9 @@ const EventPlannerOrderItem = ({ history, id, data }) => (
       <Button shape="circle" type="primary" ghost onClick={() => history.push(`/profile/event-planner/order/${id}`)}>
         <Icon type="eye" theme="outlined" />
       </Button>
-      <Button shape="circle" type="primary" ghost>
+      {/* <Button shape="circle" type="primary" ghost>
         <Icon type="edit" theme="outlined" />
-      </Button>
+      </Button> */}
     </Col>
   </Row>
 );

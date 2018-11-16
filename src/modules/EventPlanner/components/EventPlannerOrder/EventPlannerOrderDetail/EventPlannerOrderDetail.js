@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, List, Col, Icon, Spin,
+  Row, List, Col, Spin,
 } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom';
 import { groupBy, map, reduce } from 'lodash';
 import './EventPlannerOrderDetail.css';
 import {
-  OrderDetailEventNameStyled, OrderDetailDateStyled, OrderDetailStatusOverallStyled,
+  OrderDetailEventNameStyled, OrderDetailDateStyled,
   OrderDetailStatusOverallWrapperStyled,
   EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel, RatedStyled,
 } from './EventPlannerOrderDetail.styled';
@@ -64,8 +64,8 @@ class EventPlannerOrderDetail extends Component {
               {orderDetail.eventName}
               <EventStartTimeStyled>Starts at {moment.utc(orderDetail.startAt).format('HH:mm A YYYY, MMM DD')}</EventStartTimeStyled>
               <OrderDetailStatusOverallWrapperStyled>
-                <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" />
-                <OrderDetailStatusOverallStyled success>{orderDetail.orderStatus || 'N/A'}</OrderDetailStatusOverallStyled>
+                {/* <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a" /> */}
+                {/* <OrderDetailStatusOverallStyled success>{orderDetail.orderStatus || 'N/A'}</OrderDetailStatusOverallStyled> */}
                 {/* <OverallStyled>Overall</OverallStyled> */}
               </OrderDetailStatusOverallWrapperStyled>
             </OrderDetailEventNameStyled>

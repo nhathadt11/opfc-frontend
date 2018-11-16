@@ -37,7 +37,7 @@ const Cart = ({ history: { push }, selectedMenuList }) => {
                 $ { subTotal }
               </Col>
               <Col span={12}>
-                <CheckoutShippingFeeLabelStyled>Shipping fee</CheckoutShippingFeeLabelStyled>
+                <CheckoutShippingFeeLabelStyled>Other fee</CheckoutShippingFeeLabelStyled>
               </Col>
               <Col className="opfc-cart-item-checkout-price">
                 $ { totalShippingFee }

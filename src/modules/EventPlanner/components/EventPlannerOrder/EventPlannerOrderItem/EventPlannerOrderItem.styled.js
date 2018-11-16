@@ -18,7 +18,7 @@ export const OrderStatusStyled = styled.span`
 `;
 
 export const EventDateStyled = styled.span`
-  margin-left: 7px;
+  /* margin-left: 7px; */
   color: #999;
   font-style: italic;
 `;

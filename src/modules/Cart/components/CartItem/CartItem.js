@@ -114,7 +114,7 @@ class CartItem extends Component {
             <Col className="opfc-cart-item-align-right"><MenuPriceStyled>$ {menu.price}</MenuPriceStyled></Col>
           </Row>
           <Row>
-            <Col span={12} className="opfc-menu-shipping-fee">Shipping fee:</Col>
+            <Col span={12} className="opfc-menu-shipping-fee">Other fee:</Col>
             <Col className="opfc-cart-item-align-right"><ShippingFeeStyled>$ {menu.shippingFee || 0}</ShippingFeeStyled></Col>
           </Row>
           <Row>

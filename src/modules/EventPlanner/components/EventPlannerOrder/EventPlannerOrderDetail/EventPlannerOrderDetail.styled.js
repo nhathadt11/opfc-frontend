@@ -6,10 +6,9 @@ export const OrderDetailEventNameStyled = styled.div`
 `;
 
 export const EventStartTimeStyled = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   color: #999;
-  margin-left: 7px;
-  
+  margin-left: 15px;
 `;
 
 export const OrderDetailDateStyled = styled.div`
