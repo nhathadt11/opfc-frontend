@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Modal, Form, Input, Cascader, Select,
+  Modal, Form, Input, Cascader,
 } from 'antd';
 import {
   bool, func, shape, string, arrayOf,
@@ -9,7 +9,6 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
-const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -24,63 +23,52 @@ const formItemLayout = {
 
 const EditEventPlannerAddressModal = ({
   title, visible, handleOk, handleCancel, form: { getFieldDecorator }, data, cityAndDistrictList,
-}) => {
-  const prefixSelector = getFieldDecorator('prefix', {
-    initialValue: '86',
-  })(
-    <Select style={{ width: 70 }}>
-      <Option value="86">+86</Option>
-      <Option value="87">+87</Option>
-    </Select>,
-  );
-
-  return (
-    <Modal
-      title={title}
-      visible={visible}
-      onOk={handleOk}
-      onCancel={handleCancel}
-    >
-      <Form className="opfc-event-planner-account">
-        <FormItem
-          {...formItemLayout}
-          label="Receiver"
-        >
-          {getFieldDecorator('receiver', {
-            initialValue: data.receiver,
-            rules: [{
-              required: true, message: 'Please input receiver!',
-            }],
-          })(
-            <Input />,
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="Phone Number"
-        >
-          {getFieldDecorator('phoneNumber', {
-            initialValue: data.phoneNumber,
-            rules: [{ required: true, message: 'Please input receiver phone number!' }],
-          })(
-            <Input addonBefore={prefixSelector} style={{ width: '100%' }} />,
-          )}
-        </FormItem>
-        <FormItem
-          {...formItemLayout}
-          label="City and District"
-        >
-          {getFieldDecorator('cityDistrict', {
-            initialValue: [data.city, data.district, data.ward],
-            rules: [{ type: 'array', required: true, message: 'Please select your City and District!' }],
-          })(
-            <Cascader options={cityAndDistrictList} />,
-          )}
-        </FormItem>
-      </Form>
-    </Modal>
-  );
-};
+}) => (
+  <Modal
+    title={title}
+    visible={visible}
+    onOk={handleOk}
+    onCancel={handleCancel}
+  >
+    <Form className="opfc-event-planner-account">
+      <FormItem
+        {...formItemLayout}
+        label="Receiver"
+      >
+        {getFieldDecorator('receiver', {
+          initialValue: data.receiver,
+          rules: [{
+            required: true, message: 'Please input receiver!',
+          }],
+        })(
+          <Input />,
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="Phone Number"
+      >
+        {getFieldDecorator('phoneNumber', {
+          initialValue: data.phoneNumber,
+          rules: [{ required: true, message: 'Please input receiver phone number!' }],
+        })(
+          <Input style={{ width: '100%' }} />,
+        )}
+      </FormItem>
+      <FormItem
+        {...formItemLayout}
+        label="City and District"
+      >
+        {getFieldDecorator('cityDistrict', {
+          initialValue: [data.city, data.district, data.ward],
+          rules: [{ type: 'array', required: true, message: 'Please select your City and District!' }],
+        })(
+          <Cascader options={cityAndDistrictList} />,
+        )}
+      </FormItem>
+    </Form>
+  </Modal>
+);
 
 EditEventPlannerAddressModal.propTypes = {
   title: string,

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { shape, func, arrayOf } from 'prop-types';
 import {
-  Form, Input, Cascader, Select, Button,
+  Form, Input, Cascader, Button,
 } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
 import { createAccountRequest } from '../../../Account/actions/account';
 
 const FormItem = Form.Item;
-const { Option } = Select;
+// const { Option } = Select;
 
 const formItemLayout = {
   labelCol: {
@@ -77,7 +77,7 @@ class EventPlannerAccount extends Component {
           username: values.username,
           email: values.email,
           password: values.password,
-          phone: values.phonePrefix + values.phone,
+          phone: values.phone,
           city: values.cityDistrict[0],
           district: values.cityDistrict[1],
           address: values.address,
@@ -90,14 +90,14 @@ class EventPlannerAccount extends Component {
   render() {
     const { form: { getFieldDecorator }, cityAndDistrictList } = this.props;
 
-    const prefixSelector = getFieldDecorator('phonePrefix', {
-      initialValue: '86',
-    })(
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>,
-    );
+    // const prefixSelector = getFieldDecorator('phonePrefix', {
+    //   initialValue: '86',
+    // })(
+    //   <Select style={{ width: 70 }}>
+    //     <Option value="86">+86</Option>
+    //     <Option value="87">+87</Option>
+    //   </Select>,
+    // );
 
     return (
       <div>
@@ -184,7 +184,7 @@ class EventPlannerAccount extends Component {
             {getFieldDecorator('phone', {
               rules: [{ required: true, message: 'Please input your phone number!' }],
             })(
-              <Input addonBefore={prefixSelector} style={{ width: '100%' }} />,
+              <Input style={{ width: '100%' }} />,
             )}
           </FormItem>
           <FormItem {...tailFormItemLayout}>

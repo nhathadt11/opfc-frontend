@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Form, Row, Col, Input, Upload, Icon, Select, InputNumber, Cascader, message,
+  Form, Row, Col, Input, Upload, Icon, InputNumber, Cascader, message,
 } from 'antd';
 import {
   func, shape, string, arrayOf,
@@ -82,16 +82,16 @@ class StepBrandInformation extends Component {
       </div>
     );
 
-    const prefixSelector = getFieldDecorator('publicPhonePrefix', {
-      initialValue: formValues.publicPhonePrefix,
-    })(
-      <Select style={{ width: 70 }} onChange={value => onFormValueChange('phonePrefix', value)}>
-        <Select.Option value="84">+84</Select.Option>
-        <Select.Option value="85">+85</Select.Option>
-        <Select.Option value="86">+86</Select.Option>
-        <Select.Option value="87">+87</Select.Option>
-      </Select>,
-    );
+    // const prefixSelector = getFieldDecorator('publicPhonePrefix', {
+    //   initialValue: formValues.publicPhonePrefix,
+    // })(
+    //   <Select style={{ width: 70 }} onChange={value => onFormValueChange('phonePrefix', value)}>
+    //     <Select.Option value="84">+84</Select.Option>
+    //     <Select.Option value="85">+85</Select.Option>
+    //     <Select.Option value="86">+86</Select.Option>
+    //     <Select.Option value="87">+87</Select.Option>
+    //   </Select>,
+    // );
 
     return (
       <Form layout="vertical" onSubmit={this.handleSubmit}>
@@ -133,7 +133,7 @@ class StepBrandInformation extends Component {
                   }],
                 })(
                   <Input
-                    addonBefore={prefixSelector}
+                    // addonBefore={prefixSelector}
                     style={{ width: '100%' }}
                     onChange={e => onFormValueChange('publicPhone', e.target.value)}
                   />,

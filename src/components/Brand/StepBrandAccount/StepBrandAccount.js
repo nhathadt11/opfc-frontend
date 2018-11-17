@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Select } from 'antd';
+import { Form, Input } from 'antd';
 import { shape, func, string } from 'prop-types';
 import './StepBrandAccount.css';
 
@@ -11,16 +11,16 @@ const StepBrandAccount = ({
   },
   formValues, onFormValueChange, done,
 }) => {
-  const prefixSelector = getFieldDecorator('privatePhonePrefix', {
-    initialValue: formValues.privatePhonePrefix,
-  })(
-    <Select style={{ width: 70 }}>
-      <Select.Option value="84">+84</Select.Option>
-      <Select.Option value="85">+85</Select.Option>
-      <Select.Option value="86">+86</Select.Option>
-      <Select.Option value="87">+87</Select.Option>
-    </Select>,
-  );
+  // const prefixSelector = getFieldDecorator('privatePhonePrefix', {
+  //   initialValue: formValues.privatePhonePrefix,
+  // })(
+  //   <Select style={{ width: 70 }}>
+  //     <Select.Option value="84">+84</Select.Option>
+  //     <Select.Option value="85">+85</Select.Option>
+  //     <Select.Option value="86">+86</Select.Option>
+  //     <Select.Option value="87">+87</Select.Option>
+  //   </Select>,
+  // );
   const compareToFirstPassword = (rule, value, callback) => {
     if (value && value !== getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!');
@@ -97,7 +97,7 @@ const StepBrandAccount = ({
           })(
             <Input
               className="opfc-brand-account-input-phone"
-              addonBefore={prefixSelector}
+              // addonBefore={prefixSelector}
               onChange={e => onFormValueChange('privatePhone', e.target.value)}
             />,
           )
