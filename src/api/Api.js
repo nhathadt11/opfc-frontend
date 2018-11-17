@@ -238,6 +238,8 @@ const fetchSuggestedMenuMany = (userId, eventId, params) => axios.get(`/Event/Ge
 
 const bookmark = (userId, menuId) => axios.post(`/BookMark/User/${userId}/Menu/${menuId}`);
 
+const fetchBookmarkMany = userId => axios.get(`/Menu/User/${userId}/Bookmark`);
+
 const cancelBrandOrder = orderLineId => axios.post(`/Paypal/Refund/${orderLineId}`);
 
 const approveBrandOrder = orderLineId => axios.post(`/Order/Brand/Approve/${orderLineId}`);
@@ -301,6 +303,7 @@ export default {
   fetchEventPlannerDetail,
   fetchSuggestedMenuMany,
   bookmark,
+  fetchBookmarkMany,
   cancelBrandOrder,
   approveBrandOrder,
   markAsCompleted,
