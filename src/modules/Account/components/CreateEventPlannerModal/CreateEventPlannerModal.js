@@ -16,7 +16,7 @@ const CreateEventPlannerModal = ({ visible, hideModal }) => (
     centered
     footer={null}
   >
-    <CreateEventPlanner onSuccess={hideModal} />
+    <CreateEventPlanner onSuccess={hideModal} onCancel={hideModal} />
   </Modal>
 );
 

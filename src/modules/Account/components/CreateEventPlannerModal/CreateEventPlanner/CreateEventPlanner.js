@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import {
-  Form, Row, Col, Input, Upload, Icon, Select, message, Button, Cascader,
+  Form, Row, Col, Input, Upload, Icon, message, Button, Cascader,
 } from 'antd';
 import { func, shape, arrayOf } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import './CreateEventPlanner.css';
 import Api from '../../../../../api/Api';
+import { createAccountRequest } from '../../../../Account/actions/account';
 
 const FormItem = Form.Item;
 
@@ -17,6 +18,9 @@ class CreateEventPlanner extends Component {
       validateFieldsAndScroll: func.isRequired,
     }).isRequired,
     cityAndDistrictList: arrayOf(shape({})).isRequired,
+    createAccountRequestAction: func.isRequired,
+    onSuccess: func.isRequired,
+    onCancel: func.isRequired,
   }
 
   state = {
@@ -46,10 +50,16 @@ class CreateEventPlanner extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const { form: { validateFieldsAndScroll } } = this.props;
+    const { form: { validateFieldsAndScroll }, createAccountRequestAction, onSuccess } = this.props;
+    const { imageUrl } = this.state;
     validateFieldsAndScroll((err, values) => {
       if (!err) {
-        // TODO: submit with values
+        createAccountRequestAction({
+          ...values,
+          cityId: values.cityDistrict[0],
+          districtId: values.cityDistrict[1],
+          avatar: imageUrl,
+        }, onSuccess);
       }
     });
   }
@@ -59,24 +69,13 @@ class CreateEventPlanner extends Component {
   }
 
   render() {
-    const { form: { getFieldDecorator }, cityAndDistrictList } = this.props;
+    const { form: { getFieldDecorator }, cityAndDistrictList, onCancel } = this.props;
     const { imageUrl, loading } = this.state;
     const uploadButton = (
       <div>
         <Icon type={loading ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Avatar</div>
       </div>
-    );
-
-    const prefixSelector = getFieldDecorator('publicPhonePrefix', {
-      initialValue: '84',
-    })(
-      <Select style={{ width: 70 }}>
-        <Select.Option value="84">+84</Select.Option>
-        <Select.Option value="85">+85</Select.Option>
-        <Select.Option value="86">+86</Select.Option>
-        <Select.Option value="87">+87</Select.Option>
-      </Select>,
     );
 
     return (
@@ -138,21 +137,20 @@ class CreateEventPlanner extends Component {
             </FormItem>
             <FormItem label="Phone">
               {
-                getFieldDecorator('privatePhone', {
+                getFieldDecorator('phone', {
                   rules: [{
                     required: true, message: 'Phone is required!',
                   }],
                 })(
                   <Input
                     className="opfc-brand-account-input-phone"
-                    addonBefore={prefixSelector}
                   />,
                 )
               }
             </FormItem>
             <FormItem label="Email">
               {
-                getFieldDecorator('privateEmail', {
+                getFieldDecorator('email', {
                   rules: [{
                     required: true, message: 'Email is required!',
                   }, {
@@ -174,9 +172,22 @@ class CreateEventPlanner extends Component {
                 <Cascader options={cityAndDistrictList} />,
               )}
             </FormItem>
+            <FormItem label="Address">
+              {
+                getFieldDecorator('address', {
+                  rules: [{
+                    required: true, message: 'Address is required!',
+                  }],
+                })(
+                  <Input
+                    className="opfc-brand-account-input"
+                  />,
+                )
+              }
+            </FormItem>
             <div className="opfc-event-planner-register-actions">
               <Button type="primary" htmlType="submit">Register</Button>
-              <Button>Cancel</Button>
+              <Button onClick={onCancel}>Cancel</Button>
             </div>
           </Col>
         </Row>
@@ -189,7 +200,11 @@ const mapStateToProps = state => ({
   cityAndDistrictList: state.generalReducer.cityAndDistrictList,
 });
 
+const mapDispatchToProps = {
+  createAccountRequestAction: createAccountRequest,
+};
+
 export default compose(
   Form.create(),
-  connect(mapStateToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(CreateEventPlanner);

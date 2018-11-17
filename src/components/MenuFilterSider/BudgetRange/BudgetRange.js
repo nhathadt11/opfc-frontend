@@ -13,7 +13,7 @@ const BudgetRange = ({ priceFrom, priceTo, changeFullTextSearchCriteriaAction })
       range
       defaultValue={[priceFrom, priceTo]}
       min={1}
-      max={10000}
+      max={1000}
       step={10}
       value={[priceFrom, priceTo]}
       onChange={([from, to]) => {

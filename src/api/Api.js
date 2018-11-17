@@ -186,7 +186,13 @@ const updateMenu = (brandId, menuId, menu) => axios.put(`/Menu/Brand/${brandId}/
 
 const deleteMenu = id => axios.delete(`/Menu/${id}`);
 
-const createAccount = account => axios.post('/User', account);
+const createAccount = (account) => {
+  const payload = {
+    user: account,
+  };
+
+  return axios.post('/User', payload);
+};
 
 const updateAccount = (id, account) => axios.put(`/User/${id}`, { user: { ...account } });
 
