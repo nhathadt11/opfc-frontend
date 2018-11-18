@@ -26,6 +26,11 @@ import { ListTitleStyled } from './MenuDetail.styled';
 //   { id: 2, name: 'family' },
 // ];
 
+const percentage = (count, total) => {
+  if (!count) return 'N/A';
+  return (total / count).toFixed();
+};
+
 const MealList = ({ data }) => (
   <ul>
     {
@@ -108,6 +113,7 @@ class MenuDetail extends Component {
       history: { push }, selectMenuAction, menuDetail,
       ratingList,
     } = this.props;
+    const { brandSummary = {} } = menuDetail;
 
     return (
       <div>
@@ -214,14 +220,78 @@ class MenuDetail extends Component {
               </div>
 
               <div className="opfc-brand-info-item">
-                <h3>Summary on 100 orders</h3>
+                <h3>Summary on {brandSummary.orderCount} orders</h3>
                 <Row>
                   <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
-                  <Col><section className="opfc-brand-info-label">On time delivery</section><section>97%</section></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">Support Service</section>
+                    <section>
+                      {percentage(
+                        brandSummary.supportServiceCount,
+                        brandSummary.totalSupportService,
+                      )}
+                    </section>
+                  </Col>
                 </Row>
                 <Row>
                   <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
-                  <Col><section className="opfc-brand-info-label">Total service time</section><section>257 hours</section></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">Varieties</section>
+                    <section>
+                      {percentage(
+                        brandSummary.diffVateriesCount,
+                        brandSummary.TotalDiffVateries,
+                      )}
+                    </section>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">Reasonable Price</section>
+                    <section>
+                      {percentage(
+                        brandSummary.reasonablePriceCount,
+                        brandSummary.totalReasonablePrice,
+                      )}
+                    </section>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">On Time</section>
+                    <section>
+                      {percentage(
+                        brandSummary.onTimeCount,
+                        brandSummary.totalOnTime,
+                      )}
+                    </section>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">Food Quality</section>
+                    <section>
+                      {percentage(
+                        brandSummary.foodQualityCount,
+                        brandSummary.totalFoodQuality,
+                      )}
+                    </section>
+                  </Col>
+                </Row>
+                <Row>
+                  <Col span={4} className="opfc-brand-info-label"><Icon type="check-circle" style={{ fontSize: 18 }} /></Col>
+                  <Col>
+                    <section className="opfc-brand-info-label">Attitude</section>
+                    <section>
+                      {percentage(
+                        brandSummary.attitudeCount,
+                        brandSummary.totalAttitude,
+                      )}
+                    </section>
+                  </Col>
                 </Row>
               </div>
 
