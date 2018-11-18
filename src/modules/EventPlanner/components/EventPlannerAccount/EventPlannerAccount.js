@@ -112,7 +112,7 @@ class EventPlannerAccount extends Component {
                 required: true, message: 'Please input your Username!',
               }],
             })(
-              <Input />,
+              <Input disabled />,
             )}
           </FormItem>
           <FormItem
