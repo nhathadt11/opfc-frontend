@@ -107,6 +107,7 @@ class ServiceLocation extends Component {
               mode="multiple"
               showSearch
               onChange={this.handleCityChange}
+              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
             >
               { map(cityList, c => (
                 <Select.Option key={c.id} value={c.id}>{c.name}</Select.Option>
@@ -124,6 +125,7 @@ class ServiceLocation extends Component {
             <Select
               mode="multiple"
               showSearch
+              filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
             >
               { map(ableSelectDistrictList, d => (
                 <Select.Option key={d.id} value={d.id}>{d.name}</Select.Option>

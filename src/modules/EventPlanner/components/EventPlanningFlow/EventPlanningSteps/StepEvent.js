@@ -183,7 +183,10 @@ class StepEvent extends Component {
                   initialValue: selectedEvent.eventTypeId,
                   rules: [{ required: true, message: 'Event Type is required!' }],
                 })(
-                  <Select>
+                  <Select
+                    showArrow
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
+                  >
                     {
                       map(
                         eventTypeList,
@@ -200,7 +203,11 @@ class StepEvent extends Component {
                   initialValue: selectedEvent.categoryIds,
                   rules: [{ required: true, message: 'At least one category is required!' }],
                 })(
-                  <Select mode="multiple">
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
+                  >
                     {
                       map(
                         categoryList,

@@ -36,6 +36,7 @@ const StepServiceLocation = ({
             onChange={values => onFormValueChange('serviceCityIds', values)}
             mode="multiple"
             showSearch
+            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
           >
             { map(cityList, c => (
               <Select.Option key={c.id} value={c.id}>{c.name}</Select.Option>
@@ -54,6 +55,7 @@ const StepServiceLocation = ({
             onChange={values => onFormValueChange('serviceLocationIds', values)}
             mode="multiple"
             showSearch
+            filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0} // eslint-disable-line
           >
             { map(selectedDistrictList, d => (
               <Select.Option key={d.id} value={d.id}>{d.name}</Select.Option>
