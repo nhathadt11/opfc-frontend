@@ -45,7 +45,7 @@ const MainLayout = () => (
     <LoginModal />
     <RatingModal />
 
-    <Footer>Footer</Footer>
+    <Footer>FPT Capstone 2018</Footer>
   </Layout>
 );
 

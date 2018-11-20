@@ -7,11 +7,19 @@ import { connect } from 'react-redux';
 import {
   arrayOf, shape, bool, func, number,
 } from 'prop-types';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
+import { withRouter } from 'react-router-dom';
 import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
 import { selectMenuMany, changeSuggestedMenuManyPage } from '../../actions/planningFlow';
 import { ComboTotalStyled, ComnoTotalTitleStyled } from './EventPlannerSuggestionMenu.styled';
 import './EventPlannerSuggestedMenu.css';
+
+const NoSuggestedMenu = withRouter(({ history }) => (
+  <div className="opfc-no-suggested-menu">
+    <section>Sorry! We could not find best.</section>
+    <section>You may create your own manually <a href="javascript:;" onClick={() => history.push('/')}>here</a></section>
+  </div>
+));
 
 const EventPlannerSuggestedMenu = ({
   suggestedMenuList, fetching, selectMenuManyAction, params, changeSuggestedMenuManyPageAction,
@@ -20,22 +28,23 @@ const EventPlannerSuggestedMenu = ({
     <Spin spinning={fetching}>
       <Row type="flex" className="opfc-suggestion-menu-list">
         {
-          map(suggestedMenuList, (m, index) => (
-            <Card
-              key={index}
-              bordered
-              className="opfc-combo-menu-card"
-              actions={[
-                <span />,
-                <Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>,
-                <Fragment>
-                  <ComnoTotalTitleStyled>Total: </ComnoTotalTitleStyled>
-                  <ComboTotalStyled>{m.comboTotal}</ComboTotalStyled>
-                </Fragment>,
-              ]}
-            >
-              <MenuCardGrid dataList={m.menus} />
-            </Card>))
+          !isEmpty(suggestedMenuList)
+            ? map(suggestedMenuList, (m, index) => (
+              <Card
+                key={index}
+                bordered
+                className="opfc-combo-menu-card"
+                actions={[
+                  <span />,
+                  <Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>,
+                  <Fragment>
+                    <ComnoTotalTitleStyled>Total: </ComnoTotalTitleStyled>
+                    <ComboTotalStyled>{m.comboTotal}</ComboTotalStyled>
+                  </Fragment>,
+                ]}
+              >
+                <MenuCardGrid dataList={m.menus} />
+              </Card>)) : (!fetching && <NoSuggestedMenu />)
         }
       </Row>
     </Spin>

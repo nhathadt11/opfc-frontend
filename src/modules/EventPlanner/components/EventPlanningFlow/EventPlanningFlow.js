@@ -15,6 +15,13 @@ import './EventPlanningFlow.css';
 
 const { Step } = Steps;
 
+const PaymentContent = (
+  <div className="opfc-payment-content-container">
+    <section>The next process required payment from paypal.</section>
+    <section>Review your cart in care to finalize it.</section>
+  </div>
+);
+
 class EventPlanningFlow extends Component {
   static propTypes = {
     submitting: bool.isRequired,
@@ -31,7 +38,7 @@ class EventPlanningFlow extends Component {
       { title: 'Event', content: <StepEvent next={this.next} /> },
       { title: 'Menu Suggestion', content: <StepPickMenus next={this.next} prev={this.prev} /> },
       { title: 'Cart', content: <Cart /> },
-      { title: 'Payment', content: 'Payment' },
+      { title: 'Payment', content: PaymentContent },
     ];
   }
 

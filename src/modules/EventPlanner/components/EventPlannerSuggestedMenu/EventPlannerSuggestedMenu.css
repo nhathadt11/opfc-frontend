@@ -14,3 +14,10 @@
 .opfc-suggestion-menu-list {
   min-height: 150px;
 }
+
+.opfc-no-suggested-menu {
+  width: 100%;
+  text-align: center;
+  margin-top: 40px;
+  font-size: 16px;
+}
