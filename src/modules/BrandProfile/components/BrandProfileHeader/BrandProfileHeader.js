@@ -27,19 +27,23 @@ const BrandProfileHeader = ({ brand }) => (
       <h1>{brand.brandName}</h1>
       <p>
         <StatSpanStyled>
-          <StatSpanNumberStyled>{brand.menuCount || 0}</StatSpanNumberStyled>
+          <StatSpanNumberStyled>
+            {(brand.brandSummary && brand.brandSummary.menuCount) || 0}
+          </StatSpanNumberStyled>
           <span>Menus</span>
         </StatSpanStyled>
         <StatSpanStyled>
-          <StatSpanNumberStyled>{brand.mealCount || 0}</StatSpanNumberStyled>
+          <StatSpanNumberStyled>
+            {(brand.brandSummary && brand.brandSummary.mealCount) || 0}
+          </StatSpanNumberStyled>
           <span>Meals</span>
         </StatSpanStyled>
       </p>
-      <p>
+      {/* <p>
         <IconText type="star-o" text="156" />
         <IconText type="like-o" text="156" />
         <IconText type="message" text="2" />
-      </p>
+      </p> */}
     </Col>
     <Col>
       <p>
