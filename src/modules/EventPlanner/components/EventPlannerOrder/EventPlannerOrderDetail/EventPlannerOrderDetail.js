@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Row, List, Col, Spin,
+  Row, List, Col, Spin, Modal,
 } from 'antd';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -47,6 +47,19 @@ class EventPlannerOrderDetail extends Component {
     } = this.props;
 
     fetchEventPlannerOrderDetailRequestAction(id);
+  }
+
+  confirmMarkAsCompleted = (orderLineId) => {
+    const { markAsCompletedRequestAction } = this.props;
+
+    const modal = Modal.confirm({
+      title: 'Mark as Complete',
+      content: 'Are you sure to mark as completed?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => { markAsCompletedRequestAction(orderLineId); modal.destroy(); },
+      maskClosable: true,
+    });
   }
 
   render() {
@@ -109,7 +122,7 @@ class EventPlannerOrderDetail extends Component {
                             href="javascript:;"
                             role="button"
                             style={{ fontSize: '14px' }}
-                            onClick={() => markAsCompletedRequestAction(ol[0].brandOrderLineId)}
+                            onClick={() => this.confirmMarkAsCompleted(ol[0].brandOrderLineId)}
                           >
                             Mark as Completed
                           </a>
