@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { map } from 'lodash';
+import { map, isEmpty } from 'lodash';
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME } from '../constants/AppConstants';
 
 // Elastic search
@@ -10,6 +10,7 @@ const esAxios = axios.create({
 const fetchMenuManyEs = (text, criteria) => {
   const matchEventTypeNames = map(criteria.eventTypeNames, e => ({ match: { eventTypeNames: e } }));
   const matchCategoryNames = map(criteria.categoryNames, c => ({ match: { categoryNames: c } })); // eslint-disable-line
+  const matchDistrictIds = !isEmpty(criteria.location) ? { match: { districtIds: criteria.location[1] } } : undefined; // eslint-disable-line
 
   if (!text) {
     return esAxios.get('menus/_search', {
@@ -22,6 +23,7 @@ const fetchMenuManyEs = (text, criteria) => {
               must: [
                 ...matchEventTypeNames,
                 ...matchCategoryNames,
+                matchDistrictIds,
                 { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
                 { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
               ],
@@ -43,6 +45,7 @@ const fetchMenuManyEs = (text, criteria) => {
             must: [
               ...matchEventTypeNames,
               ...matchCategoryNames,
+              matchDistrictIds,
               { range: { price: { gte: criteria.priceFrom, lte: criteria.priceTo } } },
               { range: { servingNumber: { gte: criteria.servingNumberFrom, lte: criteria.servingNumberTo } } }, // eslint-disable-line
               {

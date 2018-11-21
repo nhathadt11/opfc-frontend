@@ -34,6 +34,7 @@ const initialState = {
     priceTo: 500,
     servingNumberFrom: 1,
     servingNumberTo: 50,
+    location: [],
     page: 1,
     total: 0,
   },
