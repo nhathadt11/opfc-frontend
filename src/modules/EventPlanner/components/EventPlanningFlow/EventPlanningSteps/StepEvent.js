@@ -18,6 +18,7 @@ class StepEvent extends Component {
     form: shape({
       getFieldDecorator: func.isRequired,
       validateFieldsAndScroll: func.isRequired,
+      isFieldsTouched: func.isRequired,
     }).isRequired,
     next: func.isRequired,
     createEventRequestAction: func.isRequired,
@@ -51,9 +52,9 @@ class StepEvent extends Component {
     fetchEventDetailRequestAction(id);
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = (e) => { // eslint-disable-line
     const {
-      form: { validateFieldsAndScroll },
+      form: { validateFieldsAndScroll, isFieldsTouched },
       createEventRequestAction,
       selectedEvent,
       next,
@@ -66,6 +67,14 @@ class StepEvent extends Component {
       push(`/profile/event-planner/event/${event.id}`);
       next();
     };
+
+    const touched = isFieldsTouched([
+      'eventName', 'date', 'startAt', 'endAt',
+      'cityDistrict', 'address', 'budget', 'eventTypeId',
+      'servingNumber', 'categoryIds', 'description',
+    ]);
+    if (!touched) return navigateToEventDetail(selectedEvent);
+
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         createEventRequestAction({
