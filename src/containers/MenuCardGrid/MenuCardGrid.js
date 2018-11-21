@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import MenuCard from '../../components/MenuCard/MenuCard';
 import './MenuCardGrid.css';
 
-const MenuCardGrid = ({ dataList, fetching }) => (
-  <Spin spinning={fetching}>
+const MenuCardGrid = ({ dataList, fetching, forceFetching }) => (
+  <Spin spinning={forceFetching || fetching}>
     <Row type="flex" gutter={24} className="opfc-menu-card-grid">
       {
         map(dataList, (item, index) => <Col key={index} style={{ margin: '12px 0' }}><MenuCard menu={item} /></Col>)
@@ -20,10 +20,12 @@ const MenuCardGrid = ({ dataList, fetching }) => (
 MenuCardGrid.propTypes = {
   dataList: arrayOf(shape({})).isRequired,
   fetching: bool,
+  forceFetching: bool,
 };
 
 MenuCardGrid.defaultProps = {
-  fetching: true,
+  fetching: false,
+  forceFetching: false,
 };
 
 const mapStateToProps = state => ({

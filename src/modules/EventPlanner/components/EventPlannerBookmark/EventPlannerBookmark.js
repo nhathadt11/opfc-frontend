@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { arrayOf, shape, func } from 'prop-types';
+import {
+  arrayOf, shape, func, bool,
+} from 'prop-types';
 import { EventPlannerTabTitleStyled } from '../../EventPlanner.styled';
 import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
 import { fetchBookmarkManyRequest } from '../../../Bookmark/actions/bookmark';
@@ -10,6 +12,7 @@ class EventPlannerBookmark extends Component {
   static propTypes = {
     bookmarkList: arrayOf(shape({})).isRequired,
     fetchBookmarkManyRequestAction: func.isRequired,
+    fetching: bool.isRequired,
   }
 
   componentDidMount() {
@@ -18,12 +21,12 @@ class EventPlannerBookmark extends Component {
   }
 
   render() {
-    const { bookmarkList } = this.props;
+    const { bookmarkList, fetching } = this.props;
 
     return (
       <div>
         <EventPlannerTabTitleStyled>Bookmark</EventPlannerTabTitleStyled>
-        <MenuCardGrid dataList={bookmarkList} />
+        <MenuCardGrid dataList={bookmarkList} fetching={fetching} forceFetching={fetching} />
       </div>
     );
   }
@@ -31,6 +34,7 @@ class EventPlannerBookmark extends Component {
 
 const mapStateToProps = state => ({
   bookmarkList: state.bookmarkReducer.bookmarkList,
+  fetching: state.bookmarkReducer.fetching,
 });
 
 const mapDispatchToProps = {
