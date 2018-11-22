@@ -2,7 +2,7 @@ import {
   all, takeEvery, call, put, takeLatest, select, fork,
 } from 'redux-saga/effects';
 import { message } from 'antd';
-import { isFunction, map } from 'lodash';
+import { isFunction, map, find } from 'lodash';
 import {
   CREATE_EVENT_REQUEST, createEventSuccess, fetchEventManyFailure,
   FETCH_EVENT_MANY_REQUEST, fetchEventManySuccess, createEventFailure,
@@ -27,6 +27,20 @@ const getEventId = state => state.eventPlannerReducer.event.event.id;
 const getOrderId = state => state.eventPlannerReducer.order.orderDetail.orderNo;
 const getSelectedMenuList = state => state.eventPlannerReducer.event.selectedMenuList;
 const getSuggestedMenuManyParams = state => state.eventPlannerReducer.event.params;
+const getCartItemNotes = state => state.eventPlannerReducer.event.cartItemNotes;
+
+const getNoteForMenu = (notes, menuId) => find(
+  notes,
+  (_, id) => id == menuId, // eslint-disable-line
+);
+
+const generateOrderRequest = (menuList, notes) => {
+  const request = map(menuList, m => ({
+    menuId: m.id, quantity: 1, note: getNoteForMenu(notes, m.id),
+  }));
+
+  return request;
+};
 
 function* createEvent({ payload: { event, onSuccess } }) {
   try {
@@ -118,9 +132,11 @@ function* createOrder() {
     const userId = yield select(getUserId);
     const eventId = yield select(getEventId);
     const selectedMenuList = yield select(getSelectedMenuList);
+    const cartItemNotes = yield select(getCartItemNotes);
 
-    const menuIds = map(selectedMenuList, m => m.id);
-    const { data } = yield call(Api.createOrder, userId, eventId, menuIds);
+    const orderRequest = generateOrderRequest(selectedMenuList, cartItemNotes);
+
+    const { data } = yield call(Api.createOrder, userId, eventId, orderRequest);
 
     // yield put(createOrderSuccess(data));
     // yield put(deselectMenuAll());

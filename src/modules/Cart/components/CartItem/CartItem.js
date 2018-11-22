@@ -14,7 +14,7 @@ import {
   EditingActionsStyled,
   MealListStyled,
 } from './CartItem.styled';
-import { deselectMenu } from '../../../EventPlanner/actions/planningFlow';
+import { deselectMenu, saveCartItemNote } from '../../../EventPlanner/actions/planningFlow';
 
 // const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -45,19 +45,37 @@ class CartItem extends Component {
   static propTypes = {
     menu: shape({}).isRequired,
     deselectMenuAction: func.isRequired,
+    saveCartItemNoteAction: func.isRequired,
+    cartItemNotes: shape({}).isRequired,
   }
 
   state = {
     editing: false,
+    note: null,
   }
 
   enableEditing = () => this.setState({ editing: true })
 
   disableEditing = () => this.setState({ editing: false })
 
+  handleNoteChange = () => {
+    const { menu, saveCartItemNoteAction } = this.props;
+    const { note } = this.state;
+
+    saveCartItemNoteAction(menu.id, note);
+    this.disableEditing();
+  }
+
+  rollbackToPrevNote = () => {
+    const { cartItemNotes, menu } = this.props;
+    this.setState({ note: cartItemNotes[menu.id] });
+
+    this.disableEditing();
+  }
+
   render() {
     const { menu, deselectMenuAction } = this.props;
-    const { editing } = this.state;
+    const { editing, note } = this.state;
 
     return (
       <Row type="flex" gutter={24} className="opfc-cart-item">
@@ -96,13 +114,12 @@ class CartItem extends Component {
               editing ? (
                 <TextArea
                   placeholder="Extra note"
-                  defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Integer eget ante id urna blandit venenatis in vitae enim."
+                  value={note}
+                  onChange={e => this.setState({ note: e.target.value })}
                 />
               ) : (
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Integer eget ante id urna blandit venenatis in vitae enim.
+                <p style={{ width: 200 }}>
+                  {note}
                 </p>
               )
             }
@@ -126,10 +143,10 @@ class CartItem extends Component {
           {
             editing ? (
               <EditingActionsStyled>
-                <Button shape="circle" type="primary" onClick={this.disableEditing}>
+                <Button shape="circle" type="primary" onClick={this.handleNoteChange}>
                   <Icon type="check" theme="outlined" />
                 </Button>
-                <Button shape="circle" onClick={this.disableEditing}>
+                <Button shape="circle" onClick={this.rollbackToPrevNote}>
                   <Icon type="close" theme="outlined" />
                 </Button>
               </EditingActionsStyled>
@@ -148,10 +165,15 @@ class CartItem extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  cartItemNotes: state.eventPlannerReducer.event.cartItemNotes,
+});
+
 const mapDispatchToProps = {
   deselectMenuAction: deselectMenu,
+  saveCartItemNoteAction: saveCartItemNote,
 };
 
 export default compose(
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(CartItem);

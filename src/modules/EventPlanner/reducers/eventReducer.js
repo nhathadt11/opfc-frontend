@@ -11,6 +11,7 @@ import {
   FETCH_SUGGESTED_MENU_MANY_SUCCESS, FETCH_SUGGESTED_MENU_MANY_FAILURE,
   CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS,
   DESELECT_MENU_ALL, DESELECT_MENU, SELECT_MENU_MANY, CHANGE_SUGGESTED_MENU_MANY_PARAMS,
+  SAVE_CART_ITEM_NOTE,
 } from '../actions/planningFlow';
 
 const initialState = {
@@ -22,6 +23,7 @@ const initialState = {
   currentStep: 0,
   selectedMenuList: [],
   suggestedMenuList: [],
+  cartItemNotes: {},
   params: {
     page: 1,
     size: 10,
@@ -204,6 +206,15 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
         params: {
           ...state.params,
           ...payload.params,
+        },
+      };
+    }
+    case SAVE_CART_ITEM_NOTE: {
+      return {
+        ...state,
+        cartItemNotes: {
+          ...state.cartItemNotes,
+          [payload.menuId]: payload.note,
         },
       };
     }

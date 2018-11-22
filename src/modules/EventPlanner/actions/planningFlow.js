@@ -23,6 +23,8 @@ export const CREATE_ORDER_REQUEST = 'CREATE_ORDER_REQUEST';
 export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
 export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
 
+export const SAVE_CART_ITEM_NOTE = 'SAVE_CART_ITEM_NOTE';
+
 
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
@@ -136,5 +138,13 @@ export const createOrderFailure = error => ({
   type: CREATE_ORDER_FAILURE,
   payload: {
     error,
+  },
+});
+
+export const saveCartItemNote = (menuId, note) => ({
+  type: SAVE_CART_ITEM_NOTE,
+  payload: {
+    menuId,
+    note,
   },
 });

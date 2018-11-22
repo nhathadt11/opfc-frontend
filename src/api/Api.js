@@ -219,10 +219,10 @@ const fetchMenuManyAndLimit = () => axios.get('/Menu/Limit');
 
 const fetchMenuDetail = id => axios.get(`/Menu/${id}`);
 
-const createOrder = (userId, eventId, menuIds) => axios.post('/Paypal/CreatePayment', {
+const createOrder = (userId, eventId, requestMenuList) => axios.post('/Paypal/CreatePayment', {
   userId,
   eventId,
-  requestMenuList: map(menuIds, m => ({ menuId: m, quantity: 1, note: 'Menu note content' })),
+  requestMenuList,
 });
 
 const fetchMenuRatingMany = menuId => axios.get(`/Rating/Menu/${menuId}`);
