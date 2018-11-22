@@ -10,6 +10,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import './StepBrandInformation.css';
 import Api from '../../../api/Api';
+import { cascaderFilter } from '../../../utils/Utils';
 
 const FormItem = Form.Item;
 
@@ -190,6 +191,7 @@ class StepBrandInformation extends Component {
                         onFormValueChange('districtId', values[1]);
                       }
                     }
+                    showSearch={{ filter: cascaderFilter }}
                   />,
                 )}
               </FormItem>

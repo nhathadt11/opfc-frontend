@@ -12,6 +12,7 @@ import { map } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import './StepEvent.css';
 import { createEventRequest, fetchEventDetailRequest } from '../../../actions/event';
+import { cascaderFilter } from '../../../../../utils/Utils';
 
 class StepEvent extends Component {
   static propTypes = {
@@ -150,7 +151,10 @@ class StepEvent extends Component {
                   initialValue: [selectedEvent.cityId, selectedEvent.districtId],
                   rules: [{ required: true, message: 'City and District is required!' }],
                 })(
-                  <Cascader options={cityAndDistrictList} />,
+                  <Cascader
+                    options={cityAndDistrictList}
+                    showSearch={{ filter: cascaderFilter }}
+                  />,
                 )
               }
             </Form.Item>

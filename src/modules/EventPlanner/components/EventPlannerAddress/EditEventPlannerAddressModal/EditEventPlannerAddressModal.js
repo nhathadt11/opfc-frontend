@@ -7,6 +7,7 @@ import {
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { cascaderFilter } from '../../../../../utils/Utils';
 
 const FormItem = Form.Item;
 
@@ -63,7 +64,7 @@ const EditEventPlannerAddressModal = ({
           initialValue: [data.city, data.district, data.ward],
           rules: [{ type: 'array', required: true, message: 'Please select your City and District!' }],
         })(
-          <Cascader options={cityAndDistrictList} />,
+          <Cascader options={cityAndDistrictList} showSearch={{ filter: cascaderFilter }} />,
         )}
       </FormItem>
     </Form>

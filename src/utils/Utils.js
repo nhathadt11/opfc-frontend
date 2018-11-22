@@ -57,3 +57,7 @@ export const registerUserFirebaseNotification = userId => ({ onChildAdded }) => 
   });
   messagesRef.on('value', spanshot => console.log(spanshot.val()));
 };
+
+export const cascaderFilter = (inputValue, path) => path.some(
+  option => (option.label).toLowerCase().indexOf(inputValue.toLowerCase()) > -1,
+);

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // import './BrandInformation.css';
 import Api from '../../../../api/Api';
 import { updateBrandInformationRequest } from '../../actions/settings';
+import { cascaderFilter } from '../../../../utils/Utils';
 
 const FormItem = Form.Item;
 
@@ -187,7 +188,10 @@ class BrandInformation extends Component {
                 {getFieldDecorator('cityDistrict', {
                   rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
                 })(
-                  <Cascader options={cityAndDistrictList} />,
+                  <Cascader
+                    options={cityAndDistrictList}
+                    showSearch={{ filter: cascaderFilter }}
+                  />,
                 )}
               </FormItem>
             </Row>

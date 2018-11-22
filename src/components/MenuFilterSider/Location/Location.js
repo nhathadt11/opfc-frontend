@@ -7,6 +7,7 @@ import {
 } from 'prop-types';
 import { MenuFilterItemStyled, MenuFilterItemTitleStyled } from '../MenuFilterSider.styled';
 import { changeFullTextSearchCriteria } from '../../../modules/General/actions/general';
+import { cascaderFilter } from '../../../utils/Utils';
 
 const Location = ({ cityAndDistrictList, changeFullTextSearchCriteriaAction, location }) => (
   <MenuFilterItemStyled>
@@ -16,6 +17,7 @@ const Location = ({ cityAndDistrictList, changeFullTextSearchCriteriaAction, loc
       options={cityAndDistrictList}
       value={location}
       onChange={value => changeFullTextSearchCriteriaAction('location', value)}
+      showSearch={{ filter: cascaderFilter }}
     />
   </MenuFilterItemStyled>
 );

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import './CreateEventPlanner.css';
 import Api from '../../../../../api/Api';
 import { createAccountRequest } from '../../../../Account/actions/account';
+import { cascaderFilter } from '../../../../../utils/Utils';
 
 const FormItem = Form.Item;
 
@@ -169,7 +170,7 @@ class CreateEventPlanner extends Component {
               {getFieldDecorator('cityDistrict', {
                 rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
               })(
-                <Cascader options={cityAndDistrictList} />,
+                <Cascader options={cityAndDistrictList} showSearch={{ filter: cascaderFilter }} />,
               )}
             </FormItem>
             <FormItem label="Address">
