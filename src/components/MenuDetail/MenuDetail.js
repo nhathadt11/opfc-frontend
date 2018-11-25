@@ -5,7 +5,7 @@ import {
 import { map, isEmpty } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import {
-  shape, func, number, arrayOf,
+  shape, func, number, arrayOf, bool,
 } from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -19,6 +19,7 @@ import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType, addFullText
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
 import { bookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
 import { ListTitleStyled } from './MenuDetail.styled';
+import { showLoginModal } from '../../modules/Account/actions/modal';
 
 // const tags = [
 //   { id: 0, name: 'wedding' },
@@ -71,6 +72,12 @@ class MenuDetail extends Component {
     addEventTypeAction: func.isRequired,
     addCategoryAction: func.isRequired,
     bookmarkMenuRequestAction: func.isRequired,
+    showLoginModalAction: func.isRequired,
+    loggedIn: bool,
+  }
+
+  static defaultProps = {
+    loggedIn: false,
   }
 
   componentWillMount() {
@@ -108,9 +115,25 @@ class MenuDetail extends Component {
     push('/');
   }
 
+  handleSelectMenu = (menu) => { // eslint-disable-line
+    const { loggedIn, selectMenuAction, showLoginModalAction } = this.props;
+
+    if (!loggedIn) return showLoginModalAction();
+
+    selectMenuAction(menu);
+  }
+
+  handleBookmark = (menuId, menuName) => { // eslint-disable-line
+    const { loggedIn, bookmarkMenuRequestAction, showLoginModalAction } = this.props;
+
+    if (!loggedIn) return showLoginModalAction();
+
+    bookmarkMenuRequestAction(menuId, menuName);
+  }
+
   render() {
     const {
-      history: { push }, selectMenuAction, menuDetail,
+      history: { push }, menuDetail,
       ratingList,
     } = this.props;
     const { brandSummary = {} } = menuDetail;
@@ -190,11 +213,11 @@ class MenuDetail extends Component {
             }
             <Row>
               <p className="opfc-menu-detail-action-group">
-                <Button type="primary" size="large" onClick={() => selectMenuAction(menuDetail)}>
+                <Button type="primary" size="large" onClick={() => this.handleSelectMenu(menuDetail)}>
                   <LocalIcon type="icon-spoon" />
                   Taste it
                 </Button>
-                <Button type="default" size="large" onClick={() => this.bookmarkMenuRequestAction(menuDetail.id, menuDetail.menuName)}>
+                <Button type="default" size="large" onClick={() => this.handleBookmark(menuDetail.id, menuDetail.menuName)}>
                   <LocalIcon type="icon-bookmark" />
                   Bookmark
                 </Button>
@@ -315,6 +338,7 @@ class MenuDetail extends Component {
 const mapStateToProps = state => ({
   menuDetail: state.generalReducer.menuDetail,
   ratingList: state.ratingReducer.ratingList,
+  loggedIn: state.accountReducer.account.loggedIn,
 });
 
 const mapDispatchToProps = {
@@ -325,6 +349,7 @@ const mapDispatchToProps = {
   addEventTypeAction: addFullTextSearchCriteriaEventType,
   addCategoryAction: addFullTextSearchCriteriaCategory,
   bookmarkMenuRequestAction: bookmarkRequest,
+  showLoginModalAction: showLoginModal,
 };
 
 export default compose(
