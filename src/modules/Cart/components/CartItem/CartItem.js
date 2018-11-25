@@ -67,10 +67,15 @@ class CartItem extends Component {
   }
 
   rollbackToPrevNote = () => {
-    const { cartItemNotes, menu } = this.props;
-    this.setState({ note: cartItemNotes[menu.id] });
+    this.setState({ note: this.getNote() });
 
     this.disableEditing();
+  }
+
+  getNote = () => {
+    const { cartItemNotes, menu } = this.props;
+
+    return cartItemNotes[menu.id];
   }
 
   render() {
@@ -114,12 +119,12 @@ class CartItem extends Component {
               editing ? (
                 <TextArea
                   placeholder="Extra note"
-                  value={note}
+                  value={note || this.getNote()}
                   onChange={e => this.setState({ note: e.target.value })}
                 />
               ) : (
                 <p style={{ width: 200 }}>
-                  {note}
+                  {note || this.getNote()}
                 </p>
               )
             }
