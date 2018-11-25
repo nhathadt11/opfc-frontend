@@ -99,3 +99,19 @@ export const EventPlannerOrderDetailLineStyled = styled.span`
 export const RatedStyled = styled.span`
   font-weight: normal;
 `;
+
+export const BrandOrderStatusStyled = styled.span`
+  float: right;
+  ${props => props.requesting && css`
+    color: #ff9966;
+  `}
+  ${props => props.completed && css`
+    color: #339900;
+  `}
+  ${props => props.canceled && css`
+    color: #cc3300;
+  `}
+  ${props => props.approved && css`
+    color: #3498db;
+  `}
+`;

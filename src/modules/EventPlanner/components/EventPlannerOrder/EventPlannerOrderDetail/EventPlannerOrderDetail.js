@@ -14,7 +14,7 @@ import './EventPlannerOrderDetail.css';
 import {
   OrderDetailEventNameStyled, OrderDetailDateStyled,
   OrderDetailStatusOverallWrapperStyled,
-  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel, RatedStyled,
+  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel, RatedStyled, BrandOrderStatusStyled,
 } from './EventPlannerOrderDetail.styled';
 import { fetchEventPlannerOrderDetailRequest } from '../../../actions/order';
 import EventPlannerOrderDetailLine from './EventPlannerOrderDetailLine';
@@ -64,7 +64,7 @@ class EventPlannerOrderDetail extends Component {
 
   render() {
     const {
-      orderDetail, fetching, markAsCompletedRequestAction, showRatingModalAction,
+      orderDetail, fetching, showRatingModalAction,
     } = this.props;
     const orderLineListByBrandName = groupBy(orderDetail.orderLineList, ol => ol.brandName);
 
@@ -98,12 +98,17 @@ class EventPlannerOrderDetail extends Component {
                   header={(
                     <ByBrandNameStyled>
                       {brandName}
-                      <span style={{ float: 'right' }}>
+                      <BrandOrderStatusStyled
+                        requesting={ol[0].statusId === ORDER_STATUS.REQUESTING}
+                        completed={ol[0].statusId === ORDER_STATUS.COMPLETED}
+                        canceled={ol[0].statusId === ORDER_STATUS.CANCELED}
+                        approved={ol[0].statusId === ORDER_STATUS.APPROVED}
+                      >
                         {ORDER_STATUS.COMPLETED === ol[0].statusId && !ol[0].didRate && (
                           <a
                             href="javascript:;"
                             role="button"
-                            style={{ fontSize: '14px' }}
+                            style={{ fontSize: '13px', textDecoration: 'underline' }}
                             onClick={() => showRatingModalAction(
                               ol[0].brandOrderLineId,
                               brandName,
@@ -117,17 +122,19 @@ class EventPlannerOrderDetail extends Component {
                         {
                           ol[0].didRate && <RatedStyled>Rated</RatedStyled>
                         }
-                        {ORDER_STATUS.APPROVED === ol[0].statusId ? (
-                          <a
-                            href="javascript:;"
-                            role="button"
-                            style={{ fontSize: '14px' }}
-                            onClick={() => this.confirmMarkAsCompleted(ol[0].brandOrderLineId)}
-                          >
-                            Mark as Completed
-                          </a>
-                        ) : <span>{ol[0].statusName}</span>}
-                      </span>
+                        {
+                          ORDER_STATUS.APPROVED === ol[0].statusId && (
+                            <a
+                              href="javascript:;"
+                              role="button"
+                              style={{ fontSize: '13px', textDecoration: 'underline' }}
+                              onClick={() => this.confirmMarkAsCompleted(ol[0].brandOrderLineId)}
+                            >
+                              Mark as Completed
+                            </a>)
+                        }
+                        <span>{ol[0].statusName}</span>
+                      </BrandOrderStatusStyled>
                     </ByBrandNameStyled>)}
                   bordered={false}
                   footer={(
