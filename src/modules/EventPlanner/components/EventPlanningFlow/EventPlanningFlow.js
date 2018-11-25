@@ -17,8 +17,9 @@ const { Step } = Steps;
 
 const PaymentContent = (
   <div className="opfc-payment-content-container">
-    <section>The next process required payment from paypal.</section>
-    <section>Review your cart in care to finalize it.</section>
+    <Icon type="warning" style={{ fontSize: 48, color: '#ffcc00', marginBottom: 12 }} />
+    <section className="opfc-payment-warning">The next process required payment from paypal.</section>
+    <section className="opfc-payment-warning">Review your cart in care before finalizing it.</section>
   </div>
 );
 
@@ -73,7 +74,7 @@ class EventPlanningFlow extends Component {
             }
             {
               (currentStep === this.steps.length - 1)
-              && <Button type="primary" size="large" loading={submitting} onClick={createOrderRequestAction}>Done</Button>
+              && <Button type="primary" size="large" loading={submitting} onClick={createOrderRequestAction}>Proceed</Button>
             }
             {
               currentStep > 0 && (currentStep !== this.steps.length - 1)
