@@ -17,6 +17,7 @@ import RatingModal from '../modules/EventPlanner/components/RatingModal/RatingMo
 import PrivateRoute from '../components/PrivateRoute/PrivateRoute';
 import Home from './Home/Home';
 import BrandSettings from '../modules/BrandSettings/containers/BrandSettings';
+import Plan from './Plan/Plan';
 
 const { Footer } = Layout;
 
@@ -44,6 +45,8 @@ const MainLayout = () => (
     <CreateEventPlannerModal />
     <LoginModal />
     <RatingModal />
+
+    <Plan />
 
     <Footer>FPT Capstone 2018</Footer>
   </Layout>

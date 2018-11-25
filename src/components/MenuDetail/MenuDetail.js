@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import {
-  Row, Col, Tag, Button, Icon, Affix, Rate,
+  Row, Col, Tag, Button, Icon, Affix, Rate, message,
 } from 'antd';
 import { map, isEmpty } from 'lodash';
 import { withRouter } from 'react-router-dom';
@@ -74,6 +74,7 @@ class MenuDetail extends Component {
     bookmarkMenuRequestAction: func.isRequired,
     showLoginModalAction: func.isRequired,
     loggedIn: bool,
+    selectedEvent: shape({}).isRequired,
   }
 
   static defaultProps = {
@@ -116,11 +117,15 @@ class MenuDetail extends Component {
   }
 
   handleSelectMenu = (menu) => { // eslint-disable-line
-    const { loggedIn, selectMenuAction, showLoginModalAction } = this.props;
+    const {
+      loggedIn, selectedEvent, selectMenuAction, showLoginModalAction,
+    } = this.props;
 
     if (!loggedIn) return showLoginModalAction();
+    if (isEmpty(selectedEvent)) return message.info('Please start planning event to select this menu.');
 
     selectMenuAction(menu);
+    message.success(`${menu.menuName} is selected!`);
   }
 
   handleBookmark = (menuId, menuName) => { // eslint-disable-line
@@ -339,6 +344,7 @@ const mapStateToProps = state => ({
   menuDetail: state.generalReducer.menuDetail,
   ratingList: state.ratingReducer.ratingList,
   loggedIn: state.accountReducer.account.loggedIn,
+  selectedEvent: state.eventPlannerReducer.event.event,
 });
 
 const mapDispatchToProps = {
