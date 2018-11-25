@@ -3,11 +3,14 @@ import {
   Form, Input, Rate, Button,
 } from 'antd';
 import { compose } from 'redux';
-import { shape, func, number } from 'prop-types';
+import {
+  shape, func, number, bool,
+} from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import './ReviewForm.css';
 import { createMenuRatingRequest } from '../../../modules/Rating/actions/rating';
+import { showLoginModal } from '../../../modules/Account/actions/modal';
 
 const formItemLayout = {
   labelCol: { span: 4 },
@@ -27,20 +30,26 @@ class ReviewForm extends Component {
         id: number,
       }),
     }).isRequired,
+    loggedIn: bool.isRequired,
+    showLoginModalAction: func.isRequired,
   }
 
   state = {
 
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = (e) => { // eslint-disable-line
     e.preventDefault();
 
     const {
       form: { validateFieldsAndScroll, resetFields },
       createMenuRatingRequestAction,
       match: { params: { id } },
+      loggedIn, showLoginModalAction,
     } = this.props;
+
+    if (!loggedIn) return showLoginModalAction();
+
     validateFieldsAndScroll((err, values) => {
       if (!err) {
         createMenuRatingRequestAction(values, id, () => resetFields());
@@ -88,12 +97,17 @@ class ReviewForm extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  loggedIn: state.accountReducer.account.loggedIn,
+});
+
 const mapDispatchToProps = {
   createMenuRatingRequestAction: createMenuRatingRequest,
+  showLoginModalAction: showLoginModal,
 };
 
 export default compose(
   Form.create(),
   withRouter,
-  connect(undefined, mapDispatchToProps),
+  connect(mapStateToProps, mapDispatchToProps),
 )(ReviewForm);
