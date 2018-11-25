@@ -18,7 +18,7 @@ const { Step } = Steps;
 const PaymentContent = (
   <div className="opfc-payment-content-container">
     <Icon type="warning" style={{ fontSize: 48, color: '#ffcc00', marginBottom: 12 }} />
-    <section className="opfc-payment-warning">The next process required payment from paypal.</section>
+    <section className="opfc-payment-warning">The next process requires payment from PayPal.</section>
     <section className="opfc-payment-warning">Review your cart in care before finalizing it.</section>
   </div>
 );
