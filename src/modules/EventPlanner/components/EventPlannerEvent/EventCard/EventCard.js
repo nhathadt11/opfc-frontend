@@ -45,9 +45,10 @@ const EventCard = ({
       push(`/profile/event-planner/order/${data.orderId}`);
     }
   };
+  const tooltipMessage = data.status === EVENT_STATUS.PLANNING ? 'Start picking menus now' : 'View order';
 
   return (
-    <Tooltip title="Start picking menus for this event">
+    <Tooltip title={tooltipMessage}>
       <Card
         hoverable
         onClick={handleEventClick}
