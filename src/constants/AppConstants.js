@@ -18,3 +18,8 @@ export const ORDER_STATUS = {
   CANCELED: 3,
   COMPLETED: 4,
 };
+
+export const EVENT_STATUS = {
+  PLANNING: 1,
+  PLANNED: 2,
+};
