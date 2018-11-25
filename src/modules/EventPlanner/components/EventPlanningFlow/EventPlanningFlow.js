@@ -5,7 +5,10 @@ import {
 import { map } from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { bool, func, number } from 'prop-types';
+import {
+  bool, func, number, shape,
+} from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import StepEvent from './EventPlanningSteps/StepEvent';
 import { EventStepContentStyled, ActionButtonGroupStyled } from './EventStepFlow.styled';
 import StepPickMenus from './EventPlanningSteps/StepPickMenus';
@@ -30,6 +33,9 @@ class EventPlanningFlow extends Component {
     nextEventPlanStepAction: func.isRequired,
     prevEventPlanStepAction: func.isRequired,
     createOrderRequestAction: func.isRequired,
+    history: shape({
+      push: func.isRequired,
+    }).isRequired,
   }
 
   constructor(props) {
@@ -54,7 +60,9 @@ class EventPlanningFlow extends Component {
   }
 
   render() {
-    const { submitting, currentStep, createOrderRequestAction } = this.props;
+    const {
+      submitting, currentStep, createOrderRequestAction, history,
+    } = this.props;
 
     return (
       <Fragment>
@@ -82,10 +90,13 @@ class EventPlanningFlow extends Component {
             }
             {
               currentStep === 0 && (
-                <Button size="large" type="primary" loading={submitting}>
-                  <label htmlFor="form-event" className="opfc-pointer-cursor">Next</label>
-                  <Icon type="right" theme="outlined" />
-                </Button>
+                <Fragment>
+                  <Button size="large" onClick={() => history.push('/profile/event-planner/event')} disabled={submitting}><Icon type="left" theme="outlined" />Event List</Button>
+                  <Button size="large" type="primary" loading={submitting}>
+                    <label htmlFor="form-event" className="opfc-pointer-cursor">Next</label>
+                    <Icon type="right" theme="outlined" />
+                  </Button>
+                </Fragment>
               )
             }
           </ActionButtonGroupStyled>
@@ -112,4 +123,5 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(EventPlanningFlow);
