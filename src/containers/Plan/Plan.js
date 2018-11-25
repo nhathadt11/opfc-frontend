@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom';
 
 const Plan = ({ selectedEvent, history }) => (
   !isEmpty(selectedEvent) && (
-    <Affix style={{ position: 'fixed', bottom: '50%', right: 70 }}>
+    <Affix style={{ position: 'fixed', bottom: 150, right: 70 }}>
       <Tooltip placement="left" title={selectedEvent.eventName}>
         <Button
           icon="form"
