@@ -49,7 +49,7 @@ class EventPlannerEvent extends Component {
               )))
             }
             {
-              <Col key="event-card-create" md={24} lg={12} xl={8} className="opfc-event-card">
+              <Col key="event-card-create" md={24} lg={12} className="opfc-event-card">
                 <Button
                   className="opfc-event-card-create"
                   onClick={() => {
