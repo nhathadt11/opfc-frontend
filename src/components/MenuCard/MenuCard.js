@@ -15,6 +15,15 @@ import './MenuCard.css';
 const colorList = ['#78aea4', '#c9b6c7', '#ffd6d6', '#86dbc7', '#ae5d75'];
 const randomRage = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+const getCategoryNameSingle = (menu) => {
+  if (!menu) return 'N/A';
+
+  if (!isEmpty(menu.categoryNames)) return menu.categoryNames[0];
+  if (!isEmpty(menu.categoryList)) return menu.categoryList[0].name;
+
+  return 'N/A';
+};
+
 const MenuCard = ({ loading, history, menu }) => (
   <Card
     loading={loading}
@@ -25,7 +34,7 @@ const MenuCard = ({ loading, history, menu }) => (
     cover={<img className="ofpc-menu-image-cover" alt="example" src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" />}
     onClick={() => history.push(`/menus/${menu.id}`)}
   >
-    <CatergoryLabelStyled>{!isEmpty(menu.categoryNames) ? menu.categoryNames[0] : 'N/A'}</CatergoryLabelStyled>
+    <CatergoryLabelStyled>{getCategoryNameSingle(menu)}</CatergoryLabelStyled>
     <Row style={{ marginBottom: 10 }}>
       <Col span={8}>
         <Icon type="team" theme="outlined" style={{ color: '#f68b40' }} />
