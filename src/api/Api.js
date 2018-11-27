@@ -249,6 +249,8 @@ const approveBrandOrder = orderLineId => axios.post(`/Order/Brand/Approve/${orde
 
 const markAsCompleted = orderLineId => axios.post(`/Order/MarkAsCompleted/${orderLineId}`);
 
+const markAsIncompleted = orderLineId => axios.post(`/Order/MarkAsIncompleted/${orderLineId}`);
+
 const fetchEventDetail = eventId => axios.get(`/Event/${eventId}`);
 
 const fetchServiceLocationMany = brandId => axios.get(`/ServiceLocation/Brand/${brandId}`);
@@ -310,6 +312,7 @@ export default {
   cancelBrandOrder,
   approveBrandOrder,
   markAsCompleted,
+  markAsIncompleted,
   fetchEventDetail,
   fetchServiceLocationMany,
   updateServiceLocationMany,

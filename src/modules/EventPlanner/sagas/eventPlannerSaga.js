@@ -20,7 +20,10 @@ import {
   fetchEventPlannerOrderDetailFailure, fetchEventPlannerOrderDetailSuccess,
   RATE_BRAND_REQUEST, rateBrandFailure,
 } from '../actions/order';
-import { markAsCompletedFailure, MARK_AS_COMPLETED_REQUEST } from '../../BrandProfile/actions/order';
+import {
+  markAsCompletedFailure, MARK_AS_COMPLETED_REQUEST, markAsIncompletedSuccess,
+  MARK_AS_INCOMPLETED_REQUEST, markAsIncompletedFailure, markAsCompletedSuccess,
+} from '../../BrandProfile/actions/order';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 const getEventId = state => state.eventPlannerReducer.event.event.id;
@@ -191,6 +194,7 @@ function* markAsCompleted({ payload: { orderLineId } }) {
     const orderId = yield select(getOrderId);
     yield fork(fetchEventPlannerOrderDetail, { payload: { orderId } });
     message.success('Order has been marked as completed.');
+    yield put(markAsCompletedSuccess());
   } catch (error) {
     message.error('Order could not be marked as completed.');
     yield put(markAsCompletedFailure(error));
@@ -199,6 +203,24 @@ function* markAsCompleted({ payload: { orderLineId } }) {
 
 function* watchMarkAsCompleted() {
   yield takeLatest(MARK_AS_COMPLETED_REQUEST, markAsCompleted);
+}
+
+function* markAsIncompleted({ payload: { orderLineId } }) {
+  try {
+    yield call(Api.markAsIncompleted, orderLineId);
+
+    const orderId = yield select(getOrderId);
+    yield fork(fetchEventPlannerOrderDetail, { payload: { orderId } });
+    message.success('Order has been marked as incompleted.');
+    yield put(markAsIncompletedSuccess());
+  } catch (error) {
+    message.error('Order could not be marked as incompleted.');
+    yield put(markAsIncompletedFailure(error));
+  }
+}
+
+function* watchMarkAsIncompleted() {
+  yield takeLatest(MARK_AS_INCOMPLETED_REQUEST, markAsIncompleted);
 }
 
 function* rateBrand({ payload: { orderLineId, rate, success } }) {
@@ -232,6 +254,7 @@ export default function* eventFlow() {
     watchFetchEventPlannerOrderDetail(),
     watchFetchEventDetail(),
     watchMarkAsCompleted(),
+    watchMarkAsIncompleted(),
     watchChangeSuggestedMenuManyParams(),
     watchRateBrand(),
   ]);

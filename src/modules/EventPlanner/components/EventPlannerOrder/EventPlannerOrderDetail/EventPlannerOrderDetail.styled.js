@@ -98,6 +98,7 @@ export const EventPlannerOrderDetailLineStyled = styled.span`
 
 export const RatedStyled = styled.span`
   font-weight: normal;
+  font-style: italic;
 `;
 
 export const BrandOrderStatusStyled = styled.span`
@@ -107,6 +108,9 @@ export const BrandOrderStatusStyled = styled.span`
   `}
   ${props => props.completed && css`
     color: #339900;
+  `}
+  ${props => props.incompleted && css`
+    color: #9b9b9b;
   `}
   ${props => props.canceled && css`
     color: #cc3300;

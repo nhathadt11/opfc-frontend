@@ -14,11 +14,12 @@ import './EventPlannerOrderDetail.css';
 import {
   OrderDetailEventNameStyled, OrderDetailDateStyled,
   OrderDetailStatusOverallWrapperStyled,
-  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel, RatedStyled, BrandOrderStatusStyled,
+  EventStartTimeStyled, ByBrandNameStyled, OrderItemSubTotalLabel,
+  RatedStyled, BrandOrderStatusStyled,
 } from './EventPlannerOrderDetail.styled';
 import { fetchEventPlannerOrderDetailRequest } from '../../../actions/order';
 import EventPlannerOrderDetailLine from './EventPlannerOrderDetailLine';
-import { markAsCompletedRequest } from '../../../../BrandProfile/actions/order';
+import { markAsCompletedRequest, markAsIncompletedRequest } from '../../../../BrandProfile/actions/order';
 import { ORDER_STATUS } from '../../../../../constants/AppConstants';
 import { showRatingModal } from '../../../actions/planningFlow';
 
@@ -27,6 +28,7 @@ class EventPlannerOrderDetail extends Component {
     orderDetail: shape({}).isRequired,
     fetchEventPlannerOrderDetailRequestAction: func.isRequired,
     markAsCompletedRequestAction: func.isRequired,
+    markAsIncompletedRequestAction: func.isRequired,
     match: shape({
       params: shape({
         id: oneOfType([string, number]),
@@ -54,10 +56,23 @@ class EventPlannerOrderDetail extends Component {
 
     const modal = Modal.confirm({
       title: 'Mark as Complete',
-      content: 'Are you sure to mark as completed?',
+      content: 'Are you sure to mark this order as completed?',
       okText: 'Yes',
       cancelText: 'No',
       onOk: () => { markAsCompletedRequestAction(orderLineId); modal.destroy(); },
+      maskClosable: true,
+    });
+  }
+
+  confirmMarkAsIncompleted = (orderLineId) => {
+    const { markAsIncompletedRequestAction } = this.props;
+
+    const modal = Modal.confirm({
+      title: 'Mark as Complete',
+      content: 'Are you sure to mark this order as incompleted?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => { markAsIncompletedRequestAction(orderLineId); modal.destroy(); },
       maskClosable: true,
     });
   }
@@ -101,6 +116,7 @@ class EventPlannerOrderDetail extends Component {
                       <BrandOrderStatusStyled
                         requesting={ol[0].statusId === ORDER_STATUS.REQUESTING}
                         completed={ol[0].statusId === ORDER_STATUS.COMPLETED}
+                        incompleted={ol[0].statusId === ORDER_STATUS.INCOMPLETED}
                         canceled={ol[0].statusId === ORDER_STATUS.CANCELED}
                         approved={ol[0].statusId === ORDER_STATUS.APPROVED}
                       >
@@ -124,14 +140,24 @@ class EventPlannerOrderDetail extends Component {
                         }
                         {
                           ORDER_STATUS.APPROVED === ol[0].statusId && (
-                            <a
-                              href="javascript:;"
-                              role="button"
-                              style={{ fontSize: '13px', textDecoration: 'underline' }}
-                              onClick={() => this.confirmMarkAsCompleted(ol[0].brandOrderLineId)}
-                            >
-                              Mark as Completed
-                            </a>)
+                            <span>
+                              <a
+                                href="javascript:;"
+                                role="button"
+                                style={{ fontSize: '13px', textDecoration: 'underline' }}
+                                onClick={() => this.confirmMarkAsCompleted(ol[0].brandOrderLineId)}
+                              >
+                                Mark as Completed
+                              </a> <a href="javascript:;">/</a> {' '}
+                              <a
+                                href="javascript:;"
+                                role="button"
+                                style={{ fontSize: '13px', textDecoration: 'underline' }}
+                                onClick={() => this.confirmMarkAsIncompleted(ol[0].brandOrderLineId)}
+                              >
+                                Incompleted
+                              </a>
+                            </span>)
                         }
                         <span>{ol[0].statusName}</span>
                       </BrandOrderStatusStyled>
@@ -185,6 +211,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchEventPlannerOrderDetailRequestAction: fetchEventPlannerOrderDetailRequest,
   markAsCompletedRequestAction: markAsCompletedRequest,
+  markAsIncompletedRequestAction: markAsIncompletedRequest,
   showRatingModalAction: showRatingModal,
 };
 

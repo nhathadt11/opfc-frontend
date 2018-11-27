@@ -14,6 +14,10 @@ export const MARK_AS_COMPLETED_REQUEST = 'MARK_AS_COMPLETED_REQUEST';
 export const MARK_AS_COMPLETED_SUCCESS = 'MARK_AS_COMPLETED_SUCCESS';
 export const MARK_AS_COMPLETED_FAILURE = 'MARK_AS_COMPLETED_FAILURE';
 
+export const MARK_AS_INCOMPLETED_REQUEST = 'MARK_AS_INCOMPLETED_REQUEST';
+export const MARK_AS_INCOMPLETED_SUCCESS = 'MARK_AS_INCOMPLETED_SUCCESS';
+export const MARK_AS_INCOMPLETED_FAILURE = 'MARK_AS_INCOMPLETED_FAILURE';
+
 export const fetchOrderManyRequest = () => ({
   type: FETCH_ORDER_MANY_REQUEST,
 });
@@ -83,6 +87,24 @@ export const markAsCompletedSuccess = () => ({
 
 export const markAsCompletedFailure = error => ({
   type: MARK_AS_COMPLETED_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+export const markAsIncompletedRequest = orderLineId => ({
+  type: MARK_AS_INCOMPLETED_REQUEST,
+  payload: {
+    orderLineId,
+  },
+});
+
+export const markAsIncompletedSuccess = () => ({
+  type: MARK_AS_INCOMPLETED_SUCCESS,
+});
+
+export const markAsIncompletedFailure = error => ({
+  type: MARK_AS_INCOMPLETED_FAILURE,
   payload: {
     error,
   },

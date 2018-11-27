@@ -17,6 +17,7 @@ export const ORDER_STATUS = {
   APPROVED: 2,
   CANCELED: 3,
   COMPLETED: 4,
+  INCOMPLETED: 5,
 };
 
 export const EVENT_STATUS = {
