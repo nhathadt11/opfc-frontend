@@ -25,6 +25,10 @@ export const CREATE_ORDER_FAILURE = 'CREATE_ORDER_FAILURE';
 
 export const SAVE_CART_ITEM_NOTE = 'SAVE_CART_ITEM_NOTE';
 
+export const DELETE_EVENT_REQUEST = 'DELETE_EVENT_REQUEST';
+export const DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
+export const DELETE_EVENT_FAILURE = 'DELETE_EVENT_FAILURE';
+
 
 export const changeEventPlanCurrentStep = step => ({
   type: CHANGE_EVENT_PLAN_CURRENT_STEP,
@@ -146,5 +150,23 @@ export const saveCartItemNote = (menuId, note) => ({
   payload: {
     menuId,
     note,
+  },
+});
+
+export const deleteEventRequest = eventId => ({
+  type: DELETE_EVENT_REQUEST,
+  payload: {
+    eventId,
+  },
+});
+
+export const deleteEventSuccess = () => ({
+  type: DELETE_EVENT_SUCCESS,
+});
+
+export const deleteEventFailure = error => ({
+  type: DELETE_EVENT_FAILURE,
+  payload: {
+    error,
   },
 });

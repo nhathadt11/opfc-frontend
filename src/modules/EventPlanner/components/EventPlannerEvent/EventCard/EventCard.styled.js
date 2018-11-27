@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const EventNameStyled = styled.h3`
   font-weight: 600;
+  display: inline-block;
 `;
 
 export const EventInfoLabelStyled = styled.span`
@@ -18,4 +19,8 @@ export const EventInfoValueStyled = styled.span`
     color: #339900;
   `}
   font-weight: 600;
+`;
+
+export const CloseStyled = styled.span`
+  float: right;
 `;

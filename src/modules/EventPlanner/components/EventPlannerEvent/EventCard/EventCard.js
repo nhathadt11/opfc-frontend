@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Card, Row, Tooltip, Col,
+  Card, Row, Tooltip, Col, Icon, Modal,
 } from 'antd';
 import moment from 'moment';
 import {
@@ -10,8 +10,10 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { find } from 'lodash';
-import { EventNameStyled, EventInfoLabelStyled, EventInfoValueStyled } from './EventCard.styled';
-import { selectEvent } from '../../../actions/planningFlow';
+import {
+  EventNameStyled, EventInfoLabelStyled, EventInfoValueStyled, CloseStyled,
+} from './EventCard.styled';
+import { selectEvent, deleteEventRequest } from '../../../actions/planningFlow';
 import { EVENT_STATUS } from '../../../../../constants/AppConstants';
 
 const getEventTypeNameFromId = (id, eventTypes) => {
@@ -34,6 +36,7 @@ const EventCard = ({
   history: { push },
   selectEventAction,
   eventTypeList,
+  deleteEventRequestAction,
 }) => {
   const handleEventClick = () => {
     if (data.status === EVENT_STATUS.PLANNING) {
@@ -45,7 +48,20 @@ const EventCard = ({
       push(`/profile/event-planner/order/${data.orderId}`);
     }
   };
-  const tooltipMessage = data.status === EVENT_STATUS.PLANNING ? 'Start picking menus now' : 'View order';
+  const isPlanning = data.status === EVENT_STATUS.PLANNING;
+  const tooltipMessage = isPlanning ? 'Start picking menus now' : 'View order';
+  const handleDeleteEvent = (e) => {
+    e.stopPropagation();
+
+    const modal = Modal.confirm({
+      title: 'Delete event',
+      content: 'Are you sure to delete this event?',
+      okText: 'Yes',
+      cancelText: 'No',
+      onOk: () => { deleteEventRequestAction(data.id); modal.destroy(); },
+      maskClosable: true,
+    });
+  };
 
   return (
     <Tooltip title={tooltipMessage}>
@@ -53,7 +69,12 @@ const EventCard = ({
         hoverable
         onClick={handleEventClick}
       >
-        <Row><EventNameStyled>{data.eventName}</EventNameStyled></Row>
+        <Row>
+          <EventNameStyled>{data.eventName}</EventNameStyled>
+          {
+            isPlanning && <CloseStyled onClick={handleDeleteEvent}><Icon type="close" style={{ float: 'right' }} /></CloseStyled>
+          }
+        </Row>
         <Row>
           <Col span={8} className="opfc-event-card-label">
             <EventInfoLabelStyled>Status:</EventInfoLabelStyled>
@@ -148,6 +169,7 @@ EventCard.propTypes = {
     push: func.isRequired,
   }).isRequired,
   selectEventAction: func.isRequired,
+  deleteEventRequestAction: func.isRequired,
   eventTypeList: arrayOf(shape({
     id: number,
     eventTypeName: string,
@@ -160,6 +182,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   selectEventAction: selectEvent,
+  deleteEventRequestAction: deleteEventRequest,
 };
 
 export default compose(

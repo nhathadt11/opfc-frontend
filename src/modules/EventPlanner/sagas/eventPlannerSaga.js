@@ -12,6 +12,7 @@ import Api from '../../../api/Api';
 import {
   FETCH_SUGGESTED_MENU_MANY_REQUEST, fetchSuggestedMenuManyFailure, fetchSuggestedMenuManySuccess,
   CREATE_ORDER_REQUEST, createOrderFailure, CHANGE_SUGGESTED_MENU_MANY_PARAMS,
+  deleteEventFailure, deleteEventSuccess, DELETE_EVENT_REQUEST,
 } from '../actions/planningFlow';
 import { parseErrorMessage } from '../../../utils/Utils';
 import {
@@ -244,6 +245,25 @@ function* watchRateBrand() {
   yield takeEvery(RATE_BRAND_REQUEST, rateBrand);
 }
 
+function* deleteEvent({ payload: { eventId } }) {
+  try {
+    const userId = yield select(getUserId);
+
+    yield call(Api.deleteEvent, userId, eventId);
+
+    yield put(deleteEventSuccess());
+    yield fork(fetchEventMany);
+    message.success('Event has been deleted successfully!');
+  } catch (error) {
+    yield put(deleteEventFailure(error));
+    message.error('Event could not be deleted.');
+  }
+}
+
+function* watchDeleteEvent() {
+  yield takeEvery(DELETE_EVENT_REQUEST, deleteEvent);
+}
+
 export default function* eventFlow() {
   yield all([
     watchCreateEvent(),
@@ -257,5 +277,6 @@ export default function* eventFlow() {
     watchMarkAsIncompleted(),
     watchChangeSuggestedMenuManyParams(),
     watchRateBrand(),
+    watchDeleteEvent(),
   ]);
 }

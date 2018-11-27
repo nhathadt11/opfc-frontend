@@ -273,6 +273,8 @@ const rateBrand = (userId, orderLineId, rate) => {
   return axios.post(`/PrivateRating/User/${userId}/OrderLine/${orderLineId}`, payload);
 };
 
+const deleteEvent = (userId, eventId) => axios.delete(`/Event/User/${userId}/${eventId}`);
+
 export default {
   createBrand,
   uploadImage,
@@ -318,6 +320,7 @@ export default {
   updateServiceLocationMany,
   updateBrandInformation,
   rateBrand,
+  deleteEvent,
   // Elastic search
   fetchMenuManyEs,
 };
