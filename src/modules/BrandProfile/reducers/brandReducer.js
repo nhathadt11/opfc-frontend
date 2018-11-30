@@ -8,6 +8,8 @@ const initialState = {
   brandDetail: {},
   mealList: [],
   menuList: [],
+  menuPage: 1,
+  menuTotal: 0,
   fetchingBrandDetail: false,
   fetchingMenu: false,
   fetchingMeal: false,
@@ -29,6 +31,7 @@ const brandReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetchingMenu: true,
+        menuPage: payload.page,
       };
     case FETCH_BRAND_DETAIL_SUCCESS:
       return {
@@ -47,6 +50,7 @@ const brandReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetchingMenu: false,
         menuList: payload.menuList,
+        menuTotal: payload.total,
       };
     case FETCH_BRAND_DETAIL_FAILURE:
       return {

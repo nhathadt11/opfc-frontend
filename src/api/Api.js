@@ -207,7 +207,7 @@ const fetchCategoryMany = () => axios.get('/Category');
 
 const fetchBrandDetail = id => axios.get(`/Brand/${id}`);
 
-const fetchBrandMenuMany = id => axios.get(`/Menu/Brand/${id}`);
+const fetchBrandMenuMany = (id, page) => axios.get(`/Menu/Brand/${id}`, { params: { page, size: 9 } });
 
 const fetchBrandMealMany = id => axios.get(`/Meal/Brand/${id}`);
 

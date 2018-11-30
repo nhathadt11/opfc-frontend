@@ -96,10 +96,10 @@ function* watchFetchBrandDetail() {
   yield takeLatest(FETCH_BRAND_DETAIL_REQUEST, fetchBrandDetail);
 }
 
-function* fetchBrandMenu({ payload: { id } }) {
+function* fetchBrandMenu({ payload: { id, page } }) {
   try {
-    const { data } = yield call(Api.fetchBrandMenuMany, id);
-    yield put(fetchBrandMenuManySuccess(data));
+    const { data } = yield call(Api.fetchBrandMenuMany, id, page);
+    yield put(fetchBrandMenuManySuccess(data.menuList, data.total));
   } catch (error) {
     message.error('Menus could not be fetched.');
   }
