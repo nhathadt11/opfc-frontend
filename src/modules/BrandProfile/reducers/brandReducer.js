@@ -7,6 +7,8 @@ import {
 const initialState = {
   brandDetail: {},
   mealList: [],
+  mealPage: 1,
+  mealTotal: 0,
   menuList: [],
   menuPage: 1,
   menuTotal: 0,
@@ -26,6 +28,7 @@ const brandReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fetchingMeal: true,
+        mealPage: payload.page,
       };
     case FETCH_BRAND_MENU_MANY_REQUEST:
       return {
@@ -44,6 +47,7 @@ const brandReducer = (state = initialState, { type, payload }) => {
         ...state,
         fetchingMeal: false,
         mealList: payload.mealList,
+        mealTotal: payload.total,
       };
     case FETCH_BRAND_MENU_MANY_SUCCESS:
       return {

@@ -54,17 +54,19 @@ export const fetchBrandMenuManyFailure = error => ({
   },
 });
 
-export const fetchBrandMealManyRequest = id => ({
+export const fetchBrandMealManyRequest = (id, page = 1) => ({
   type: FETCH_BRAND_MEAL_MANY_REQUEST,
   payload: {
     id,
+    page,
   },
 });
 
-export const fetchBrandMealManySuccess = mealList => ({
+export const fetchBrandMealManySuccess = (mealList, total) => ({
   type: FETCH_BRAND_MEAL_MANY_SUCCESS,
   payload: {
     mealList,
+    total,
   },
 });
 

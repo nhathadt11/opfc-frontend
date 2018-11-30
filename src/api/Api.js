@@ -209,7 +209,7 @@ const fetchBrandDetail = id => axios.get(`/Brand/${id}`);
 
 const fetchBrandMenuMany = (id, page) => axios.get(`/Menu/Brand/${id}`, { params: { page, size: 9 } });
 
-const fetchBrandMealMany = id => axios.get(`/Meal/Brand/${id}`);
+const fetchBrandMealMany = (id, page) => axios.get(`/Meal/Brand/${id}`, { params: { page, size: 9 } });
 
 const fetchCityMany = () => axios.get('/City');
 
