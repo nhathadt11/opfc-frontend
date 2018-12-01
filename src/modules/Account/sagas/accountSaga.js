@@ -22,6 +22,10 @@ import {
 import store from '../../../store';
 import { fetchGeneralDataRequest } from '../../General/sagas/generalSaga';
 import fire from '../../../utils/Firebase';
+import {
+  FETCH_USER_BOOKMARK_MENU_ID_MANY_REQUEST,
+  fetchUserBookmarkMenuIdManySuccess, fetchUserBookmarkMenuIdManyFailure,
+} from '../actions/bookmark';
 
 const getUserId = state => state.accountReducer.account.account.user.id;
 
@@ -94,11 +98,28 @@ function* registerUserToFirebaseNoti({ payload: { account } }) {
   }
 }
 
+function* fetchUserBookmarkMenuIds({ payload: { account } }) {
+  try {
+    const { user: { id } } = account;
+    const { data } = yield call(Api.fetchUserBookmarkMenuIdMany, id);
+
+    yield put(fetchUserBookmarkMenuIdManySuccess(data));
+  } catch (error) {
+    message.error('Bookmark menu ids could not be fetched.');
+    yield put(fetchUserBookmarkMenuIdManyFailure(error));
+  }
+}
+
+function* watchFetchUserBookmarkMenuIdMany() {
+  yield takeLatest(FETCH_USER_BOOKMARK_MENU_ID_MANY_REQUEST, fetchUserBookmarkMenuIds);
+}
+
 function* afterLoginSuccess(action) {
   const { payload: { account } } = action;
   yield fork(persistAuthentication, account);
   yield fork(configAxiosAuthHeader, account.token);
   yield fork(registerUserToFirebaseNoti, action);
+  yield fork(fetchUserBookmarkMenuIds, action);
 }
 
 function* watchLoginSuccess() {
@@ -146,5 +167,6 @@ export default function* accountFlow() {
     watchLoginSuccess(),
     watchLogoutAccount(),
     watchMarkNotificationAsRead(),
+    watchFetchUserBookmarkMenuIdMany(),
   ]);
 }

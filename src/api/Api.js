@@ -275,6 +275,8 @@ const rateBrand = (userId, orderLineId, rate) => {
 
 const deleteEvent = (userId, eventId) => axios.delete(`/Event/User/${userId}/${eventId}`);
 
+const fetchUserBookmarkMenuIdMany = userId => axios.get(`/Menu/User/${userId}/Bookmark/MenuIds`);
+
 export default {
   createBrand,
   uploadImage,
@@ -321,6 +323,7 @@ export default {
   updateBrandInformation,
   rateBrand,
   deleteEvent,
+  fetchUserBookmarkMenuIdMany,
   // Elastic search
   fetchMenuManyEs,
 };
