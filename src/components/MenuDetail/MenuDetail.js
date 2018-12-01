@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import {
   Row, Col, Tag, Button, Icon, Affix, Rate, message,
 } from 'antd';
-import { map, isEmpty } from 'lodash';
+import { map, isEmpty, some } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import {
   shape, func, number, arrayOf, bool,
@@ -17,7 +17,7 @@ import ReviewList from '../ReviewList/ReviewList';
 import { selectMenu } from '../../modules/EventPlanner/actions/planningFlow';
 import { fetchMenuDetailRequest, addFullTextSearchCriteriaEventType, addFullTextSearchCriteriaCategory } from '../../modules/General/actions/general';
 import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Rating/actions/rating';
-import { bookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
+import { bookmarkRequest, removeBookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
 import { ListTitleStyled } from './MenuDetail.styled';
 import { showLoginModal } from '../../modules/Account/actions/modal';
 
@@ -75,6 +75,8 @@ class MenuDetail extends Component {
     showLoginModalAction: func.isRequired,
     loggedIn: bool,
     selectedEvent: shape({}).isRequired,
+    bookmarkMenuIdList: arrayOf(number).isRequired,
+    removeBookmarkRequestAction: func.isRequired,
   }
 
   static defaultProps = {
@@ -134,6 +136,17 @@ class MenuDetail extends Component {
     if (!loggedIn) return showLoginModalAction();
 
     bookmarkMenuRequestAction(menuId, menuName);
+  }
+
+  handleRemoveBookmark = (menuId, menuName) => {
+    const { removeBookmarkRequestAction } = this.props;
+
+    removeBookmarkRequestAction(menuId, menuName);
+  }
+
+  isBookmarked = () => {
+    const { menuDetail, bookmarkMenuIdList } = this.props;
+    return some(bookmarkMenuIdList, id => id === menuDetail.id);
   }
 
   render() {
@@ -222,10 +235,19 @@ class MenuDetail extends Component {
                   <LocalIcon type="icon-spoon" />
                   Taste it
                 </Button>
-                <Button type="default" size="large" onClick={() => this.handleBookmark(menuDetail.id, menuDetail.menuName)}>
-                  <LocalIcon type="icon-bookmark" />
-                  Bookmark
-                </Button>
+                {
+                  this.isBookmarked() ? (
+                    <Button type="default" size="large" onClick={() => this.handleRemoveBookmark(menuDetail.id, menuDetail.menuName)}>
+                      <LocalIcon type="icon-bookmark" />
+                      Bookmarked
+                    </Button>
+                  ) : (
+                    <Button type="default" size="large" onClick={() => this.handleBookmark(menuDetail.id, menuDetail.menuName)}>
+                      <LocalIcon type="icon-bookmark" />
+                      Bookmark
+                    </Button>
+                  )
+                }
               </p>
             </Row>
           </Col>
@@ -345,6 +367,7 @@ const mapStateToProps = state => ({
   ratingList: state.ratingReducer.ratingList,
   loggedIn: state.accountReducer.account.loggedIn,
   selectedEvent: state.eventPlannerReducer.event.event,
+  bookmarkMenuIdList: state.accountReducer.bookmark.bookmarkMenuIdList,
 });
 
 const mapDispatchToProps = {
@@ -355,6 +378,7 @@ const mapDispatchToProps = {
   addEventTypeAction: addFullTextSearchCriteriaEventType,
   addCategoryAction: addFullTextSearchCriteriaCategory,
   bookmarkMenuRequestAction: bookmarkRequest,
+  removeBookmarkRequestAction: removeBookmarkRequest,
   showLoginModalAction: showLoginModal,
 };
 

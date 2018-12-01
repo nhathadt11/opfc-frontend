@@ -241,6 +241,8 @@ const fetchSuggestedMenuMany = (userId, eventId, params) => axios.get(`/Event/Ge
 
 const bookmark = (userId, menuId) => axios.post(`/BookMark/User/${userId}/Menu/${menuId}`);
 
+const removeBookmark = (userId, menuId) => axios.delete(`/BookMark/User/${userId}/Menu/${menuId}`);
+
 const fetchBookmarkMany = userId => axios.get(`/Menu/User/${userId}/Bookmark`);
 
 const cancelBrandOrder = orderLineId => axios.post(`/Paypal/Refund/${orderLineId}`);
@@ -312,6 +314,7 @@ export default {
   fetchEventPlannerDetail,
   fetchSuggestedMenuMany,
   bookmark,
+  removeBookmark,
   fetchBookmarkMany,
   cancelBrandOrder,
   approveBrandOrder,

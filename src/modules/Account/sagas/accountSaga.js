@@ -98,9 +98,9 @@ function* registerUserToFirebaseNoti({ payload: { account } }) {
   }
 }
 
-function* fetchUserBookmarkMenuIds({ payload: { account } }) {
+function* fetchUserBookmarkMenuIds() {
   try {
-    const { user: { id } } = account;
+    const id = yield select(getUserId);
     const { data } = yield call(Api.fetchUserBookmarkMenuIdMany, id);
 
     yield put(fetchUserBookmarkMenuIdManySuccess(data));
@@ -119,7 +119,7 @@ function* afterLoginSuccess(action) {
   yield fork(persistAuthentication, account);
   yield fork(configAxiosAuthHeader, account.token);
   yield fork(registerUserToFirebaseNoti, action);
-  yield fork(fetchUserBookmarkMenuIds, action);
+  yield fork(fetchUserBookmarkMenuIds);
 }
 
 function* watchLoginSuccess() {
