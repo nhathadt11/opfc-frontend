@@ -15,7 +15,7 @@ class GalleryTab extends React.Component {
     previewImage: '',
     fileList: [{
       uid: '-1',
-      name: 'xxx.png',
+      name: 'photo.png',
       status: 'done',
       url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
     }],

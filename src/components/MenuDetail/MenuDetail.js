@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react';
 import {
   Row, Col, Tag, Button, Icon, Affix, Rate, message,
 } from 'antd';
-import { map, isEmpty, some } from 'lodash';
+import {
+  map, isEmpty, some, slice,
+} from 'lodash';
 import { withRouter } from 'react-router-dom';
 import {
   shape, func, number, arrayOf, bool,
@@ -149,6 +151,13 @@ class MenuDetail extends Component {
     return some(bookmarkMenuIdList, id => id === menuDetail.id);
   }
 
+  getThumbnailPhoto = () => {
+    const { menuDetail } = this.props;
+
+    return (menuDetail.photo && menuDetail.photo[0])
+    || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
+  }
+
   render() {
     const {
       history: { push }, menuDetail,
@@ -160,9 +169,9 @@ class MenuDetail extends Component {
       <div>
         <Row type="flex" className="opfc-menu-detail">
           <Col className="opfc-menu-detail-image">
-            <img src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" width="100%" alt="Product detail" />
+            <img src={this.getThumbnailPhoto()} width="100%" alt="Product detail" />
             <div className="opfc-menu-detail-gallery">
-              <Gallery />
+              <Gallery photoList={slice(menuDetail.photo, 1)} />
             </div>
           </Col>
           <Col className="opfc-menu-detail-main">

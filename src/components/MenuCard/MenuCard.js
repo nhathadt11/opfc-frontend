@@ -24,6 +24,8 @@ const getCategoryNameSingle = (menu) => {
   return 'N/A';
 };
 
+const getThumbnailPhoto = ({ photo }) => (!isEmpty(photo) ? photo[0] : 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png');
+
 const MenuCard = ({ loading, history, menu }) => (
   <Card
     loading={loading}
@@ -31,7 +33,7 @@ const MenuCard = ({ loading, history, menu }) => (
     hoverable
     bordered={false}
     className="opfc-menu-card"
-    cover={<img className="ofpc-menu-image-cover" alt="example" src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" />}
+    cover={<img className="ofpc-menu-image-cover" alt="example" src={getThumbnailPhoto(menu)} />}
     onClick={() => history.push(`/menus/${menu.id}`)}
   >
     <CatergoryLabelStyled>{getCategoryNameSingle(menu)}</CatergoryLabelStyled>

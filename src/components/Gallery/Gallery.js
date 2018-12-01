@@ -1,16 +1,20 @@
 import React from 'react';
 import { Upload, Modal } from 'antd';
+import { arrayOf, string } from 'prop-types';
+import { map, isEmpty } from 'lodash';
 
 class Gallery extends React.Component {
+  static propTypes = {
+    photoList: arrayOf(string),
+  }
+
+  static defaultProps = {
+    photoList: [],
+  }
+
   state = {
     previewVisible: false,
     previewImage: '',
-    fileList: [{
-      uid: '-1',
-      name: 'xxx.png',
-      status: 'done',
-      url: 'https://66.media.tumblr.com/8656631b418bf0abeca3a1369882156c/tumblr_pfc6r4M06l1r8jkpuo1_1280.jpg',
-    }],
   };
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -22,10 +26,22 @@ class Gallery extends React.Component {
     });
   }
 
-  handleChange = ({ fileList }) => this.setState({ fileList })
+  // handleChange = ({ fileList }) => this.setState({ fileList })
 
   render() {
-    const { previewVisible, previewImage, fileList } = this.state;
+    const { photoList } = this.props;
+    const { previewVisible, previewImage } = this.state;
+    const fileList = !isEmpty(photoList) ? map(photoList, (p, idx) => ({
+      uid: idx,
+      name: 'photo.png',
+      status: 'done',
+      url: p,
+    })) : [{
+      uid: '-1',
+      name: 'photo.png',
+      status: 'done',
+      url: 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png',
+    }];
 
     return (
       <div className="clearfix">
@@ -34,7 +50,7 @@ class Gallery extends React.Component {
           listType="picture-card"
           fileList={fileList}
           onPreview={this.handlePreview}
-          onChange={this.handleChange}
+          // onChange={this.handleChange}
           showUploadList={{ showRemoveIcon: false }}
         />
         <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
