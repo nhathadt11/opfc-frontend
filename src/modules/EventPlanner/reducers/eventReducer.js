@@ -12,7 +12,14 @@ import {
   CREATE_ORDER_REQUEST, CREATE_ORDER_FAILURE, CREATE_ORDER_SUCCESS,
   DESELECT_MENU_ALL, DESELECT_MENU, SELECT_MENU_MANY, CHANGE_SUGGESTED_MENU_MANY_PARAMS,
   SAVE_CART_ITEM_NOTE,
+  SELECT_COMBO_GUID,
 } from '../actions/planningFlow';
+
+const initialParams = {
+  page: 1,
+  size: 10,
+  total: 0,
+};
 
 const initialState = {
   eventList: [],
@@ -22,13 +29,10 @@ const initialState = {
   fetchingEventDetail: false,
   currentStep: 0,
   selectedMenuList: [],
+  selectedGuid: null,
   suggestedMenuList: [],
   cartItemNotes: {},
-  params: {
-    page: 1,
-    size: 10,
-    total: 0,
-  },
+  params: initialParams,
   ratingModalVisible: false,
   rate: {},
 };
@@ -99,7 +103,7 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
     case SELECT_MENU_MANY: {
       return {
         ...state,
-        selectedMenuList: [...state.selectedMenuList, ...payload.menus],
+        selectedMenuList: payload.menus,
       };
     }
     case FETCH_EVENT_MANY_REQUEST: {
@@ -125,6 +129,11 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         event: payload.event,
+        selectedMenuList: [],
+        selectedGuid: null,
+        suggestedMenuList: [],
+        cartItemNotes: {},
+        params: initialParams,
       };
     }
     case DESELECT_EVENT: {
@@ -216,6 +225,12 @@ const eventPlannerReducer = (state = initialState, { type, payload }) => {
           ...state.cartItemNotes,
           [payload.menuId]: payload.note,
         },
+      };
+    }
+    case SELECT_COMBO_GUID: {
+      return {
+        ...state,
+        selectedGuid: payload.guid,
       };
     }
     default:

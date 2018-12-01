@@ -5,14 +5,15 @@ import {
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import {
-  arrayOf, shape, bool, func, number,
+  arrayOf, shape, bool, func, number, string,
 } from 'prop-types';
 import { map, isEmpty } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import MenuCardGrid from '../../../../containers/MenuCardGrid/MenuCardGrid';
-import { selectMenuMany, changeSuggestedMenuManyPage } from '../../actions/planningFlow';
+import { selectMenuMany, changeSuggestedMenuManyPage, selectComboGuid } from '../../actions/planningFlow';
 import { ComboTotalStyled, ComnoTotalTitleStyled } from './EventPlannerSuggestionMenu.styled';
 import './EventPlannerSuggestedMenu.css';
+import LocalIcon from '../../../../fonts/LocalFont';
 
 const NoSuggestedMenu = withRouter(({ history }) => (
   <div className="opfc-no-suggested-menu">
@@ -22,7 +23,9 @@ const NoSuggestedMenu = withRouter(({ history }) => (
 ));
 
 const EventPlannerSuggestedMenu = ({
-  suggestedMenuList, fetching, selectMenuManyAction, params, changeSuggestedMenuManyPageAction,
+  suggestedMenuList, fetching, selectMenuManyAction,
+  params, changeSuggestedMenuManyPageAction, selectComboGuidAction,
+  selectedGuid,
 }) => (
   <Fragment>
     <Spin spinning={fetching}>
@@ -36,7 +39,15 @@ const EventPlannerSuggestedMenu = ({
                 className="opfc-combo-menu-card"
                 actions={[
                   <span />,
-                  <Button type="default" onClick={() => selectMenuManyAction(m.menus)}><Icon type="plus" />Add</Button>,
+                  <Button
+                    type={selectedGuid === m.guid ? 'primary' : 'default'}
+                    onClick={() => {
+                      selectMenuManyAction(m.menus);
+                      selectComboGuidAction(m.guid);
+                    }}
+                  ><LocalIcon type="icon-spoon" />
+                    Taste it
+                  </Button>,
                   <Fragment>
                     <ComnoTotalTitleStyled>Total: </ComnoTotalTitleStyled>
                     <ComboTotalStyled>{m.comboTotal}</ComboTotalStyled>
@@ -68,17 +79,25 @@ EventPlannerSuggestedMenu.propTypes = {
     total: number,
   }).isRequired,
   changeSuggestedMenuManyPageAction: func.isRequired,
+  selectComboGuidAction: func.isRequired,
+  selectedGuid: string,
+};
+
+EventPlannerSuggestedMenu.defaultProps = {
+  selectedGuid: null,
 };
 
 const mapStateToProps = state => ({
   suggestedMenuList: state.eventPlannerReducer.event.suggestedMenuList,
   fetching: state.eventPlannerReducer.event.fetching,
   params: state.eventPlannerReducer.event.params,
+  selectedGuid: state.eventPlannerReducer.event.selectedGuid,
 });
 
 const mapDispatchToProps = {
   selectMenuManyAction: selectMenuMany,
   changeSuggestedMenuManyPageAction: changeSuggestedMenuManyPage,
+  selectComboGuidAction: selectComboGuid,
 };
 
 export default compose(
