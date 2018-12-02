@@ -32,10 +32,11 @@ export const createMealFailure = error => ({
   },
 });
 
-export const deleteMealRequest = id => ({
+export const deleteMealRequest = (id, success) => ({
   type: DELETE_MEAL_REQUEST,
   payload: {
     id,
+    success,
   },
 });
 

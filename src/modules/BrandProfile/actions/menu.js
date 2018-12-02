@@ -28,10 +28,11 @@ export const createMenuFailure = error => ({
   },
 });
 
-export const deleteMenuRequest = id => ({
+export const deleteMenuRequest = (id, success) => ({
   type: DELETE_MENU_REQUEST,
   payload: {
     id,
+    success,
   },
 });
 

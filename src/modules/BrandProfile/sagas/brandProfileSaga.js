@@ -16,7 +16,8 @@ import {
 import {
   FETCH_BRAND_DETAIL_REQUEST, fetchBrandDetailSuccess, fetchBrandDetailFailure,
   FETCH_BRAND_MENU_MANY_REQUEST, FETCH_BRAND_MEAL_MANY_REQUEST, fetchBrandMealManySuccess,
-  fetchBrandMenuManySuccess, fetchBrandMealManyRequest,
+  fetchBrandMenuManySuccess, fetchBrandMealManyRequest, fetchBrandDetailRequest,
+  fetchBrandMenuManyRequest,
 } from '../actions/brand';
 import {
   FETCH_ORDER_MANY_REQUEST, fetchOrderManyFailure, fetchOrderManySuccess,
@@ -43,6 +44,7 @@ function* createMeal({ payload: { meal, onSuccess } }) {
     yield put(createMealSuccess(response.data));
 
     yield put(fetchBrandMealManyRequest(brandId));
+    yield put(fetchBrandDetailRequest(brandId));
   } catch (error) {
     message.error(meal.id ? 'Could not update meal' : 'Could not create meal');
     yield put(createMealFailure(error));
@@ -67,11 +69,17 @@ function* watchFetchMealMany() {
   yield takeLatest(FETCH_MEAL_MANY_REQUEST, fetchMealMany);
 }
 
-function* deleteMenu({ payload: { id } }) {
+function* deleteMenu({ payload: { id, success } }) {
   try {
     yield call(Api.deleteMenu, id);
+
     message.success('Delete menu successfully!');
+    if (isFunction(success)) success();
     yield put(deleteMenuSuccess());
+
+    const brandId = yield select(getBrandId);
+    yield put(fetchBrandMenuManyRequest(brandId));
+    yield put(fetchBrandDetailRequest(brandId));
   } catch (error) {
     message.error('Could not delete menu');
     yield put(deleteMenuFailure(error));
@@ -137,7 +145,8 @@ function* createMenu({ payload: { menu, success } }) {
     if (isFunction(success)) success(response.data);
     message.success(successMessage);
     yield put(createMenuSuccess(response.data));
-    yield fork(fetchBrandMenu, { payload: { id: brandId } });
+    yield put(fetchBrandMenuManyRequest(brandId));
+    yield put(fetchBrandDetailRequest(brandId));
   } catch (error) {
     message.error(menu.id ? 'Could not update menu' : 'Could not create menu');
     yield put(createMenuFailure(error));
@@ -148,12 +157,17 @@ function* watchCreateMenu() {
   yield takeEvery(CREATE_MENU_REQUEST, createMenu);
 }
 
-function* deleteMeal({ payload: { id } }) {
+function* deleteMeal({ payload: { id, success } }) {
   try {
     yield call(Api.deleteMeal, id);
+
     message.success('Delete meal successfully!');
+    if (isFunction(success)) success();
     yield put(deleteMealSuccess());
-    yield fork(fetchBrandMealMany);
+
+    const brandId = yield select(getBrandId);
+    yield put(fetchBrandMealManyRequest(brandId));
+    yield put(fetchBrandDetailRequest(brandId));
   } catch (error) {
     message.error('Could not delete meal');
     yield put(deleteMealFailure(error));

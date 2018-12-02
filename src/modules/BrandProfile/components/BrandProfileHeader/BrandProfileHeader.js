@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, shape } from 'prop-types';
+import { string, shape, number } from 'prop-types';
 import {
   Row, Avatar, Col, Icon,
 } from 'antd';
@@ -18,7 +18,7 @@ IconText.propTypes = {
   text: string.isRequired,
 };
 
-const BrandProfileHeader = ({ brand }) => (
+const BrandProfileHeader = ({ brand, mealCount, menuCount }) => (
   <Row type="flex" gutter={64} className="opfc-brand-profile-header">
     <Col>
       <Avatar size={128} icon="user" src={brand.avatar} />
@@ -28,13 +28,13 @@ const BrandProfileHeader = ({ brand }) => (
       <p>
         <StatSpanStyled>
           <StatSpanNumberStyled>
-            {(brand.brandSummary && brand.brandSummary.menuCount) || 0}
+            {menuCount}
           </StatSpanNumberStyled>
           <span>Menus</span>
         </StatSpanStyled>
         <StatSpanStyled>
           <StatSpanNumberStyled>
-            {(brand.brandSummary && brand.brandSummary.mealCount) || 0}
+            {mealCount}
           </StatSpanNumberStyled>
           <span>Meals</span>
         </StatSpanStyled>
@@ -67,6 +67,8 @@ const BrandProfileHeader = ({ brand }) => (
 
 BrandProfileHeader.propTypes = {
   brand: shape({}).isRequired,
+  mealCount: number.isRequired,
+  menuCount: number.isRequired,
 };
 
 export default BrandProfileHeader;

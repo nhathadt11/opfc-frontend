@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { func, shape, bool } from 'prop-types';
+import {
+  func, shape, bool, number,
+} from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import BrandProfileHeader from './components/BrandProfileHeader/BrandProfileHeader';
 import BrandProfileContent from './components/BrandProfileContent/BrandProfileContent';
@@ -18,6 +20,8 @@ class BrandProfile extends Component {
     match: shape({}).isRequired,
     profiling: bool,
     loggedInBrand: shape({}).isRequired,
+    menuTotal: number.isRequired,
+    mealTotal: number.isRequired,
   }
 
   static defaultProps = {
@@ -46,11 +50,13 @@ class BrandProfile extends Component {
   }
 
   render() {
-    const { brand, profiling } = this.props;
+    const {
+      brand, profiling, menuTotal, mealTotal,
+    } = this.props;
 
     return (
       <BrandProfileStyled>
-        <BrandProfileHeader brand={brand} />
+        <BrandProfileHeader brand={brand} mealCount={mealTotal} menuCount={menuTotal} />
         <BrandProfileContent profiling={profiling} />
       </BrandProfileStyled>
     );
@@ -60,6 +66,8 @@ class BrandProfile extends Component {
 const mapStateToProps = state => ({
   brand: state.brandProfileReducer.brand.brandDetail,
   loggedInBrand: state.accountReducer.account.account.brand,
+  menuTotal: state.brandProfileReducer.brand.menuTotal,
+  mealTotal: state.brandProfileReducer.brand.mealTotal,
 });
 
 const mapDispatchToProps = {

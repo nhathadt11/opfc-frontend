@@ -15,13 +15,15 @@ import { MealDescriptionStyled } from './MenuCard.styled';
 const MealCard = ({
   meal, showCreateMealModalAction, deleteMealRequestAction, profiling,
 }) => {
-  const confirmDelete = () => Modal.confirm({
-    title: 'Delete Meal',
-    content: 'Are you sure to delete this meal?',
-    okText: 'Delete',
-    cancelText: 'Cancel',
-    onOk: () => deleteMealRequestAction(meal.id),
-  });
+  const confirmDelete = () => {
+    const modal = Modal.confirm({
+      title: 'Delete Meal',
+      content: 'Are you sure to delete this meal?',
+      okText: 'Delete',
+      cancelText: 'Cancel',
+      onOk: () => deleteMealRequestAction(meal.id, modal.destroy),
+    });
+  };
 
   return (
     <Card hoverable style={{ height: '100%' }}>
