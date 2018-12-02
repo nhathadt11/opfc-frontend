@@ -40,7 +40,7 @@ class CreateMenuModal extends Component {
 
     if (!isEmpty(nextProps.selectedMenu)) {
       this.setState({
-        uploadedFileList: map(selectedMenu.photos, photo => ({
+        uploadedFileList: map(selectedMenu.photo, photo => ({
           uid: photo,
           name: 'photo',
           url: photo,
@@ -228,7 +228,7 @@ class CreateMenuModal extends Component {
                     {
                       map(
                         eventTypeList,
-                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>,
+                        t => <Select.Option key={t.id} value={t.id}>{t.eventTypeName}</Select.Option>, //eslint-disable-line
                       )
                     }
                   </Select>,
