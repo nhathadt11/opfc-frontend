@@ -1,5 +1,5 @@
 .opfc-combo-menu-card:not(:first-child) {
-  margin-top: 15px;
+  /* margin-top: 15px; */
 }
 
 .opfc-combo-menu-card > .ant-card-body {
