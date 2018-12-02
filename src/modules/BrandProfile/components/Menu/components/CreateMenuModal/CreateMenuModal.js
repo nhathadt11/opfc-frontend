@@ -46,8 +46,6 @@ class CreateMenuModal extends Component {
           url: photo,
         })),
       });
-    } else {
-      this.setState({ uploadedFileList: [] });
     }
   }
 
