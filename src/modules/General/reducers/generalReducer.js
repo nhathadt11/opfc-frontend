@@ -73,6 +73,11 @@ const generalReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         fullTextSearchValue: payload.text,
+        fullTextSearch: {
+          ...state.fullTextSearch,
+          value: payload.text,
+          page: 1,
+        },
         fetching: true,
       };
     case FETCH_EVENT_TYPE_MANY_SUCCESS:
