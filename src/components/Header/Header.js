@@ -11,12 +11,12 @@ import CreateProfileButton from '../Brand/CreateProfileButton/CreateProfileButto
 import { showLoginModal } from '../../modules/Account/actions/modal';
 import { showRatingModal } from '../../modules/EventPlanner/actions/planningFlow';
 import NotificationDropdown from './NotificationDropdown/NotificationDropdown';
-import { fetchMenuManyRequest } from '../../modules/General/actions/general';
+import { fetchMenuManyRequest, changeFullTextSearchCriteria } from '../../modules/General/actions/general';
 import ProfileDropdown from './ProfileDropdown/ProfileDropdown';
 
 const Header = ({
   history: { push }, account, loggedIn,
-  showLoginModalAction, fetchMenuManyRequestAction,
+  showLoginModalAction, fetchMenuManyRequestAction, changeFullTextSearchCriteriaAction,
 }) => (
   <Layout.Header className="header">
     <LogoStyled src="/tasty.png" alt="Logo" onClick={() => push('/')} />
@@ -32,6 +32,7 @@ const Header = ({
         onSearch={(value) => {
           push('/');
           fetchMenuManyRequestAction(value);
+          changeFullTextSearchCriteriaAction('page', 1);
         }}
       />
     </div>
@@ -71,6 +72,7 @@ Header.propTypes = {
   loggedIn: bool.isRequired,
   showLoginModalAction: func.isRequired,
   fetchMenuManyRequestAction: func.isRequired,
+  changeFullTextSearchCriteriaAction: func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -82,6 +84,7 @@ const mapDispatchToProps = {
   showLoginModalAction: showLoginModal,
   showRatingModalAction: showRatingModal,
   fetchMenuManyRequestAction: fetchMenuManyRequest,
+  changeFullTextSearchCriteriaAction: changeFullTextSearchCriteria,
 };
 
 export default compose(

@@ -76,7 +76,6 @@ const generalReducer = (state = initialState, { type, payload }) => {
         fullTextSearch: {
           ...state.fullTextSearch,
           value: payload.text,
-          page: 1,
         },
         fetching: true,
       };
