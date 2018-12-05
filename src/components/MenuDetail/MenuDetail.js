@@ -299,7 +299,7 @@ class MenuDetail extends Component {
                     <section>
                       {percentage(
                         brandSummary.diffVateriesCount,
-                        brandSummary.TotalDiffVateries,
+                        brandSummary.totalDiffVateries,
                       )}
                     </section>
                   </Col>
