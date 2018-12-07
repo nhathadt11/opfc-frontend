@@ -1,3 +1,11 @@
 .opfc-review-list {
   min-height: 150px;
 }
+
+.opfc-review-menu-name {
+  margin: 25px 20px;
+}
+
+.opfc-review-post {
+  margin-bottom: 30px;
+}

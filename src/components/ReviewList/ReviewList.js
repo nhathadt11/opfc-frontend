@@ -17,10 +17,10 @@ const ReviewList = ({
   menuName, dataList, fetching, totalRating, averageRatingPoint,
 }) => (
   <ReviewListStyled>
-    <Row>
+    <Row className="opfc-review-menu-name">
       <h2>Reviews for menu {menuName || 'N/A'}</h2>
     </Row>
-    <Row>
+    <Row className="opfc-review-post">
       <Col span={6} className="opfc-rating-overall">
         <h4>Overall</h4>
         <div className="opfc-rating-overall-point">{averageRatingPoint.toFixed(1)}/5</div>
