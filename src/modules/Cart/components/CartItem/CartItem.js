@@ -6,6 +6,7 @@ import { shape, arrayOf, func } from 'prop-types';
 import { map } from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import './CartItem.css';
 import LocalIcon from '../../../../fonts/LocalFont';
 import {
@@ -47,6 +48,9 @@ class CartItem extends Component {
     deselectMenuAction: func.isRequired,
     saveCartItemNoteAction: func.isRequired,
     cartItemNotes: shape({}).isRequired,
+    history: shape({
+      push: func.isRequired,
+    }).isRequired,
   }
 
   state = {
@@ -86,7 +90,7 @@ class CartItem extends Component {
   }
 
   render() {
-    const { menu, deselectMenuAction } = this.props;
+    const { menu, deselectMenuAction, history: { push } } = this.props;
     const { editing, note } = this.state;
 
     return (
@@ -96,7 +100,7 @@ class CartItem extends Component {
         </Col>
         <Col span={4}>
           <div>
-            <MenuNameStyled>{menu.menuName}</MenuNameStyled>
+            <MenuNameStyled onClick={() => push(`/menus/${menu.id}`)}>{menu.menuName}</MenuNameStyled>
             <ByBrandNameStyled>by {menu.brandName || 'N/A'}</ByBrandNameStyled>
             <section>
               <span><LocalIcon type="icon-dish" /> x {menu.mealList ? menu.mealList.length : 0}</span>
@@ -188,4 +192,5 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(CartItem);

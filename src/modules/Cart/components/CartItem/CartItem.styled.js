@@ -3,6 +3,10 @@ import styled from 'styled-components';
 export const MenuNameStyled = styled.div`
   font-weight: 600;
   font-size: 16px;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `;
 
 export const ByBrandNameStyled = styled.div`
