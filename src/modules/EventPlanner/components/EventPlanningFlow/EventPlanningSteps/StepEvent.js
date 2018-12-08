@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { map } from 'lodash';
 import { withRouter } from 'react-router-dom';
+import PlacesAutocomplete from 'react-places-autocomplete';
 import './StepEvent.css';
 import { createEventRequest, fetchEventDetailRequest } from '../../../actions/event';
 import { cascaderFilter } from '../../../../../utils/Utils';
@@ -164,7 +165,37 @@ class StepEvent extends Component {
                   initialValue: selectedEvent.address,
                   rules: [{ required: true, message: 'Address is required!' }],
                 })(
-                  <Input />,
+                  <PlacesAutocomplete>
+                    {({
+                      getInputProps, getSuggestionItemProps, suggestions, loading,
+                    }) => (
+                      <div className="autocomplete-root">
+                        <Input {...getInputProps()} />
+                        <div className="autocomplete-dropdown-container">
+                          {loading && <div>Loading...</div>}
+                          {suggestions.map((suggestion) => {
+                            const className = suggestion.active
+                              ? 'suggestion-item--active'
+                              : 'suggestion-item';
+                            // inline style for demonstration purpose
+                            const style = suggestion.active
+                              ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                              : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                            return (
+                              <div
+                                {...getSuggestionItemProps(suggestion, {
+                                  className,
+                                  style,
+                                })}
+                              >
+                                <span>{suggestion.description}</span>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </PlacesAutocomplete>,
                 )
               }
             </Form.Item>
