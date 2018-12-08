@@ -5,6 +5,9 @@ import {
   EventPlannerOrderDetailLineStyled, MenuNameStyled, OrderItemPriceLabel, OrderItemShippingFeeLabel,
 } from './EventPlannerOrderDetail.styled';
 
+const getThumbnailPhoto = menuDetail => (menuDetail.photo && menuDetail.photo[0])
+  || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
+
 const EventPlannerOrderDetailLine = ({ data }) => (
   <EventPlannerOrderDetailLineStyled>
     <Row>
@@ -12,7 +15,7 @@ const EventPlannerOrderDetailLine = ({ data }) => (
     </Row>
     <Row type="flex" className="opfc-order-detail-item" gutter={24}>
       <Col>
-        <img src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" width={80} alt="Menu" />
+        <img src={getThumbnailPhoto(data)} width={80} alt="Menu" />
       </Col>
       <Col className="opfc-order-detail-meal-list">
         <List

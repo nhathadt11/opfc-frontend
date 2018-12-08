@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  List, Row, Col, Button, Affix,
+  List, Row, Col, Affix,
 } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { shape, func, arrayOf } from 'prop-types';
@@ -13,7 +13,7 @@ import {
 } from './Cart.styled';
 import './Cart.css';
 
-const Cart = ({ history: { push }, selectedMenuList }) => {
+const Cart = ({ selectedMenuList }) => {
   const subTotal = selectedMenuList.reduce((acc, menu) => acc + (menu.price || 0), 0);
   const totalShippingFee = selectedMenuList.reduce((acc, menu) => acc + (menu.shippingFee || 0), 0);
   const total = subTotal + totalShippingFee;
@@ -60,9 +60,6 @@ const Cart = ({ history: { push }, selectedMenuList }) => {
 };
 
 Cart.propTypes = {
-  history: shape({
-    push: func.isRequired,
-  }).isRequired,
   selectedMenuList: arrayOf(shape({})).isRequired,
 };
 

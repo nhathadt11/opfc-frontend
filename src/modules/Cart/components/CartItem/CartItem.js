@@ -78,6 +78,13 @@ class CartItem extends Component {
     return cartItemNotes[menu.id];
   }
 
+  getThumbnailPhoto = () => {
+    const { menu } = this.props;
+
+    return (menu.photo && menu.photo[0])
+    || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
+  }
+
   render() {
     const { menu, deselectMenuAction } = this.props;
     const { editing, note } = this.state;
@@ -85,7 +92,7 @@ class CartItem extends Component {
     return (
       <Row type="flex" gutter={24} className="opfc-cart-item">
         <Col>
-          <img src="https://66.media.tumblr.com/a2f0c1471f30dd3e89325ee9f6b86bc8/tumblr_pflxnarapM1sxuwguo1_640.jpg" alt="Menu" width={120} />
+          <img src={this.getThumbnailPhoto()} alt="Menu" width={120} />
         </Col>
         <Col span={4}>
           <div>
