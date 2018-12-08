@@ -31,7 +31,7 @@ import { showLoginModal } from '../../modules/Account/actions/modal';
 
 const percentage = (count, total) => {
   if (!count) return 'N/A';
-  return (total / count).toFixed();
+  return `${(total / count / 5 * 100).toFixed()}%`;
 };
 
 const MealList = ({ data }) => (
