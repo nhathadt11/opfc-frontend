@@ -87,6 +87,7 @@ const createBrand = (userAndBrand) => {
     brandName: userAndBrand.brandName,
     phone: userAndBrand.publicPhone,
     email: userAndBrand.publicEmail,
+    payPalEmail: userAndBrand.payPalEmail,
     serviceLocationIds: userAndBrand.serviceLocationIds,
   };
 

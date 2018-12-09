@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Api from '../../../../api/Api';
 import { updateBrandInformationRequest } from '../../actions/settings';
 import { cascaderFilter } from '../../../../utils/Utils';
+import './BrandInformation.css';
 
 const FormItem = Form.Item;
 
@@ -132,18 +133,14 @@ class BrandInformation extends Component {
             </Upload>
             <FormItem label="Bio">
               {
-                getFieldDecorator('description', {
-                  rules: [{
-                    required: true, message: 'Bio is required!',
-                  }],
-                })(
+                getFieldDecorator('description')(
                   <Input.TextArea style={{ width: 200 }} />,
                 )
               }
             </FormItem>
           </Col>
           <Col>
-            <FormItem label="Hotline">
+            <FormItem label="Hotline" className="opfc-brand-information-form-item">
               {
                 getFieldDecorator('phone', {
                   rules: [{
@@ -157,7 +154,7 @@ class BrandInformation extends Component {
                 )
               }
             </FormItem>
-            <FormItem label="Email">
+            <FormItem label="Email" className="opfc-brand-information-form-item">
               {
                 getFieldDecorator('email', {
                   rules: [{
@@ -170,7 +167,20 @@ class BrandInformation extends Component {
                 )
               }
             </FormItem>
-            <FormItem label="Number of member">
+            <FormItem label="PayPal Email" className="opfc-brand-information-form-item">
+              {
+                getFieldDecorator('payPalEmail', {
+                  rules: [{
+                    required: true, message: 'PayPal Email is required!',
+                  }, {
+                    type: 'email', message: 'The input is not valid Email!',
+                  }],
+                })(
+                  <Input />,
+                )
+              }
+            </FormItem>
+            <FormItem label="Number of member" className="opfc-brand-information-form-item">
               {
                 getFieldDecorator('participantNumber', {
                   rules: [{
@@ -184,6 +194,7 @@ class BrandInformation extends Component {
             <Row>
               <FormItem
                 label="City and District"
+                className="opfc-brand-information-form-item"
               >
                 {getFieldDecorator('cityDistrict', {
                   rules: [{ type: 'array', required: true, message: 'Please select City and District!' }],
