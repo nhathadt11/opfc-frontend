@@ -34,14 +34,24 @@ class BrandProfileContent extends Component {
     profiling: false,
   }
 
+  state = {
+    stateActiveTab: '1',
+  }
+
   handleActiveTabChange = (key) => {
-    const { history: { push } } = this.props;
-    push(key);
+    const { history: { push }, profiling } = this.props;
+
+    if (profiling) {
+      push(key);
+    } else {
+      this.setState({ stateActiveTab: key });
+    }
   }
 
   render() {
     const { showCreateMenuModalAction, showCreateMealModalAction, profiling } = this.props;
     const { match: { params: { tab } } } = this.props;
+    const { stateActiveTab } = this.state;
     const operations = {
       menu: <Button onClick={() => showCreateMenuModalAction()}><Icon type="plus" /></Button>,
       meal: <Button onClick={() => showCreateMealModalAction()}><Icon type="plus" /></Button>,
@@ -49,22 +59,22 @@ class BrandProfileContent extends Component {
 
     return (
       <Tabs
-        defaultActiveKey="/profile/brand"
+        defaultActiveKey={profiling ? '/profile/brand' : '1'}
         size="large"
         className="opfc-brand-profile-content"
         tabBarExtraContent={profiling && operations[tab]}
         onChange={this.handleActiveTabChange}
-        activeKey={tab}
+        activeKey={profiling ? tab : stateActiveTab}
       >
         <TabPane
           tab={<span><LocalIcon type="icon-menu" />Menu</span>}
-          key="menu"
+          key={profiling ? 'menu' : '1'}
         >
           <MenuTab profiling={profiling} />
         </TabPane>
         <TabPane
           tab={<span><LocalIcon type="icon-dish" />Meal</span>}
-          key="meal"
+          key={profiling ? 'meal' : '2'}
         >
           <MealTab profiling={profiling} />
         </TabPane>
@@ -78,7 +88,7 @@ class BrandProfileContent extends Component {
           profiling && (
             <TabPane
               tab={<span><Icon type="form" />Order</span>}
-              key="order"
+              key={profiling ? 'order' : '4'}
             >
               <OrderTab />
             </TabPane>
