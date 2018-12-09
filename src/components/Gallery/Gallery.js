@@ -2,6 +2,7 @@ import React from 'react';
 import { Upload, Modal } from 'antd';
 import { arrayOf, string } from 'prop-types';
 import { map, isEmpty } from 'lodash';
+import { MENU_PHOTO_PLACHOLDER } from '../../constants/AppConstants';
 
 class Gallery extends React.Component {
   static propTypes = {
@@ -40,7 +41,7 @@ class Gallery extends React.Component {
       uid: '-1',
       name: 'photo.png',
       status: 'done',
-      url: 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png',
+      url: MENU_PHOTO_PLACHOLDER,
     }];
 
     return (

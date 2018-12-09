@@ -157,6 +157,22 @@ class StepBrandInformation extends Component {
                 )
               }
             </FormItem>
+            <FormItem label="PayPal Email">
+              {
+                getFieldDecorator('payPalEmail', {
+                  initialValue: formValues.payPalEmail,
+                  rules: [{
+                    required: true, message: 'PayPal Email is required!',
+                  }, {
+                    type: 'email', message: 'The input is not valid Email!',
+                  }],
+                })(
+                  <Input
+                    onChange={e => onFormValueChange('payPalEmail', e.target.value)}
+                  />,
+                )
+              }
+            </FormItem>
             <FormItem label="Number of member">
               {
                 getFieldDecorator('participantNumber', {

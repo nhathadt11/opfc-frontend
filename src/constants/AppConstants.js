@@ -24,3 +24,5 @@ export const EVENT_STATUS = {
   PLANNING: 1,
   PLANNED: 2,
 };
+
+export const MENU_PHOTO_PLACHOLDER = 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';

@@ -3,7 +3,9 @@ import {
   Row, Col, Button, Icon, Input, Modal, Tooltip,
 } from 'antd';
 import { shape, arrayOf, func } from 'prop-types';
-import { map } from 'lodash';
+import {
+  map, isEmpty, isArray, isString, split,
+} from 'lodash';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -16,6 +18,7 @@ import {
   MealListStyled,
 } from './CartItem.styled';
 import { deselectMenu, saveCartItemNote } from '../../../EventPlanner/actions/planningFlow';
+import { MENU_PHOTO_PLACHOLDER } from '../../../../constants/AppConstants';
 
 // const { RangePicker } = DatePicker;
 const { TextArea } = Input;
@@ -85,9 +88,12 @@ class CartItem extends Component {
   getThumbnailPhoto = () => {
     const { menu } = this.props;
 
-    return (menu.photo && menu.photo[0])
-    || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
-  }
+    if (isEmpty(menu.photo)) return MENU_PHOTO_PLACHOLDER;
+    if (isArray(menu.photo)) return menu.photo[0];
+    if (isString(menu.photo)) return split(menu.photo, ';')[0];
+
+    return MENU_PHOTO_PLACHOLDER;
+  };
 
   render() {
     const { menu, deselectMenuAction, history: { push } } = this.props;

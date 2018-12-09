@@ -4,13 +4,16 @@ import {
 } from 'antd';
 import { bool, shape, func } from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import {
+  isEmpty, isString, isArray, split,
+} from 'lodash';
 import {
   MenuCardTitleStyled, CatergoryLabelStyled, MenuCardContentStyled,
   ByStyled, BrandNameStyled,
 } from './MenuCard.styled';
 import LocalIcon from '../../fonts/LocalFont';
 import './MenuCard.css';
+import { MENU_PHOTO_PLACHOLDER } from '../../constants/AppConstants';
 
 const colorList = ['#78aea4', '#c9b6c7', '#ffd6d6', '#86dbc7', '#ae5d75'];
 const randomRage = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,7 +27,13 @@ const getCategoryNameSingle = (menu) => {
   return 'N/A';
 };
 
-const getThumbnailPhoto = ({ photo }) => (!isEmpty(photo) ? photo[0] : 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png');
+const getThumbnailPhoto = ({ photo }) => {
+  if (isEmpty(photo)) return MENU_PHOTO_PLACHOLDER;
+  if (isArray(photo)) return photo[0];
+  if (isString(photo)) return split(photo, ';')[0];
+
+  return MENU_PHOTO_PLACHOLDER;
+};
 
 const MenuCard = ({ loading, history, menu }) => (
   <Card

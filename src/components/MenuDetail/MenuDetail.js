@@ -3,7 +3,7 @@ import {
   Row, Col, Tag, Button, Icon, Affix, Rate, message,
 } from 'antd';
 import {
-  map, isEmpty, some, slice,
+  map, isEmpty, some, slice, isArray, isString, split,
 } from 'lodash';
 import { withRouter } from 'react-router-dom';
 import {
@@ -22,6 +22,7 @@ import { fetchMenuRatingManyRequest, clearRatingList } from '../../modules/Ratin
 import { bookmarkRequest, removeBookmarkRequest } from '../../modules/Bookmark/actions/bookmark';
 import { ListTitleStyled } from './MenuDetail.styled';
 import { showLoginModal } from '../../modules/Account/actions/modal';
+import { MENU_PHOTO_PLACHOLDER } from '../../constants/AppConstants';
 
 // const tags = [
 //   { id: 0, name: 'wedding' },
@@ -154,9 +155,18 @@ class MenuDetail extends Component {
   getThumbnailPhoto = () => {
     const { menuDetail } = this.props;
 
-    return (menuDetail.photo && menuDetail.photo[0])
-    || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
+    return (menuDetail.photo && menuDetail.photo[0]) || MENU_PHOTO_PLACHOLDER;
   }
+
+  getThumbnailPhoto = () => {
+    const { menuDetail } = this.props;
+
+    if (isEmpty(menuDetail.photo)) return MENU_PHOTO_PLACHOLDER;
+    if (isArray(menuDetail.photo)) return menuDetail.photo[0];
+    if (isString(menuDetail.photo)) return split(menuDetail.photo, ';')[0];
+
+    return MENU_PHOTO_PLACHOLDER;
+  };
 
   render() {
     const {

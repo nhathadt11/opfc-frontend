@@ -38,6 +38,7 @@ export const OrderDetailStatusOverallWrapperStyled = styled.span`
 
 export const MenuNameStyled = styled.div`
   margin-bottom: 10px;
+  font-weight: 600;
 `;
 
 export const ByBrandNameStyled = styled.section`

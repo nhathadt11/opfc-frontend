@@ -2,11 +2,20 @@ import React from 'react';
 import { Row, Col, List } from 'antd';
 import { shape } from 'prop-types';
 import {
+  isEmpty, isArray, isString, split,
+} from 'lodash';
+import {
   EventPlannerOrderDetailLineStyled, MenuNameStyled, OrderItemPriceLabel, OrderItemShippingFeeLabel,
 } from './EventPlannerOrderDetail.styled';
+import { MENU_PHOTO_PLACHOLDER } from '../../../../../constants/AppConstants';
 
-const getThumbnailPhoto = menuDetail => (menuDetail.photo && menuDetail.photo[0])
-  || 'https://vanteacafe.com/img/placeholders/xcomfort_food_placeholder.png,qv=1.pagespeed.ic.x100Yi-Swz.png';
+const getThumbnailPhoto = ({ photo }) => {
+  if (isEmpty(photo)) return MENU_PHOTO_PLACHOLDER;
+  if (isArray(photo)) return photo[0];
+  if (isString(photo)) return split(photo, ';')[0];
+
+  return MENU_PHOTO_PLACHOLDER;
+};
 
 const EventPlannerOrderDetailLine = ({ data }) => (
   <EventPlannerOrderDetailLineStyled>
@@ -15,7 +24,7 @@ const EventPlannerOrderDetailLine = ({ data }) => (
     </Row>
     <Row type="flex" className="opfc-order-detail-item" gutter={24}>
       <Col>
-        <img src={getThumbnailPhoto(data)} width={80} alt="Menu" />
+        <img src={getThumbnailPhoto(data)} width={80} height={80} style={{ objectFit: 'contain' }} alt="Menu" />
       </Col>
       <Col className="opfc-order-detail-meal-list">
         <List
