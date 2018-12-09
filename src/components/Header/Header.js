@@ -44,7 +44,7 @@ const Header = ({
       {
         loggedIn ? (
           <Link to={
-              account.user.userRoleId === 2 ? '/profile/brand' : '/profile/event-planner/account'
+              account.user.userRoleId === 2 ? '/profile/brand/menu' : '/profile/event-planner/account'
             }
           >
             <ProfileDropdown>

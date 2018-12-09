@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Tabs, Button, Icon } from 'antd';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { func, bool } from 'prop-types';
+import {
+  func, bool, shape, string,
+} from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import LocalIcon from '../../../../fonts/LocalFont';
 import MenuTab from '../BrandProfileContentTabs/MenuTab/MenuTab';
 import MealTab from '../BrandProfileContentTabs/MealTab/MealTab';
@@ -19,43 +22,49 @@ class BrandProfileContent extends Component {
     showCreateMenuModalAction: func.isRequired,
     showCreateMealModalAction: func.isRequired,
     profiling: bool,
+    history: shape({
+      push: func.isRequired,
+    }).isRequired,
+    match: shape({
+      path: string,
+    }).isRequired,
   }
 
   static defaultProps = {
     profiling: false,
   }
 
-  state = {
-    activeTab: 1,
+  handleActiveTabChange = (key) => {
+    const { history: { push } } = this.props;
+    push(key);
   }
-
-  handleActiveTabChange = key => this.setState({ activeTab: key })
 
   render() {
     const { showCreateMenuModalAction, showCreateMealModalAction, profiling } = this.props;
-    const { activeTab } = this.state;
+    const { match: { params: { tab } } } = this.props;
     const operations = {
-      1: <Button onClick={() => showCreateMenuModalAction()}><Icon type="plus" /></Button>,
-      2: <Button onClick={() => showCreateMealModalAction()}><Icon type="plus" /></Button>,
+      menu: <Button onClick={() => showCreateMenuModalAction()}><Icon type="plus" /></Button>,
+      meal: <Button onClick={() => showCreateMealModalAction()}><Icon type="plus" /></Button>,
     };
 
     return (
       <Tabs
-        defaultActiveKey="1"
+        defaultActiveKey="/profile/brand"
         size="large"
         className="opfc-brand-profile-content"
-        tabBarExtraContent={profiling && operations[activeTab]}
+        tabBarExtraContent={profiling && operations[tab]}
         onChange={this.handleActiveTabChange}
+        activeKey={tab}
       >
         <TabPane
           tab={<span><LocalIcon type="icon-menu" />Menu</span>}
-          key="1"
+          key="menu"
         >
           <MenuTab profiling={profiling} />
         </TabPane>
         <TabPane
           tab={<span><LocalIcon type="icon-dish" />Meal</span>}
-          key="2"
+          key="meal"
         >
           <MealTab profiling={profiling} />
         </TabPane>
@@ -69,7 +78,7 @@ class BrandProfileContent extends Component {
           profiling && (
             <TabPane
               tab={<span><Icon type="form" />Order</span>}
-              key="4"
+              key="order"
             >
               <OrderTab />
             </TabPane>
@@ -87,4 +96,5 @@ const mapDispatchToProps = {
 
 export default compose(
   connect(undefined, mapDispatchToProps),
+  withRouter,
 )(BrandProfileContent);

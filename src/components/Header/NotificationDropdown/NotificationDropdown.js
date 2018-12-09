@@ -7,13 +7,33 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { map, isEmpty } from 'lodash';
 import moment from 'moment';
+import { withRouter } from 'react-router-dom';
 import { markNotificationAsReadRequest } from '../../../modules/Account/actions/notification';
 import './NotificationDropdown.css';
 import { NotificationContentStyled, NotificationTimeStyled } from './NotificationDropdown.styled';
+import { fetchEventPlannerOrderDetailRequest } from '../../../modules/EventPlanner/actions/order';
 
 const NotificationDropdown = ({
-  children, count, notificationList, markNotificationAsReadRequestAction,
+  children, count, notificationList,
+  markNotificationAsReadRequestAction,
+  fetchEventPlannerOrderDetailRequestAction,
+  history: { push },
 }) => {
+  const handleNotificationClick = (key, val) => {
+    if (!val['Read']) {
+      markNotificationAsReadRequestAction(key);
+    }
+
+    const verb = val['Verb'];
+    if (verb === 'approved' || verb === 'canceled') {
+      push(`/profile/event-planner/order/${val['Data']['OrderId']}`);
+      fetchEventPlannerOrderDetailRequestAction(val['Data']['OrderId']);
+    }
+    if (verb === 'requested for' || verb === 'marked as completed' || verb === 'marked as incompleted') {
+      push(`/profile/brand/order/${val['Data']['OrderId']}`);
+    }
+  };
+
   const menu = (
     <Menu className="opfc-notification-dropdown-menu">
       {
@@ -25,7 +45,7 @@ const NotificationDropdown = ({
           <Menu.Item
             key={key}
             className={`opfc-notification-item ${val['Read'] ? 'notification-item-read' : ''}`}
-            onClick={() => markNotificationAsReadRequestAction(key)}
+            onClick={() => handleNotificationClick(key, val)}
           >
             <NotificationContentStyled bold>
               {val['Subject']}
@@ -57,6 +77,10 @@ NotificationDropdown.propTypes = {
   count: number.isRequired,
   notificationList: arrayOf(shape({})).isRequired,
   markNotificationAsReadRequestAction: func.isRequired,
+  fetchEventPlannerOrderDetailRequestAction: func.isRequired,
+  history: shape({
+    push: func.isRequired,
+  }).isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -66,8 +90,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   markNotificationAsReadRequestAction: markNotificationAsReadRequest,
+  fetchEventPlannerOrderDetailRequestAction: fetchEventPlannerOrderDetailRequest,
 };
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
+  withRouter,
 )(NotificationDropdown);

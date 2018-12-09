@@ -34,7 +34,7 @@ const MainLayout = () => (
       <Route path="/brand/:id" component={BrandProfile} />
       <Route path="/menus/:id" component={MenuDetail} />
       <PrivateRoute path="/profile/event-planner" component={EventPlanner} />
-      <PrivateRoute path="/profile/brand" component={props => <BrandProfile {...props} profiling />} />
+      <PrivateRoute path="/profile/brand/:tab" component={props => <BrandProfile {...props} profiling />} />
       <PrivateRoute path="/profile/settings" component={BrandSettings} />
       <PrivateRoute path="/cart" component={Cart} />
       <PrivateRoute path="/checkout" component={Checkout} />

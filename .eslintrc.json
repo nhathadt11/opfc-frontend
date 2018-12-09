@@ -8,7 +8,8 @@
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "import/prefer-default-export": "off",
     "react/jsx-one-expression-per-line": "off",
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "dot-notation": "off"
   },
   "parser": "babel-eslint"
 }
