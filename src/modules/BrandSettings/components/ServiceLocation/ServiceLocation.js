@@ -40,6 +40,17 @@ class ServiceLocation extends Component {
     this.setState({ selectedCityIds });
   }
 
+  componentDidUpdate(prevProps) {
+    const { serviceLocationIds, form: { setFieldsValue } } = this.props;
+
+    if (JSON.stringify(prevProps.serviceLocationIds) !== JSON.stringify(serviceLocationIds)) {
+      const selectedCityList = this.getCityListBySelectedDistrictIds();
+      const selectedCityIds = map(selectedCityList, c => c.id);
+
+      setFieldsValue({ serviceCityIds: selectedCityIds, serviceLocationIds });
+    }
+  }
+
   getCityListBySelectedDistrictIds() {
     const { districtList, cityList, serviceLocationIds } = this.props;
     const selectedDistrictList = filter(
